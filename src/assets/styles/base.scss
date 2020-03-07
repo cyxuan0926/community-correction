@@ -1,0 +1,83 @@
+@import "./var";
+
+body {
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  color: $--color-text-primary;
+  font-variant: tabular-nums;
+  font-feature-settings: "tnum";
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.base-svg {
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 1em;
+  height: 1em;
+  // vertical-align: -0.15em;
+  fill: currentColor;
+}
+
+.block {
+  padding: $base-space * 3 $base-space * 4 $base-space * 5;
+  border-radius: $--border-radius-base;
+  background-color: #fff;
+
+  &-header__title {
+    height: 16px;
+    padding-left: $base-space + 3px;
+    line-height: 16px;
+    font-size: 16px;
+    color: #000;
+    @include border-left(3px, $--color-primary);
+  }
+}
+
+.row {
+  margin-top: $base-space * 3;
+}
+
+.form-page {
+  padding-top: $base-space * 5;
+  padding-bottom: $base-space * 5;
+
+  .el-form {
+    width: 546px;
+    margin: 0 auto;
+  }
+
+  .operate {
+    margin-top: $base-space * 8;
+
+    .el-button + .el-button {
+      margin-left: $base-space * 19;
+    }
+  }
+}
+
+// [placeholder]::placeholder {
+//   color: #bfbfbf;
+// }
+
+#nprogress .bar {
+  background-color: $--color-primary !important;
+}

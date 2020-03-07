@@ -1,0 +1,4 @@
+export const mutationsGlobal = {
+  SET_COMPONENTS_KEEPALIVE: 'SET_COMPONENTS_KEEPALIVE',
+  SET_LOADING: 'SET_LOADING'
+}

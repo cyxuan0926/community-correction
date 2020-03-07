@@ -97,3 +97,16 @@ $--tab-border-line: 1px solid $--border-color-base !default;
 
 /* 自定义变量
 -------------------------- */
+
+$title-color: rgba(0, 0, 0, .85) !default;
+
+// 头部高度
+$layout-header-height: 56px;
+
+$layout-main-height: calc(100vh - 56px);
+
+// 侧栏宽度
+$layout-siderbar-width: 200px;
+
+// 间距按 8 的倍数递增
+$base-space: 8px;
