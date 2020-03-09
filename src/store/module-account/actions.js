@@ -15,7 +15,7 @@ export default {
 
       return token && !isEmptyObject(token)
     } catch (err) {
-      console.log(err)
+      Promise.reject(err)
     }
   },
 
@@ -28,7 +28,7 @@ export default {
 
       return publicUserInfo
     } catch (err) {
-      console.log(err)
+      Promise.reject(err)
     }
   },
 
@@ -41,7 +41,7 @@ export default {
 
       return menus
     } catch (err) {
-      console.log(err)
+      Promise.reject(err)
     }
   },
 
@@ -65,7 +65,7 @@ export default {
       }
       return tokenResult && menusResult && publicUserInfoResult
     } catch (err) {
-      console.log(err)
+      Promise.reject(err)
     }
   }
 }

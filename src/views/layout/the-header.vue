@@ -61,7 +61,7 @@ export default {
         this.$store.dispatch('global/logout')
         this.$router.push(routesPath.ACCOUNT_LOGIN)
       } catch (err) {
-        console.log(err)
+        Promise.reject(err)
       }
     }
   }

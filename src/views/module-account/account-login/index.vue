@@ -98,7 +98,7 @@ export default {
           this.$router.replace(nextPath)
         }
       } catch (err) {
-        console.log(err)
+        Promise.reject(err)
       }
     }
   }
