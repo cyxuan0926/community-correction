@@ -95,7 +95,6 @@ export default {
               ? redirectPath
               : routesPath.HOME
 
-          console.log(nextPath)
           this.$router.replace(nextPath)
         }
       } catch (err) {
@@ -128,7 +127,6 @@ export default {
   h2 {
     margin-top: -8vh;
     font-size: 24px;
-    font-family: PingFang SC;
     font-weight: 800;
     color: #4381e6;
     line-height: 18px;

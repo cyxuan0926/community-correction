@@ -3,7 +3,7 @@ import routesPath from '../routes-path'
 
 export default [
   {
-    path: routesPath.ROOT,
+    path: routesPath.HOME,
     component: _import('layout/the-layout'),
     redirect: routesPath.HOME,
     meta: {},

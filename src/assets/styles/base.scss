@@ -33,7 +33,6 @@ body {
   box-sizing: border-box;
   width: 1em;
   height: 1em;
-  // vertical-align: -0.15em;
   fill: currentColor;
 }
 
@@ -74,10 +73,3 @@ body {
   }
 }
 
-// [placeholder]::placeholder {
-//   color: #bfbfbf;
-// }
-
-#nprogress .bar {
-  background-color: $--color-primary !important;
-}

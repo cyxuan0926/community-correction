@@ -14,43 +14,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import menuItem from './menu-item.vue'
-
-import cloneDeep from 'lodash/cloneDeep'
-import routes from '@/router/routes'
-import { hasAuth } from '@/utils/auth'
-
-function filterRoutes(routes) {
-  const _routes = routes.filter(route => {
-    if (!route.meta.isMenu) {
-      return false
-    }
-
-    return route.meta.auth ? hasAuth(route.meta.auth) : true
-  })
-
-  routes.splice(0)
-  routes.push(..._routes)
-
-  routes.forEach(route => {
-    if (Array.isArray(route.children) && route.children.length > 0) {
-      filterRoutes(route.children)
-    }
-  })
-}
-
-const _routes = cloneDeep(routes)
-
-filterRoutes(_routes)
 
 export default {
   components: { menuItem },
 
   data() {
-    return { menus: _routes }
+    return {}
   },
 
   computed: {
+    ...mapState('account', ['menus']),
+
     activeIndex() {
       return this.$route.meta.activeMenu || this.$route.path
     }

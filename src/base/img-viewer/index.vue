@@ -1,9 +1,5 @@
 <template>
-  <el-image
-    lazy
-    :src="url"
-    :alt="title"
-    @click.native="showImg" />
+  <el-image lazy :src="url" :alt="title" @click.native="showImg" />
 </template>
 
 <script>
@@ -30,17 +26,17 @@ export default {
   methods: {
     showImg() {
       const commonToolbar = {
-          zoomIn: 1,
-          zoomOut: 1,
-          oneToOne: 1,
-          reset: 1,
-          prev: 0,
-          play: 1,
-          next: 0,
-          rotateLeft: 1,
-          rotateRight: 1,
-          flipHorizontal: 1,
-          flipVertical: 1
+        zoomIn: 1,
+        zoomOut: 1,
+        oneToOne: 1,
+        reset: 1,
+        prev: 0,
+        play: 1,
+        next: 0,
+        rotateLeft: 1,
+        rotateRight: 1,
+        flipHorizontal: 1,
+        flipVertical: 1
       }
       const toolbar = Object.assign({}, commonToolbar, this.toolbar)
       return new Viewer(this.$el.parentNode, {
@@ -53,7 +49,7 @@ export default {
           this.viewer.destroy()
         },
         url: this.url
-      });
+      })
     }
   }
 }

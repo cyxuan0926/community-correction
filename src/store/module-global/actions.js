@@ -19,10 +19,10 @@ export default {
   logout({ commit, dispatch }) {
     removeStore()
     dispatch('$hideLoading')
-    commit('account/' + mutationsAccount.SET_TOKEN, {})
-    commit('account/' + mutationsAccount.SET_MENUS, [])
-    commit('account/' + mutationsAccount.SET_AUTHORITIES, [])
-    commit('account/' + mutationsAccount.SET_PUBLICUSERINFO, {})
+    commit(`account/${mutationsAccount.SET_TOKEN}`, {}, { root: true })
+    commit(`account/${mutationsAccount.SET_MENUS}`, [], { root: true })
+    commit(`account/${mutationsAccount.SET_AUTHORITIES}`, [], { root: true })
+    commit(`account/${mutationsAccount.SET_PUBLICUSERINFO}`, {}, { root: true })
     Message({
       showClose: true,
       message: '退出登陆成功',

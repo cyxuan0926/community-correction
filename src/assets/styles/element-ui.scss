@@ -6,7 +6,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
 
-#body {
+body {
   .el-button {
     vertical-align: top;
 
@@ -35,36 +35,50 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   }
 
   .el-submenu {
+    border-radius: 0 100px 100px 0;
+    background-color: $menu-item-title-bg;
+
+    & .el-menu-item {
+      height: 44px;
+      line-height: 39px;
+    }
 
     &__title:hover,
     &.is-active .el-submenu__title {
-      color: $--color-primary;
-      background-color: #fff;
+      color: $--color-white;
+      background-color: $--menu-item-hover-fill;
 
       i {
-        color: $--color-primary;
+        color: $--color-white;
       }
     }
 
     &__title {
+      border-radius: 0 100px 100px 0;
       height: 44px;
       margin: 4px 0;
-      line-height: 44px;
+      line-height: 39px;
+    }
+
+    &.is-opened {
+      border-radius: 0 20px 100px 0;
+      
     }
   }
 
   .el-menu-item {
     height: 44px;
     margin: $base-space 0;
-    border-radius: 0px 100px 100px 0px;
-    line-height: 44px;
-    color: #fff;
+    border-radius: 0 100px 100px 0;
+    line-height: 39px;
+    color: $--color-text-primary;
     transition: none;
+    background-color: $menu-item-title-bg;
     @include border-left($--color-primary, 10px);
 
     i {
       margin-right: $base-space;
-      color: #fff;
+      color: $--color-white;
     }
 
     &:after {
@@ -73,27 +87,18 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
       transition: transform .15s cubic-bezier(.215, .61, .355, 1), opacity .15s cubic-bezier(.215, .61, .355, 1);
     }
 
-    // &:hover {
-    //   color: $--color-primary;
-    //   background-color: #fff;
-
-    //   i {
-    //     color: $--color-primary;
-    //   }
-    // }
-
     &:hover {
-      color: $--color-primary;
-      background-color: transparent;
+      color: $--color-white;
+      background-color: $--menu-item-hover-fill;
 
       i {
-        color: $--color-primary;
+        color: $--color-white;
       }
     }
 
     &:focus,
     &.is-active {
-      color: $--color-primary;
+      color: $--color-white;
       background-color: $--menu-item-hover-fill;
 
       &:after {
@@ -103,20 +108,18 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
       }
 
       i {
-        color: $--color-primary;
+        color: $--color-white;
       }
     }
   }
 
   .el-form-item {
-    // margin-bottom: $base-space * 3;
 
     &.is-error {
 
       .el-input__inner:focus,
       .el-textarea__inner:focus {
         border-color: #ff4d4f;
-        // border-right-width: 1px !important;
         box-shadow: 0 0 0 2px rgba(245, 34, 45, .2);
       }
     }
@@ -132,14 +135,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
   .el-input {
     &__inner {
-      // padding: 0 12px;
-      // line-height: 30px;
 
       &:focus {
-        // border-color: #40a9ff;
-        // border-right-width: 1px !important;
         box-shadow: 0 0 0 2px rgba(19, 80, 195, .2);
-        // box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
       }
     }
   }
@@ -176,10 +174,6 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     &__body {
       padding: $base-space * 3;
     }
-
-    // &__footer {
-    //   border-top: 1px solid $--border-color-base;
-    // }
 
     &__headerbtn {
       top: 14px;
@@ -269,10 +263,6 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     &--highlight-current {
       .el-tree-node {
         &__content {
-          // height: 32px;
-          // margin-bottom: $base-space / 2;
-          // border-radius: $--border-radius-base;
-
           &:hover {
             color: #fff;
             background-color: $--color-primary;

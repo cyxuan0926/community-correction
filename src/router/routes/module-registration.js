@@ -1,3 +1,18 @@
-// import { _import } from '../helper'
-// import routesPath from '../routes-path'
-export default []
+import { _import } from '../helper'
+import routesPath from '../routes-path'
+
+export default [
+  {
+    path: routesPath.REGISTRATION,
+    component: _import('layout/the-layout'),
+    redirect: routesPath.CORRECTION_STAFF_LIST,
+    meta: {},
+    children: [
+      {
+        path: routesPath.REGISTRATION_LIST,
+        component: _import('module-registration'),
+        meta: {}
+      }
+    ]
+  }
+]

@@ -49,7 +49,7 @@ $--disabled-border-base: $--border-color-base !default;
 
 /* Menu
 --------------------------*/
-$--menu-item-hover-fill: rgba(243, 246, 252, 1) !default;
+$--menu-item-hover-fill: #4381e6 !default;
 
 /* Table
 -------------------------- */
@@ -110,3 +110,6 @@ $layout-siderbar-width: 200px;
 
 // 间距按 8 的倍数递增
 $base-space: 8px;
+
+// 侧边栏item 背景色
+$menu-item-title-bg: #f0f3fa;

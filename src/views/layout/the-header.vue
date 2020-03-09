@@ -6,12 +6,24 @@
     </div>
 
     <div class="toolbar">
-      <el-dropdown class="toolbar__item toolbar__user">
+      <el-row class="toolbar__item toolbar__date">
         <div>
-          <el-avatar :src="avatar" size="small" />
-          <span>asdasd</span>
+          <span>{{ nowTime['date'] }}</span>
+          <span>{{ nowTime['week'] }}</span>
         </div>
-      </el-dropdown>
+      </el-row>
+      <el-row class="toolbar__item toolbar__user">
+        <div>
+          <el-avatar :src="userAvatar" size="small" />
+          <span>欢迎您，管理员</span>
+        </div>
+      </el-row>
+      <el-row class="toolbar__item toolbar__logout">
+        <div @click="onLogout">
+          <i class="el-icon-switch-button icon" />
+          <span>退出</span>
+        </div>
+      </el-row>
     </div>
   </el-header>
 </template>
@@ -19,20 +31,34 @@
 <script>
 import * as helper from '@/utils/helper'
 import routesPath from '@/router/routes-path'
-import avatar from '@/assets/img/layout-header-AR.png'
+import userAvatar from '@/assets/img/layout-header-AR.png'
+import logoutAvatar from '@/assets/img/layout-header-loginout.png'
+import { toDateString, toWeekString } from '@/utils/lang'
 
 export default {
   data() {
     return {
-      avatar
+      userAvatar,
+      logoutAvatar
+    }
+  },
+
+  computed: {
+    nowTime() {
+      const now = Date.now()
+      const date = toDateString(now, 'yyyy年MM月dd日')
+      const week = toWeekString(now)
+
+      return { date, week }
     }
   },
 
   methods: {
-    async logout() {
+    async onLogout() {
       try {
         await helper.$confirm('确定退出登录吗?')
 
+        this.$store.dispatch('global/logout')
         this.$router.push(routesPath.ACCOUNT_LOGIN)
       } catch (err) {
         console.log(err)
@@ -89,8 +115,17 @@ export default {
     height: 100%;
 
     &__item {
+      font-size: $--font-size-base;
       + .toolbar__item {
         padding-left: $base-space * 3;
+      }
+    }
+
+    &__date {
+      span {
+        + span {
+          margin-left: $base-space * 2;
+        }
       }
     }
 
@@ -99,8 +134,21 @@ export default {
       cursor: pointer;
 
       .el-avatar {
-        margin-right: $base-space;
+        margin-right: $base-space * 2;
         vertical-align: middle;
+      }
+
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    &__logout {
+      cursor: pointer;
+
+      i {
+        font-size: $--font-size-medium;
+        margin-right: $base-space * 2;
       }
     }
   }

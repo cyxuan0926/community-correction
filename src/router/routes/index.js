@@ -15,10 +15,5 @@ export default [
   ...correctionStaff,
   ...registration,
   ...supervision,
-  ...home,
-  {
-    path: routesPath.ROOT,
-    redirect: routesPath.HOME,
-    meta: {}
-  }
+  ...home
 ]

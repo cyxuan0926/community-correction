@@ -1,11 +1,10 @@
 <template>
   <el-submenu
     v-if="menu.children && menu.children.length > 0"
-    :index="menu.path"
+    :index="menu.path || '/supervision'"
   >
     <template v-slot:title>
-      <base-svg :href="menu.meta.icon" />
-      <span>{{ menu.meta.title }}</span>
+      <span>{{ menu.name }}</span>
     </template>
     <menu-item
       v-for="childMenu in menu.children"
@@ -15,8 +14,7 @@
   </el-submenu>
   <el-menu-item v-else :index="menu.path">
     <template v-slot:title>
-      <base-svg :href="menu.meta.icon" />
-      <span>{{ menu.meta.title }}</span>
+      <span>{{ menu.name }}</span>
     </template>
   </el-menu-item>
 </template>
@@ -30,9 +28,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.base-svg {
-  margin-left: 12px;
-  margin-right: $base-space * 2;
-}
-</style>
+<style lang="scss" scoped></style>

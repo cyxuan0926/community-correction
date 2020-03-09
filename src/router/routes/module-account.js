@@ -4,7 +4,7 @@ import routesPath from '../routes-path'
 export default [
   {
     path: routesPath.ACCOUNT_LOGIN,
-    component: _import('module-account/account-login/index'),
+    component: _import('module-account/account-login'),
     meta: { noCheckLogin: true }
   }
 ]
