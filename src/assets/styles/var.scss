@@ -29,10 +29,8 @@ $--color-text-regular: #666 !default;
 $--color-text-secondary: #999 !default;
 
 $--color-text-placeholder: #c0c4cc !default;
-// $--color-text-placeholder: rgba(0, 0, 0, 0.251) !default;
 
 $--border-color-base: #e8e8e8 !default;
-// $--border-color-base: #dcdfe6 !default;
 
 $--border-radius-base: 3px !default;
 
@@ -41,11 +39,8 @@ $--border-radius-small: 2px !default;
 
 /* Disable base
 -------------------------- */
-// $--disabled-fill-base: $--background-color-base !default;
-// $--disabled-color-base: $--color-text-placeholder !default;
 
 $--disabled-border-base: $--border-color-base !default;
-// $--disabled-border-base: $--border-color-light !default;
 
 /* Menu
 --------------------------*/
@@ -56,17 +51,13 @@ $--menu-item-hover-fill: #4381e6 !default;
 $--table-border-color: #e8e8e8 !default;
 $--table-font-color: $--color-text-primary !default;
 $--table-header-font-color: rgba(0, 0, 0, 0.65) !default;
-// $--table-row-hover-background-color: #e6f7ff !default;
 $--table-current-row-background-color: #e6f7ff !default;
 $--table-header-background-color: #fafafa !default;
-// $--table-fixed-box-shadow: 0 0 10px rgba(0, 0, 0, .12) !default;
 
 /* Dialog
 -------------------------- */
-// $--dialog-background-color: $--color-white !default;
 $--dialog-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !default;
 $--dialog-title-font-size: $--font-size-medium !default;
-// $--dialog-font-line-height: $--font-line-height-primary !default;
 $--dialog-padding-primary: 20px !default;
 
 /* Pagination

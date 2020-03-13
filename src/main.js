@@ -7,6 +7,7 @@ import { mapActions, mapState } from 'vuex'
 import '@/base'
 import '@/common/plugins'
 import './assets/styles/index.scss'
+import '@/assets/icons/iconfont.css'
 
 Vue.config.productionTip = false
 

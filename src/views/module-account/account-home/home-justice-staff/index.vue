@@ -2,7 +2,7 @@
   <div class="home">
     <div class="home__content-information">
       <div class="information-item_registration">
-        <div class="registration-item_weather" v-loading="loading">
+        <div class="registration-item_weather">
           <div id="weather-view-he" />
         </div>
         <div class="registration-item_warnning">
@@ -68,7 +68,6 @@
 export default {
   data() {
     return {
-      loading: true,
       dateMonth: Date.now(),
       tabelCols: [
         {

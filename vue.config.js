@@ -15,6 +15,9 @@ module.exports = {
       }
     }
   },
+  devServer: {
+    disableHostCheck: true
+  },
   chainWebpack(config) {
     config.when(isProduction(), config => {
       config.optimization.splitChunks({

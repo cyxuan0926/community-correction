@@ -51,6 +51,10 @@ body {
       i {
         color: $--color-white;
       }
+
+      i.icon-supervision {
+        color: $--color-white;
+      }
     }
 
     &__title {
@@ -58,10 +62,20 @@ body {
       height: 44px;
       margin: 4px 0;
       line-height: 39px;
+      i.icon-supervision {
+        font-size: 22px;
+        color: $--color-text-primary;
+      }
     }
 
     &.is-opened {
       border-radius: 0 20px 100px 0;
+
+      .el-submenu__title:hover {
+        i.icon-supervision {
+          color: $--color-white;
+        }
+      }
       
     }
   }
@@ -78,7 +92,8 @@ body {
 
     i {
       margin-right: $base-space;
-      color: $--color-white;
+      color: $--color-text-primary;
+      font-size: 22px;
     }
 
     &:after {
@@ -93,6 +108,7 @@ body {
 
       i {
         color: $--color-white;
+        font-size: 22px;
       }
     }
 
@@ -109,6 +125,7 @@ body {
 
       i {
         color: $--color-white;
+        font-size: 22px;
       }
     }
   }

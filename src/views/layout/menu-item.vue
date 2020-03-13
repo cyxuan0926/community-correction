@@ -4,6 +4,7 @@
     :index="menu.path || '/supervision'"
   >
     <template v-slot:title>
+      <i :class="['iconfont', `${menu.icon}`]" />
       <span>{{ menu.name }}</span>
     </template>
     <menu-item
@@ -14,6 +15,7 @@
   </el-submenu>
   <el-menu-item v-else :index="menu.path">
     <template v-slot:title>
+      <i :class="['iconfont', `${menu.icon}`]" />
       <span>{{ menu.name }}</span>
     </template>
   </el-menu-item>

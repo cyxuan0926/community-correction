@@ -15,7 +15,7 @@
       <el-row class="toolbar__item toolbar__user">
         <div>
           <el-avatar :src="userAvatar" size="small" />
-          <span>欢迎您，管理员</span>
+          <span>欢迎您，{{ role }}</span>
         </div>
       </el-row>
       <el-row class="toolbar__item toolbar__logout">
@@ -37,9 +37,12 @@ import { toDateString, toWeekString } from '@/utils/lang'
 
 export default {
   data() {
+    const { role } = this.$store.state.account.token
+
     return {
       userAvatar,
-      logoutAvatar
+      logoutAvatar,
+      role
     }
   },
 
@@ -56,7 +59,7 @@ export default {
   methods: {
     async onLogout() {
       try {
-        await helper.$confirm('确定退出登录吗?')
+        await helper.$confirm('是否退出登陆?')
 
         this.$store.dispatch('global/logout')
         this.$router.push(routesPath.ACCOUNT_LOGIN)
