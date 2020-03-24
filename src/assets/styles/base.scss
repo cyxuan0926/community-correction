@@ -43,10 +43,6 @@ body {
   }
 }
 
-.row {
-  margin-top: $base-space * 3;
-}
-
 .form-page {
   padding-top: $base-space * 5;
   padding-bottom: $base-space * 5;
@@ -65,3 +61,17 @@ body {
   }
 }
 
+.search {
+  padding-bottom: 10px;
+}
+
+.cursor_pointer {
+  cursor: pointer;
+}
+
+.el-table.table-tabs_card {
+  ::v-deep .cell {
+    height: 32px;
+    line-height: 32px;
+  }
+}

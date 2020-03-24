@@ -1,11 +1,10 @@
 <template>
   <el-breadcrumb class="com-breadcrumb" separator-class="el-icon-arrow-right">
-    <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-    <el-breadcrumb-item
-      v-for="route in routes"
-      :key="route.path"
-      :to="route.path"
+    <el-breadcrumb-item v-if="$route.meta.isTheOnlyRoot"
+      >首页</el-breadcrumb-item
     >
+    <el-breadcrumb-item v-else :to="{ path: '/home' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item v-for="route in routes" :key="route.path">
       {{ route.meta.title }}
     </el-breadcrumb-item>
   </el-breadcrumb>
@@ -25,13 +24,27 @@ export default {
 
 <style lang="scss" scoped>
 .com-breadcrumb {
-  height: 52px;
+  height: 38px;
   padding: 0 $base-space * 3;
-  line-height: 52px;
-  background-color: #f7f8fa;
+  line-height: 38px;
+  background-color: #e6e6e6;
 
-  ::v-deep .el-breadcrumb__inner.is-link {
-    font-weight: normal;
+  .el-breadcrumb__item {
+    ::v-deep .el-breadcrumb__inner.is-link {
+      font-weight: normal;
+    }
+
+    &:last-child {
+      ::v-deep.el-breadcrumb__inner {
+        font-weight: bold;
+      }
+    }
+
+    &:only-child {
+      ::v-deep.el-breadcrumb__inner {
+        font-weight: normal;
+      }
+    }
   }
 }
 </style>

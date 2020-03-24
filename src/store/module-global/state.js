@@ -3,5 +3,14 @@ export default {
   componentsKeepAlive: [],
 
   // 加载状态
-  $loading: false
+  $loading: false,
+
+  // 省份
+  provinceLists: [],
+
+  // 市
+  cityLists: [],
+
+  // 县
+  countyLists: []
 }

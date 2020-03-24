@@ -16,14 +16,11 @@ const tips = (message = '操作失败', type = 'error') => {
 
 const codes = {
   200: {
-    resData: true,
-    next: params => {
-      tips(params.msg || '操作成功', 'success')
-    }
+    resData: true
   },
   400: {
-    next: () => {
-      tips('请求无效')
+    next: params => {
+      tips(params.msg || '请求无效')
     }
   },
   401: {
@@ -43,23 +40,23 @@ const codes = {
     }
   },
   404: {
-    next: () => {
-      tips('找不到对应的资源！')
+    next: params => {
+      tips(params.msg || '找不到对应的资源！')
     }
   },
   405: {
-    next: () => {
-      tips('请求方法错误！')
+    next: params => {
+      tips(params.msg || '请求方法错误！')
     }
   },
   413: {
-    next: () => {
-      tips('文件过大，请重新上传')
+    next: params => {
+      tips(params.msg || '文件过大，请重新上传')
     }
   },
   415: {
-    next: () => {
-      tips('提交的数据格式错误！')
+    next: params => {
+      tips(params.msg || '提交的数据格式错误！')
     }
   },
   500: {
@@ -68,13 +65,13 @@ const codes = {
     }
   },
   502: {
-    next: () => {
-      tips('Bad Gateway,网关错误！')
+    next: params => {
+      tips(params.msg || 'Bad Gateway,网关错误！')
     }
   },
   504: {
-    next: () => {
-      tips('请检查服务是否启动！')
+    next: params => {
+      tips(params.msg || '请检查服务是否启动！')
     }
   },
   10006: {
@@ -122,7 +119,7 @@ const commonResponseHandler = params => {
     return false
   }
   result.next && result.next(params.data, params.config.url)
-  if (result.resData) return params.data
+  if (params.data) return params.data
 }
 
 const publicResponseHandler = {
@@ -161,6 +158,10 @@ const publicResponseHandler = {
   500: () => {
     tips('公共服务问题')
     // tips('请求失败，服务器错误')
+    return false
+  },
+  undefined: () => {
+    tips('Network Error')
     return false
   }
 }

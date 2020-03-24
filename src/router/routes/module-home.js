@@ -6,12 +6,12 @@ export default [
     path: routesPath.HOME,
     component: _import('layout/the-layout'),
     redirect: routesPath.HOME,
-    meta: {},
     children: [
       {
+        name: 'Home',
         path: routesPath.HOME,
         component: _import('module-account/account-home'),
-        meta: { icon: 'icon-home' }
+        meta: { icon: 'icon-home', isTheOnlyRoot: true }
       }
     ]
   }

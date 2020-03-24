@@ -5,9 +5,11 @@ import store from './store'
 import { mapActions, mapState } from 'vuex'
 
 import '@/base'
+import '@/common/filters'
 import '@/common/plugins'
 import './assets/styles/index.scss'
 import '@/assets/icons/iconfont.css'
+import 'viewerjs/dist/viewer.css'
 
 Vue.config.productionTip = false
 

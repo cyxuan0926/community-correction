@@ -19,8 +19,8 @@ export default {
 
       cols.forEach(col => {
         const options = {
-          attrs: { ...col },
-          key: `${col.label}-${col.prop}-${col.slotName}`
+          attrs: { align: 'center', ...col },
+          key: `${col.label}-${col.prop}`
         }
         const slot = col.slotName && this.$scopedSlots[col.slotName]
 

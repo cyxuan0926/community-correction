@@ -1,23 +1,32 @@
 <template>
-  <el-row>
+  <div class="pagination" v-if="$attrs.total">
+    <span class="pagination-total">共 {{ $attrs.total }} 条</span>
     <el-pagination
       background
-      hide-on-single-page
-      layout="prev, pager, next, slot"
+      layout="sizes, prev, pager, next, jumper"
       :page-sizes="[10, 20, 30, 40, 50]"
       v-bind="$attrs"
       v-on="$listeners"
     />
-    <span>共 {{ $attrs.total }} 条</span>
-  </el-row>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.el-row {
+.pagination {
   display: flex;
   justify-content: flex-end;
   margin-top: $base-space * 3;
   line-height: 32px;
   padding-right: 2px;
+
+  .pagination-total {
+    padding: 0px 10px;
+  }
+
+  ::v-deep li.active {
+    & + li {
+      border-left: 1px solid #e8e8e8;
+    }
+  }
 }
 </style>

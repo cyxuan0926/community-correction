@@ -1,7 +1,7 @@
 <template>
   <el-submenu
     v-if="menu.children && menu.children.length > 0"
-    :index="menu.path || '/supervision'"
+    :index="menu.path"
   >
     <template v-slot:title>
       <i :class="['iconfont', `${menu.icon}`]" />

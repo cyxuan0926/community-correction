@@ -137,3 +137,22 @@ export function filterObject(obj, predicate) {
 
   return result
 }
+
+/**
+ * @param {*} originValue 需要过滤的值
+ * @param {*} filterEl 过滤依赖的值
+ * @param {*} compareK 过滤的key
+ * @param {*} showK 显示值的key
+ * @returns 实际显示的值
+ */
+export const filterInput = (
+  originValue = '',
+  { filterEl = [], compareK = 'label', showK = 'value', joinSeparator = '' }
+) => {
+  const filterResult = filterEl.filter(el => {
+    return el[compareK] === originValue
+  })
+  const result = filterResult.map(item => item[showK])
+
+  return result.join(joinSeparator)
+}

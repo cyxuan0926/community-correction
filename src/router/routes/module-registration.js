@@ -6,12 +6,12 @@ export default [
     path: routesPath.REGISTRATION,
     component: _import('layout/the-layout'),
     redirect: routesPath.CORRECTION_STAFF_LIST,
-    meta: {},
     children: [
       {
+        name: 'Registration',
         path: routesPath.REGISTRATION_LIST,
         component: _import('module-registration'),
-        meta: {}
+        meta: { title: '报到统计' }
       }
     ]
   }

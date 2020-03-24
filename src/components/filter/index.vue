@@ -8,7 +8,7 @@
     >
       <el-input
         v-if="item.type === 'input'"
-        v-model="filterParams[item.name]"
+        v-model.trim="filterParams[item.name]"
         v-bind="item"
         clearable
       />
@@ -36,9 +36,10 @@
     </el-form-item>
 
     <el-form-item class="operate">
-      <el-button type="primary" @click="onFilter(normalizedFilterParams)">
-        查询
-      </el-button>
+      <el-button
+        icon="el-icon-search"
+        @click="onFilter(normalizedFilterParams)"
+      />
 
       <el-button v-if="clearable" type="warning" @click="onClear">
         重置
@@ -90,6 +91,10 @@ export default {
       handler() {
         this.$emit('input', this.normalizedFilterParams)
       }
+    },
+
+    filterItems(item) {
+      if (item) this.onClear()
     }
   },
 
@@ -134,6 +139,19 @@ export default {
 
 <style lang="scss" scoped>
 .el-form-item {
-  margin-bottom: 0 !important;
+  margin: 0px 10px 10px 0px !important;
+
+  ::v-deep .el-input {
+    width: 13em;
+  }
+
+  ::v-deep .el-date-editor {
+    width: 24em;
+  }
+
+  ::v-deep .el-button {
+    vertical-align: middle;
+    height: 34px;
+  }
 }
 </style>

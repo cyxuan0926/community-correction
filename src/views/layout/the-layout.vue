@@ -53,6 +53,7 @@ export default {
 
 .el-aside {
   height: $layout-main-height;
+  border-right: 1px solid #e6e6e6;
 }
 
 .el-main {
@@ -64,6 +65,7 @@ export default {
 
   ::v-deep .el-scrollbar__wrap {
     overflow-x: hidden;
+    background-color: $--color-white;
   }
 
   ::v-deep .el-scrollbar__view {

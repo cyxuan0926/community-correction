@@ -38,20 +38,21 @@ export default {
 .el-aside {
   position: relative;
   width: $layout-siderbar-width !important;
-  background-color: #fff;
+  background-color: $--color-white;
   box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
   transition: width 0.3s ease-in-out;
 }
 
 .el-menu {
   width: $layout-siderbar-width;
-  padding-top: 18px;
+  padding-top: $--font-size-large;
   border: none;
-  background-color: #fff;
+  background-color: $--color-white;
 }
 
 .el-scrollbar {
   height: 100%;
+  background-color: $--color-white;
 
   ::v-deep &__wrap {
     overflow-x: hidden;

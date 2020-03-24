@@ -2,16 +2,20 @@ export default {
   data() {
     return {
       // 分页参数
-      pagination: { page: 1, size: 10 },
-      pageData: { page: 1, size: 10, totalElements: 0, content: [] }
+      pagination: { page: 1, rows: 10 },
+
+      // 当前页的数据
+      pageData: { totalElements: 0, content: [] }
     }
   },
 
   computed: {
     currentPageElements() {
-      const { page, size, totalElements } = this.pageData
+      const { page, rows } = this.pagination
 
-      return page > 1 ? totalElements - (page - 1) * size : totalElements
+      const { totalElements } = this.pageData
+
+      return page > 1 ? totalElements - (page - 1) * rows : totalElements
     }
   },
 
@@ -23,9 +27,9 @@ export default {
     },
 
     // 每页条数切换
-    onSizeChange(size) {
+    onSizeChange(rows) {
       this.pagination.page = 1
-      this.pagination.size = size
+      this.pagination.rows = rows
       this.gettingPageData()
     },
 
@@ -33,9 +37,9 @@ export default {
       this.updatePagination(1, 10)
     },
 
-    updatePagination(page = 1, size = 10) {
+    updatePagination(page = 1, rows = 10) {
       this.pagination.page = page
-      this.pagination.size = size
+      this.pagination.rows = rows
     },
 
     calculatePagination(rowsRemoved = 1) {
@@ -46,7 +50,12 @@ export default {
 
     // 表格自定义排序列
     sn(index) {
-      return index + 1 + (this.pageData.page - 1) * this.pageData.size
+      return index + 1 + (this.pagination.page - 1) * this.pagination.rows
+    },
+
+    onFilterForms() {
+      this.resetPagination()
+      this.gettingPageData()
     },
 
     // 获取数据的方法

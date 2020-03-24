@@ -10,6 +10,7 @@ export default {
   // 矫正人员管理
   CORRECTION_STAFF: '/correction-staff',
   CORRECTION_STAFF_LIST: '/correction-staff/list',
+  CORRECTION_STAFF_INFORMATION: '/correction-staff/information',
 
   // 监督管理
   SUPERVISION: '/supervision',
@@ -22,5 +23,6 @@ export default {
 
   // 报到统计
   REGISTRATION: '/registration-report',
-  REGISTRATION_LIST: '/registration-report/list'
+  REGISTRATION_LIST: '/registration-report/list',
+  REGISTRATION_DETAILE_LIST: ''
 }
