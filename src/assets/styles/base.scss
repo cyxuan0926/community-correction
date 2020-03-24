@@ -69,8 +69,8 @@ body {
   cursor: pointer;
 }
 
-.el-table.table-tabs_card {
-  ::v-deep .cell {
+.table-tabs_card {
+  .cell {
     height: 32px;
     line-height: 32px;
   }
