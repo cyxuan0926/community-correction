@@ -1,4 +1,5 @@
 import * as registrationAPI from '@/services/api/module-registration'
+
 import { mutationRegistration } from './mutation-types'
 
 export default {

@@ -1,7 +1,11 @@
 import { mutationsGlobal } from './mutation-types'
+
 import { removeStore } from '@/utils/storage'
+
 import { mutationsAccount } from '../module-account/mutation-types'
+
 import { Message } from 'element-ui'
+
 import * as globalAPI from '@/services/api/module-common'
 
 export default {
@@ -56,6 +60,18 @@ export default {
       const { content } = await globalAPI.getCounties(params)
 
       commit(mutationsGlobal.SET_COUNTY, content)
+
+      return true
+    } catch (err) {
+      Promise.reject(err)
+    }
+  },
+
+  async getJurisdictions({ commit }, params) {
+    try {
+      const { data } = await globalAPI.getJurisdictions(params)
+
+      commit(mutationsGlobal.SET_JURISDICTION, data)
 
       return true
     } catch (err) {

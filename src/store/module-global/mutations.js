@@ -19,5 +19,9 @@ export default {
 
   [mutationsGlobal.SET_COUNTY]: (state, countyLists) => {
     state.countyLists = countyLists
+  },
+
+  [mutationsGlobal.SET_JURISDICTION]: (state, jurisdictions) => {
+    state.jurisdictions = jurisdictions
   }
 }

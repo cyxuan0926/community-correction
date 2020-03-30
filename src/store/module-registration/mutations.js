@@ -6,6 +6,7 @@ export default {
     { list = [], totalCount = 0 }
   ) => {
     state.reportDetailLists.content = list
+
     state.reportDetailLists.totalCount = totalCount
   }
 }

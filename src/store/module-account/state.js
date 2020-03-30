@@ -2,7 +2,8 @@ import {
   getToken,
   getMenus,
   getAuthorities,
-  getPublicUserInfo
+  getPublicUserInfo,
+  getAccountJurisdictionAreaInfo
 } from '@/utils/storage'
 
 export default {
@@ -15,6 +16,9 @@ export default {
   // token
   token: getToken(),
 
-  // 公共服务用户信息
-  publicUserInfo: getPublicUserInfo()
+  // 登陆账户公共服务基本信息
+  publicUserInfo: getPublicUserInfo(),
+
+  // 登陆账户司法机构/地区信息
+  accountJurisdictionAreaInfo: getAccountJurisdictionAreaInfo()
 }

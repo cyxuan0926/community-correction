@@ -4,6 +4,7 @@ import correctionStaff from './module-correction-staff'
 import registration from './module-registration'
 import supervision from './module-supervision'
 import home from './module-home'
+import reportDetail from './module-report-detail'
 
 export default [
   {
@@ -15,5 +16,6 @@ export default [
   ...correctionStaff,
   ...registration,
   ...supervision,
-  ...home
+  ...home,
+  ...reportDetail
 ]

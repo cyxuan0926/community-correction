@@ -17,6 +17,7 @@ export default {
 
   // 外出审批
   SUPERVISION_OUT: '/supervision-out/list',
+  SUPERVISION_OUT_INFORMATION: '/supervision-out/information',
 
   // 报到提醒
   SUPERVISION_REMIND: '/supervision-remind/list',
@@ -24,5 +25,9 @@ export default {
   // 报到统计
   REGISTRATION: '/registration-report',
   REGISTRATION_LIST: '/registration-report/list',
-  REGISTRATION_DETAILE_LIST: ''
+  REGISTRATION_DETAILE_LIST: '',
+
+  // 报到详情
+  REPORT_DETAIL: '/report-detail',
+  REPORT_DETAIL_LIST: '/report-detail/list'
 }

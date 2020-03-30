@@ -10,6 +10,7 @@
         v-if="item.type === 'input'"
         v-model.trim="filterParams[item.name]"
         v-bind="item"
+        v-on="itemEvents[item.name]"
         clearable
       />
 
@@ -19,6 +20,15 @@
         v-if="item.type === 'select'"
         v-model="filterParams[item.name]"
         v-bind="item"
+        v-on="itemEvents[item.name]"
+        @change="
+          onSelectChange({
+            name: item.name,
+            value: filterParams[item.name],
+            filterItems,
+            filterParams
+          })
+        "
       >
         <el-option
           v-for="(option, i) in item.options"
@@ -31,11 +41,15 @@
       <el-date-picker
         v-if="isDatePicker(item.type)"
         v-model="filterParams[item.name]"
+        unlink-panels
         v-bind="item"
+        v-on="itemEvents[item.name]"
       />
     </el-form-item>
 
     <el-form-item class="operate">
+      <slot name="pre" />
+
       <el-button
         icon="el-icon-search"
         @click="onFilter(normalizedFilterParams)"
@@ -44,6 +58,8 @@
       <el-button v-if="clearable" type="warning" @click="onClear">
         重置
       </el-button>
+
+      <slot name="append" />
     </el-form-item>
   </el-form>
 </template>
@@ -67,7 +83,17 @@ export default {
       default: () => []
     },
 
+    itemEvents: {
+      type: Object,
+      default: () => ({})
+    },
+
     onFilter: {
+      type: Function,
+      default: function() {}
+    },
+
+    onSelectChange: {
       type: Function,
       default: function() {}
     }

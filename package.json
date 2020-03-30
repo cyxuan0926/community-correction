@@ -4,7 +4,7 @@
     "name": "caiyang",
     "email": "840473997@qq.com"
   },
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --open --mode local",

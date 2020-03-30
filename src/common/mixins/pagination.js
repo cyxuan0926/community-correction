@@ -1,11 +1,21 @@
+import baseFilter from '@/components/filter'
+
 export default {
+  components: { baseFilter },
+
   data() {
     return {
       // 分页参数
       pagination: { page: 1, rows: 10 },
 
       // 当前页的数据
-      pageData: { totalElements: 0, content: [] }
+      pageData: { totalElements: 0, content: [] },
+
+      // 搜索元素
+      filterItems: [],
+
+      // 查询参数
+      filterParams: {}
     }
   },
 

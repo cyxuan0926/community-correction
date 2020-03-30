@@ -48,7 +48,8 @@ import {
   saveToken,
   saveMenus,
   saveAuthorities,
-  savePublicUserInfo
+  savePublicUserInfo,
+  saveAccountJurisdictionAreaInfo
 } from '@/utils/storage'
 
 export default {
@@ -68,7 +69,13 @@ export default {
   },
 
   computed: {
-    ...mapState('account', ['menus', 'authorities', 'publicUserInfo', 'token'])
+    ...mapState('account', [
+      'menus',
+      'authorities',
+      'publicUserInfo',
+      'token',
+      'accountJurisdictionAreaInfo'
+    ])
   },
 
   methods: {
@@ -87,6 +94,7 @@ export default {
           saveMenus(this.menus)
           saveAuthorities(this.authorities)
           savePublicUserInfo(this.publicUserInfo)
+          saveAccountJurisdictionAreaInfo(this.accountJurisdictionAreaInfo)
 
           const redirectPath = this.$route.query.redirect
 

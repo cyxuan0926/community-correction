@@ -53,7 +53,6 @@ export default {
         type: 'daterange',
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',
-        unlinkPanels: true,
         valueFormat: 'yyyy-MM-dd'
       },
       {

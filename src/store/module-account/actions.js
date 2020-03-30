@@ -1,6 +1,9 @@
 import * as accountAPI from '@/services/api/module-account'
+
 import { mutationsAccount } from './mutation-types'
+
 import jwtDecode from 'jwt-decode'
+
 import { isEmptyObject } from '@/utils/lang'
 
 export default {
@@ -45,11 +48,25 @@ export default {
     }
   },
 
+  // 获取账户的司法机构/地区信息
+  async getAccountByUserName({ commit }, { username }) {
+    try {
+      const { data } = await accountAPI.getAccountByUserName({ username })
+
+      commit(mutationsAccount.SET_ACCOUNT_JURISDICTION_AREA_INFO, data)
+
+      return data
+    } catch (err) {
+      Promise.reject(err)
+    }
+  },
+
   // 账户登陆
   async login({ commit, dispatch, state }, { username, password }) {
     try {
       let menusResult = false,
-        publicUserInfoResult = false
+        publicUserInfoResult = false,
+        accountJurisdictionAreaInfoResult = false
 
       const tokenResult = await dispatch('getToken', { username, password })
 
@@ -62,8 +79,10 @@ export default {
         menusResult = await dispatch('getMenus')
 
         publicUserInfoResult = await dispatch('getPublicUserInfo')
+
+        accountJurisdictionAreaInfoResult = await dispatch('getAccountByUserName', { username })
       }
-      return tokenResult && menusResult && publicUserInfoResult
+      return tokenResult && menusResult && publicUserInfoResult && accountJurisdictionAreaInfoResult
     } catch (err) {
       Promise.reject(err)
     }

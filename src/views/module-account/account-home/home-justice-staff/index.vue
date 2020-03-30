@@ -65,7 +65,7 @@
             {{ day | toDateString('dd', false) }}</span
           >
           <!-- 当月有特殊内容的日期 -->
-          <el-popover placement="right" trigger="click" v-else>
+          <el-popover v-else placement="right" trigger="click">
             <div slot="reference" :class="isSelected ? 'red' : ''">
               {{ day | toDateString('dd', false) }}
             </div>

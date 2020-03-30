@@ -2,6 +2,7 @@ const TOKEN = 'token'
 const MENUS = 'menus'
 const AUTHORITIES = 'authorities'
 const PUBLICUSERINFO = 'publicUserInfo'
+const ACCOUNTJURISDICTIONAREAINFO = 'accountJurisdictionAreaInfo'
 
 export const getToken = () => {
   const token = localStorage.getItem(TOKEN)
@@ -41,6 +42,16 @@ export const getPublicUserInfo = () => {
 
 export const savePublicUserInfo = publicUserInfo => {
   localStorage.setItem(PUBLICUSERINFO, JSON.stringify(publicUserInfo))
+}
+
+export const getAccountJurisdictionAreaInfo = () => {
+  const accountJurisdictionAreaInfo = localStorage.getItem(ACCOUNTJURISDICTIONAREAINFO)
+
+  return accountJurisdictionAreaInfo ? JSON.parse(accountJurisdictionAreaInfo) : {}
+}
+
+export const saveAccountJurisdictionAreaInfo = accountJurisdictionAreaInfo => {
+  localStorage.setItem(ACCOUNTJURISDICTIONAREAINFO, JSON.stringify(accountJurisdictionAreaInfo))
 }
 
 export const removeStore = () => {

@@ -38,16 +38,14 @@
   </div>
 </template>
 <script>
-import baseFilter from '@/components/filter'
 import { pagination, registrationDetail } from '@/common/mixins'
+
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Registration',
 
   mixins: [pagination, registrationDetail],
-
-  components: { baseFilter },
 
   data() {
     const tabStatus = {
@@ -104,9 +102,7 @@ export default {
       activeTabName: tabStatus['STATISTICS'],
       tabOptions,
       tabStatus,
-      statisticsTableCols,
-      filterItems: [],
-      filterParams: {}
+      statisticsTableCols
     }
   },
 
@@ -140,6 +136,7 @@ export default {
 
     async gettingPageData() {
       // this.$showLoading()
+
       const { prisonerName, time, status } = this.filterParams
 
       let params = {
@@ -156,7 +153,6 @@ export default {
         }
       }
 
-      console.log(params)
       if (this.activeTabName === this.tabStatus['STATISTICS']) return
 
       if (this.activeTabName === this.tabStatus['DETAILS']) {

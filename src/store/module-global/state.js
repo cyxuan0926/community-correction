@@ -12,5 +12,8 @@ export default {
   cityLists: [],
 
   // 县
-  countyLists: []
+  countyLists: [],
+
+  // 司法所
+  jurisdictions: []
 }

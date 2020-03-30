@@ -158,7 +158,6 @@
   </div>
 </template>
 <script>
-import baseFilter from '@/components/filter'
 import repetitionButton from '@/components/repetition-button'
 import { pagination } from '@/common/mixins'
 import routesPath from '@/router/routes-path'
@@ -170,7 +169,7 @@ export default {
 
   mixins: [pagination],
 
-  components: { baseFilter, repetitionButton },
+  components: { repetitionButton },
 
   data() {
     const tabStatus = {
@@ -244,7 +243,6 @@ export default {
         type: 'datetimerange',
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',
-        unlinkPanels: true,
         defaultTime: ['00:00:00', '23:59:59'],
         valueFormat: 'yyyy-MM-dd HH:mm:ss'
       }
@@ -337,7 +335,6 @@ export default {
       allTableCols,
       filterItems: pengdingFilterItems,
       pengdingFilterItems,
-      filterParams: {},
       radius: 300,
       radiusOptions: RADIUSOPTIONS,
       remarkOptions: REMARKOPTIONS,

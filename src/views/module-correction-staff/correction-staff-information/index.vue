@@ -1,10 +1,12 @@
 <template>
   <div class="correction-information">
-    <p class="correction-information-title"><strong>基本信息</strong></p>
+    <p class="correction-information-title title-information__common">
+      <strong>基本信息</strong>
+    </p>
 
-    <div class="correction-information-form">
+    <div class="correction-information-form form-information__common">
       <el-form
-        class="form-basic"
+        class="form-basic form"
         ref="formBasic"
         :model="formBasicModel"
         inline
@@ -338,7 +340,11 @@
         :url="faceImg.url"
       />
 
-      <el-form :model="formSupervisionModel" inline class="form-supervision">
+      <el-form
+        class="form-supervision form"
+        :model="formSupervisionModel"
+        inline
+      >
         <el-form-item class="form-item_idCard is-required" label="身份证信息">
           <template>
             <base-img-viewer
@@ -384,7 +390,7 @@
       </el-form>
     </div>
 
-    <div class="correction-information-button">
+    <div class="correction-information-button information-button__common">
       <el-button type="primary" @click="onSave">保存</el-button>
       <el-button type="primary" @click="onGoBack">返回</el-button>
     </div>
@@ -623,28 +629,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$-boder-style: 1px solid #dcdfe6;
-
 .correction-information {
-  &-title {
-    padding-bottom: 10px;
-  }
-
   &-form {
-    display: flex;
-    flex-wrap: wrap;
-
-    .form-basic,
-    .form-supervision {
-      ::v-deep .el-form-item {
-        padding: 16px 0px;
-        margin-right: 0px;
-        margin-bottom: 0px;
-        border: $-boder-style;
-        border-bottom: none;
-      }
-    }
-
     .form-basic {
       width: 65%;
 
@@ -799,17 +785,6 @@ $-boder-style: 1px solid #dcdfe6;
           }
         }
       }
-    }
-  }
-
-  &-button {
-    width: 99.4%;
-    padding-top: 10px;
-    display: flex;
-    justify-content: flex-end;
-
-    ::v-deep .el-button {
-      width: 8%;
     }
   }
 

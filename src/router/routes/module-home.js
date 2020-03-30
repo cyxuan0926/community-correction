@@ -11,7 +11,7 @@ export default [
         name: 'Home',
         path: routesPath.HOME,
         component: _import('module-account/account-home'),
-        meta: { icon: 'icon-home', isTheOnlyRoot: true }
+        meta: { isTheOnlyRoot: true }
       }
     ]
   }

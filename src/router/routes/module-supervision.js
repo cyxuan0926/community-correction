@@ -11,13 +11,29 @@ export default [
       {
         name: 'SupervisionOut',
         path: routesPath.SUPERVISION_OUT,
-        component: _import('module-supervision/supervision-out'),
-        meta: { title: '外出审批' }
+        component: _import('module-supervision/supervision-out/out-list'),
+        meta: {
+          title: '外出审批',
+          componentsToKeepAlive: ['supervisionOut']
+        }
       },
       {
-        name: 'SupervisonRemind',
+        name: 'SupervisionOutInformation',
+        path: `${routesPath.SUPERVISION_OUT_INFORMATION}/:id`,
+        component: _import(
+          'module-supervision/supervision-out/out-information'
+        ),
+        meta: {
+          activeMenu: routesPath.SUPERVISION_OUT,
+          title: '外出审批信息',
+          componentsUnRemoveKeepAlive: ['supervisionOut']
+        },
+        props: route => ({ applicationId: route.params.id })
+      },
+      {
+        name: 'SupervisionRemind',
         path: routesPath.SUPERVISION_REMIND,
-        component: _import('module-supervision/supervison-remind'),
+        component: _import('module-supervision/supervision-remind'),
         meta: { title: '报到提醒' }
       }
     ]

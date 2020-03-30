@@ -64,9 +64,14 @@ class HttpClient {
     )
   }
 
-  // DELETE请求
+  // DELETE请求(urlencoded)
   delete(url = '', params = {}, config = {}) {
     return this.instance.delete(url, Object.assign({ params }, config))
+  }
+
+  // PUT请求(urlencoded)
+  put(url = '', params = {}, config = {}) {
+    return this.instance.put(url, Object.assign({ params }, config))
   }
 }
 

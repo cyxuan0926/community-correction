@@ -38,3 +38,8 @@ export const getPublicUserInfo = () => {
 export const getMenus = () => {
   return httpClient.get('/menus/my', {}, basicConfig)
 }
+
+// 根据username查询账户
+export const getAccountByUserName = ({ username }) => {
+  return httpClient.get('/sys/user/by-username', { username })
+}

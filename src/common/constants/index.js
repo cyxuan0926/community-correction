@@ -73,3 +73,70 @@ export const REGISTRATION = [
     value: 5
   }
 ]
+
+// 交通工具类型
+export const vehicleType = [
+  {
+    label: '飞机',
+    value: 0
+  },
+  {
+    label: '火车',
+    value: 1
+  },
+  {
+    label: '汽车',
+    value: 2
+  },
+  {
+    label: '其他',
+    value: 3
+  }
+]
+
+// 状态
+export const status = [
+  {
+    label: '未审核',
+    value: 0
+  },
+  {
+    label: '已通过',
+    value: 1
+  },
+  {
+    label: '已拒绝',
+    value: 2
+  },
+  {
+    label: '已取消',
+    value: 3
+  }
+]
+
+// 返回类型
+export const roundType = [
+  {
+    label: '单程',
+    value: 0
+  },
+  {
+    label: '往返',
+    value: 1
+  }
+]
+
+// 账户角色
+export const roles = {
+  // 司法部账户
+  JUDICIARY_ACCOUNT: 'judiciary_account',
+
+  // 司法厅账户
+  JUSTICE_DEPARTMENT_ACCOUNT: 'justice_department_account',
+
+  // 司法局账户
+  JUSTICE_BUREAU_ACCOUNT: 'justice_bureau_account',
+
+  // 司法所账户
+  JUSTICE_OFFICE_ACCOUNT: 'justice_office_account'
+}
