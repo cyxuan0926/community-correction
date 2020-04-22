@@ -1,7 +1,7 @@
 module.exports = {
   repository: {
     type: 'git',
-    url: 'http://103.37.158.17/yt/front/community-correction.git',
+    url: 'http://39.104.53.150/yt/front/community-correction.git',
     branch: 'dev'
   },
 
