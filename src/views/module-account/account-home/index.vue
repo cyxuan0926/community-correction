@@ -5,34 +5,47 @@
         <div class="registration-item_weather">
           <div id="weather-view-he" />
         </div>
+
         <div class="registration-item_warnning">
           <strong>报到提醒</strong>
+
           <el-link>
             <strong>更多 ></strong>
           </el-link>
         </div>
+
         <div class="registration-item_near">
           <div>
             <i class="el-icon-ship icon" />
+
             <span>临近报到</span>
           </div>
-          <div>10位矫正人员报到时间只剩1天</div>
+
+          <div>
+            {{ reportRemindNearbyPersons || '10位矫正人员报到时间只剩1天' }}
+          </div>
         </div>
+
         <div class="registration-item_late">
           <div>
             <i class="el-icon-ship icon" />
+
             <span>报到范围内未报到</span>
           </div>
-          <div>未报到人数：28</div>
+
+          <div>未报到人数：{{ reportRemindUnreportPersons || 28 }}</div>
         </div>
       </div>
+
       <div class="information-item_supervision">
         <div class="supervision-item_title">
           <strong>外出申请报到</strong>
+
           <el-link>
             <strong>更多 ></strong>
           </el-link>
         </div>
+
         <base-table
           stripe
           :cols="tabelCols"
@@ -45,6 +58,7 @@
         </base-table>
       </div>
     </div>
+
     <div class="home__content-calendar">
       <el-date-picker
         v-model="dateMonth"
@@ -52,9 +66,9 @@
         placeholder="选择月"
         value-format="timestamp"
         :picker-options="pickerOptions"
-        @change="onMonthPickerChange"
       />
-      <el-calendar v-model="dateMonth">
+
+      <el-calendar v-model="dateMonth" @click.native.stop="onClosePopover">
         <template #dateCell="{ data: { isSelected, day, type }}">
           <!-- 不是当月的日期/当前月无特殊内容的日期 -->
           <span
@@ -64,9 +78,21 @@
           >
             {{ day | toDateString('dd', false) }}</span
           >
+
           <!-- 当月有特殊内容的日期 -->
-          <el-popover v-else placement="right" trigger="click">
-            <div slot="reference" :class="isSelected ? 'red' : ''">
+          <el-popover
+            v-else
+            v-model="showDay[day]"
+            placement="right"
+            trigger="manual"
+            content="dadkasd"
+            @click.stop
+          >
+            <div
+              slot="reference"
+              :class="day === Today ? 'calendar-day_noreport' : ''"
+              @click.stop="onGetDayDetails(day)"
+            >
               {{ day | toDateString('dd', false) }}
             </div>
           </el-popover>
@@ -78,6 +104,8 @@
 <script>
 import { toDateString } from '@/utils/lang'
 
+import { mapState, mapActions } from 'vuex'
+
 const NOW = Date.now()
 
 const TIME = toDateString(NOW, 'yyyy-MM-dd')
@@ -88,6 +116,8 @@ export default {
   data() {
     return {
       dateMonth: NOW,
+
+      Today: TIME,
 
       pickerOptions: {
         disabledDate: time => {
@@ -153,11 +183,29 @@ export default {
         city: '乌鲁木齐'
       },
 
-      tableData: []
+      tableData: [],
+
+      showDay: []
     }
   },
 
+  computed: {
+    ...mapState('account', [
+      'calendarMonthReportInfomations',
+      'calendarOnedayReportInfofomations',
+      'reportRemindNearbyPersons',
+      'reportRemindUnreportPersons'
+    ])
+  },
+
   methods: {
+    ...mapActions('account', [
+      'getCalendarOfMonthReportDetails',
+      'getCalendarOfOnedayReportDetails',
+      'getReportRemindOfReportNearby',
+      'getReportRemindOfUnreportPersons'
+    ]),
+
     async onLoadWeatherView() {
       try {
         await (function(d) {
@@ -181,16 +229,28 @@ export default {
       }
     },
 
-    // 月份选择器
-    onMonthPickerChange(time) {
-      console.log(time, toDateString(time, 'yyyy-MM'))
+    // 获取具体某一天的数据
+    onGetDayDetails(day) {
+      console.log(day)
+      this.$set(this.showDay, day, !this.showDay[day])
+    },
+
+    onClosePopover() {
+      this.showDay = []
     }
   },
 
   async mounted() {
-    console.log(TIME)
     this.tableData = new Array(9).fill(this.basciData)
+    // this.$showLoading()
     await this.onLoadWeatherView()
+    // await Promise.all([
+    //   this.onLoadWeatherView(),
+    //   this.getCalendarOfMonthReportDetails(),
+    //   this.getReportRemindOfReportNearby(),
+    //   this.getReportRemindOfUnreportPersons()
+    // ])
+    // this.$hideLoading()
   }
 }
 </script>
@@ -306,6 +366,7 @@ export default {
           text-align: center;
           width: 100%;
           padding: 1px 0px;
+          cursor: not-allowed;
 
           div,
           &.calendar-day_nonecurrntmonth {
@@ -316,22 +377,7 @@ export default {
             color: $--color-text-primary;
             margin: 0px auto;
             width: 10%;
-          }
-
-          &.calendar-day_noreport {
-            background-color: #fefdc5;
-          }
-
-          &.calendar-day_report {
-            background-color: #ddfcc8;
-          }
-
-          &.calendar-day_danger {
-            background-color: #eb333d;
-          }
-
-          &.calendar-today_normal {
-            background-color: $--color-primary;
+            cursor: pointer;
           }
         }
       }
@@ -346,8 +392,23 @@ export default {
     display: none !important;
   }
 
-  .red {
-    background-color: red;
+  .calendar-day_noreport {
+    background-color: #fefdc5;
+    border-radius: 50%;
+  }
+
+  .calendar-day_report {
+    background-color: #ddfcc8;
+    border-radius: 50%;
+  }
+
+  .calendar-day_danger {
+    background-color: #eb333d;
+    border-radius: 50%;
+  }
+
+  .calendar-today_normal {
+    background-color: $--color-primary;
     border-radius: 50%;
   }
 

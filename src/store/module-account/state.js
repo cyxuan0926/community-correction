@@ -20,5 +20,17 @@ export default {
   publicUserInfo: getPublicUserInfo(),
 
   // 登陆账户司法机构/地区信息
-  accountJurisdictionAreaInfo: getAccountJurisdictionAreaInfo()
+  accountJurisdictionAreaInfo: getAccountJurisdictionAreaInfo(),
+
+  // 日历-一个月的数据
+  calendarMonthReportInfomations: [],
+
+  // 日历-某一天具体的数据
+  calendarOnedayReportInfofomations: '',
+
+  // 临近报到人数
+  reportRemindNearbyPersons: '',
+
+  // 报到期内未报到人数
+  reportRemindUnreportPersons: 0
 }

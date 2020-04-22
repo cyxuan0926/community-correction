@@ -45,13 +45,20 @@ export const savePublicUserInfo = publicUserInfo => {
 }
 
 export const getAccountJurisdictionAreaInfo = () => {
-  const accountJurisdictionAreaInfo = localStorage.getItem(ACCOUNTJURISDICTIONAREAINFO)
+  const accountJurisdictionAreaInfo = localStorage.getItem(
+    ACCOUNTJURISDICTIONAREAINFO
+  )
 
-  return accountJurisdictionAreaInfo ? JSON.parse(accountJurisdictionAreaInfo) : {}
+  return accountJurisdictionAreaInfo
+    ? JSON.parse(accountJurisdictionAreaInfo)
+    : {}
 }
 
 export const saveAccountJurisdictionAreaInfo = accountJurisdictionAreaInfo => {
-  localStorage.setItem(ACCOUNTJURISDICTIONAREAINFO, JSON.stringify(accountJurisdictionAreaInfo))
+  localStorage.setItem(
+    ACCOUNTJURISDICTIONAREAINFO,
+    JSON.stringify(accountJurisdictionAreaInfo)
+  )
 }
 
 export const removeStore = () => {

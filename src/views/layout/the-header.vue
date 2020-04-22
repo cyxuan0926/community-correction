@@ -32,7 +32,6 @@
 import * as helper from '@/utils/helper'
 import routesPath from '@/router/routes-path'
 import userAvatar from '@/assets/img/layout-header-AR.png'
-import logoutAvatar from '@/assets/img/layout-header-loginout.png'
 import { toDateString, toWeekString } from '@/utils/lang'
 
 export default {
@@ -41,7 +40,6 @@ export default {
 
     return {
       userAvatar,
-      logoutAvatar,
       role
     }
   },

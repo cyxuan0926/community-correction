@@ -62,7 +62,11 @@ export default {
     try {
       const { data } = await correctionStaffAPI.getCorrectionalDetail(params)
 
-      const { attachmentFileList = [], addressList = [] } = data
+      const {
+        attachmentFileList = [],
+        addressList = [],
+        effectiveRange = 300
+      } = data
 
       let filterAttachmentFileList = []
 
@@ -70,6 +74,8 @@ export default {
         filterAttachmentFileList = filterFileLists(attachmentFileList)
 
       if (!addressList && !Array.isArray(addressList)) data['addressList'] = []
+
+      if (!effectiveRange) data['effectiveRange'] = 300
 
       commit(
         mutationCorrectionStaff.SET_CORRECTIONAL_STAFF_FILE_LISTS,

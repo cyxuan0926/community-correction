@@ -105,7 +105,7 @@
           label="报到周期"
           class="form-item_fullwidth"
           prop="reportingCycle"
-          :rules="{ required: true }"
+          :rules="{ required: true, message: '请选择报到周期' }"
         >
           <el-select
             v-model="formBasicModel.reportingCycle"
@@ -124,7 +124,7 @@
         <el-form-item
           label="报到期"
           prop="reportingPeriod"
-          :rules="{ required: true }"
+          :rules="{ required: true, message: '请选择报到期' }"
         >
           <el-select
             v-model="formBasicModel.reportingPeriod"
@@ -221,7 +221,9 @@
 
         <el-form-item label="原判刑期" prop="originalSentence">
           <el-input
-            v-model="formBasicModel.originalSentence"
+            v-model.trim="formBasicModel.originalSentence"
+            show-word-limit
+            maxlength="50"
             placeholder="请填写原判刑期"
             clearable
           />
@@ -261,6 +263,8 @@
           <el-input
             v-model.trim="formBasicModel.correctDeadline"
             placeholder="请填写矫正期限"
+            show-word-limit
+            maxlength="50"
             clearable
           />
         </el-form-item>
@@ -360,7 +364,7 @@
           label="报到地点"
           class="form-item_location"
           prop="effectiveRange"
-          :rules="{ required: true }"
+          :rules="{ required: true, message: '请选择有效范围' }"
         >
           <template
             v-for="(address, index) of formSupervisionModel.addressList"
@@ -757,6 +761,10 @@ export default {
 
             .el-select {
               width: 20%;
+            }
+
+            .el-form-item__error {
+              margin-left: 69px;
             }
           }
         }

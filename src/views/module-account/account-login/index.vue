@@ -15,6 +15,7 @@
             v-model.trim="formData.username"
             placeholder="请输入账号"
             size="default"
+            clearable
           />
         </el-form-item>
         <el-form-item prop="password">
@@ -24,6 +25,7 @@
             type="password"
             placeholder="请输入密码"
             size="default"
+            clearable
           />
         </el-form-item>
         <el-button

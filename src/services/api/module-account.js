@@ -1,4 +1,5 @@
 import { httpClient } from '../request'
+
 import { URLConfig } from '../urls'
 
 // 公共服务的接口地址
@@ -42,4 +43,24 @@ export const getMenus = () => {
 // 根据username查询账户
 export const getAccountByUserName = ({ username }) => {
   return httpClient.get('/sys/user/by-username', { username })
+}
+
+// 首页-日历(一个月的数据)
+export const getCalendarOfMonthReportDetails = () => {
+  return httpClient.get('/report/reportremind/query-month-reportinfo')
+}
+
+// 首页-日历(某一天报到情况)
+export const getCalendarOfOnedayReportDetails = ({ day }) => {
+  return httpClient.get('/report/reportremind/query-oneday-reportinfo', { day })
+}
+
+// 首页-临近报到人数统计
+export const getReportRemindOfReportNearby = () => {
+  return httpClient.get('/report/reportremind/query-reportnear')
+}
+
+// 首页-报到期内未报到人数
+export const getReportRemindOfUnreportPersons = () => {
+  return httpClient.get('/report/reportremind/count-unreportperson')
 }

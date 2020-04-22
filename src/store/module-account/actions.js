@@ -64,9 +64,9 @@ export default {
   // 账户登陆
   async login({ commit, dispatch, state }, { username, password }) {
     try {
+      // accountJurisdictionAreaInfoResult = false
       let menusResult = false,
-        publicUserInfoResult = false,
-        accountJurisdictionAreaInfoResult = false
+        publicUserInfoResult = false
 
       const tokenResult = await dispatch('getToken', { username, password })
 
@@ -80,9 +80,90 @@ export default {
 
         publicUserInfoResult = await dispatch('getPublicUserInfo')
 
-        accountJurisdictionAreaInfoResult = await dispatch('getAccountByUserName', { username })
+        // accountJurisdictionAreaInfoResult = await dispatch(
+        //   'getAccountByUserName',
+        //   { username }
+        // )
       }
-      return tokenResult && menusResult && publicUserInfoResult && accountJurisdictionAreaInfoResult
+      return tokenResult && menusResult && publicUserInfoResult
+      // accountJurisdictionAreaInfoResult
+    } catch (err) {
+      Promise.reject(err)
+    }
+  },
+
+  // 获取首页日历整个月数据
+  async getCalendarOfMonthReportDetails({ commit }) {
+    try {
+      const { data } = await accountAPI.getCalendarOfMonthReportDetails()
+
+      const filterDetails = data.map(item => {
+        switch (item.state) {
+          case '1':
+            item.className = 'calendar-day_report'
+            break
+          case '2':
+            item.className = 'calendar-day_noreport'
+            break
+          case '3':
+            item.className = 'calendar-day_danger'
+            break
+          case '0':
+            item.className = ''
+            break
+          default:
+            break
+        }
+        return item
+      })
+
+      commit(
+        mutationsAccount.SET_CALENDAR_MONTH_REPORT_INFORMATIONS,
+        filterDetails
+      )
+
+      return true
+    } catch (err) {
+      Promise.reject(err)
+    }
+  },
+
+  // 获取首页日历某一个的具体数据
+  async getCalendarOfOnedayReportDetails({ commit }, { day }) {
+    try {
+      const { data } = await accountAPI.getCalendarOfOnedayReportDetails({
+        day
+      })
+
+      commit(mutationsAccount.SET_CALENDAR_ONEDAY_REPORT_INFORMATIONS, data)
+
+      return true
+    } catch (err) {
+      Promise.reject(err)
+    }
+  },
+
+  // 获取临近报到人数统计
+  async getReportRemindOfReportNearby({ commit }) {
+    try {
+      const { data } = await accountAPI.getReportRemindOfReportNearby()
+
+      commit(mutationsAccount.SET_REPORT_REMIND_NEARBY_PERSONS, data)
+
+      return true
+    } catch (err) {
+      Promise.reject(err)
+    }
+  },
+
+  // 获取报到期内未报到人数
+  async getReportRemindOfUnreportPersons({ commit }) {
+    try {
+      const { data } = await accountAPI.getReportRemindOfUnreportPersons()
+
+      commit(mutationsAccount.SET_REPORT_REMIND_UNREPORT_PERSONS, data)
+
+      return true
     } catch (err) {
       Promise.reject(err)
     }

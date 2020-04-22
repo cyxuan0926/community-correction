@@ -126,6 +126,30 @@ export const roundType = [
   }
 ]
 
+// 性别
+export const sex = [
+  {
+    label: '男',
+    value: '男'
+  },
+  {
+    label: '女',
+    value: '女'
+  }
+]
+
+// 外出审批审核
+export const outCheckOperation = [
+  {
+    label: '通过',
+    value: 1
+  },
+  {
+    label: '不通过',
+    value: 0
+  }
+]
+
 // 账户角色
 export const roles = {
   // 司法部账户

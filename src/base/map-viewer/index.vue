@@ -52,12 +52,20 @@ export default {
   watch: {
     visible(value) {
       if (value) {
-        if (!this.map) this.initAMap()
+        if (!this.map) {
+          this.$nextTick(function() {
+            this.initAMap()
+          })
+        }
       } else this.onMapDestroy()
     },
 
     radius(value) {
-      if (value && this.map) this.initAMap()
+      if (value && this.map) {
+        this.$nextTick(function() {
+          this.initAMap()
+        })
+      }
     }
   },
 
@@ -73,12 +81,12 @@ export default {
 
         const mapInstance = await MapLoader()
 
-        this.map = new mapInstance.Map(this.$refs.map, {
+        this.map = await new mapInstance.Map(this.$refs.map, {
           zoomEnable: false,
           ...mapClass
         })
 
-        new mapInstance.Circle({
+        await new mapInstance.Circle({
           map: this.map,
           radius: this.radius,
           strokeColor: '#3366ff',
@@ -89,13 +97,13 @@ export default {
           ...circleConfigs
         })
 
-        new mapInstance.Marker({
+        await new mapInstance.Marker({
           map: this.map,
           icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png',
           ...markerConfigs
         })
 
-        this.map.setFitView()
+        await this.map.setFitView()
       } catch (err) {
         Promise.reject(err)
       }

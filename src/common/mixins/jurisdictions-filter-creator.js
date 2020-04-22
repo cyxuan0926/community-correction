@@ -52,12 +52,16 @@ export default {
 
     // 司法厅账户
     isJusticeDepartmentAccount() {
-      return this.$store.getters['account/role'] === roles.JUSTICE_DEPARTMENT_ACCOUNT
+      return (
+        this.$store.getters['account/role'] === roles.JUSTICE_DEPARTMENT_ACCOUNT
+      )
     },
 
     // 司法局账户
     isJusticeBureauAccount() {
-      return this.$store.getters['account/role'] === roles.JUSTICE_BUREAU_ACCOUNT
+      return (
+        this.$store.getters['account/role'] === roles.JUSTICE_BUREAU_ACCOUNT
+      )
     }
   },
 
@@ -277,12 +281,10 @@ export default {
       this.createCityFilter()
     }
     if (this.isJusticeBureauAccount) {
-      
+      this.createJurisdictionFilter()
+      this.createCountyFilter()
+      this.createCityFilter()
+      this.createProvinceFilter(true)
     }
-    this.createJurisdictionFilter()
-    this.createCountyFilter()
-    this.createCityFilter()
-    this.createProvinceFilter(true)
-    
   }
 }

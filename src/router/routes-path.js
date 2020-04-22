@@ -25,7 +25,6 @@ export default {
   // 报到统计
   REGISTRATION: '/registration-report',
   REGISTRATION_LIST: '/registration-report/list',
-  REGISTRATION_DETAILE_LIST: '',
 
   // 报到详情
   REPORT_DETAIL: '/report-detail',
