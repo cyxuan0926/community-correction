@@ -18,5 +18,22 @@ export default {
     } catch (err) {
       Promise.reject(err)
     }
+  },
+
+  async getReportStatisticsPage({ commit }, params) {
+    try {
+      const { data } = await registrationAPI.getReportStatisticsPage(params)
+
+      const { list, totalCount } = data
+
+      commit(mutationRegistration.GET_REPORT_STATISTICS_LISTS, {
+        list,
+        totalCount
+      })
+
+      return true
+    } catch (err) {
+      Promise.reject(err)
+    }
   }
 }

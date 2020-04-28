@@ -55,7 +55,67 @@ export default {
     try {
       const { data } = await supervisionAPI.getReportOutDetails(params)
 
-      commit(mutationSupervision.SET_REPORT_OUT_DETAIL, data)
+      const {
+        tripList,
+        auditResult,
+        auditTime,
+        awayReasons,
+        correctionName,
+        createTime,
+        duration,
+        refusalReasons,
+        roundType,
+        sex,
+        status
+      } = data
+
+      let details = {
+        auditResult,
+        auditTime,
+        awayReasons,
+        correctionName,
+        createTime,
+        duration,
+        refusalReasons,
+        roundType,
+        sex,
+        status
+      }
+
+      const filterAuditResult = !auditResult ? 0 : 1
+
+      if (tripList && Array.isArray(tripList) && tripList.length) {
+        let trips = {}
+
+        tripList.forEach(trip => {
+          if (!trip.roundtripType) {
+            trips = Object.assign({}, trips, {
+              detailedAddress: trip.detailedAddress,
+              outwardCityName: trip.fromcityName,
+              destinationCityName: trip.tocityName,
+              outwardVehicleNum: trip.vehicleNum,
+              outwardVehicleType: trip.vehicleType,
+              outwardStartTime: trip.startTime,
+              outwardeEndTime: trip.endTime
+            })
+          } else {
+            trips = Object.assign({}, trips, {
+              backVehicleNum: trip.vehicleNum,
+              backVehicleType: trip.vehicleType,
+              backStartTime: trip.startTime,
+              backEndTime: trip.endTime
+            })
+          }
+        })
+
+        details = {
+          ...details,
+          ...trips,
+          auditResult: filterAuditResult
+        }
+      }
+
+      commit(mutationSupervision.SET_REPORT_OUT_DETAIL, details)
 
       return true
     } catch (err) {

@@ -44,7 +44,7 @@ export default {
     ]
     const allFilterItems = [
       {
-        name: 'prisonerName',
+        name: 'correctionalName',
         type: 'input',
         placeholder: '请输入矫正人员姓名'
       },

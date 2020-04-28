@@ -8,11 +8,11 @@
       <el-form class="form" :model="formData" inline>
         <el-form-item
           label="矫正人员姓名"
-          prop="name"
+          prop="correctionName"
           :rules="{ required: true, message: '请输入矫正人员姓名' }"
         >
           <el-input
-            v-model="formData.name"
+            v-model="formData.correctionName"
             placeholder="请输入矫正人员姓名"
             disabled
           />
@@ -36,11 +36,11 @@
         <el-form-item
           class="el-form_fullWidth border__right form-item__selection"
           label="单程往返"
-          prop="dfc"
+          prop="roundType"
           :rules="{ required: true, message: '请选择单程往返' }"
         >
           <el-select
-            v-model="formData.dfc"
+            v-model="formData.roundType"
             placeholder="请选择单程往返"
             disabled
           >
@@ -56,11 +56,11 @@
         <el-form-item
           class="border-right__none"
           label="出发城市"
-          prop="cityName"
+          prop="outwardCityName"
           :rules="{ required: true, message: '请输入出发城市' }"
         >
           <el-input
-            v-model="formData.cityName"
+            v-model="formData.outwardCityName"
             placeholder="请输入出发城市"
             disabled
           />
@@ -69,11 +69,11 @@
         <el-form-item
           class="border__right"
           label="目的城市"
-          prop="destination"
+          prop="destinationCityName"
           :rules="{ required: true, message: '请输入目的城市' }"
         >
           <el-input
-            v-model="formData.destination"
+            v-model="formData.destinationCityName"
             placeholder="请输入目的城市"
             disabled
           />
@@ -82,11 +82,11 @@
         <el-form-item
           class="el-form_fullWidth border__right"
           label="目的地详细地址"
-          prop="details"
+          prop="detailedAddress"
           :rules="{ required: true, message: '请输入目的地详细地址' }"
         >
           <el-input
-            v-model="formData.details"
+            v-model="formData.detailedAddress"
             placeholder="请输入目的地详细地址"
             disabled
           />
@@ -95,11 +95,11 @@
         <el-form-item
           class="border-right__none"
           label="去程班次"
-          prop="leaveBanci"
+          prop="outwardVehicleNum"
           :rules="{ required: true, message: '请输入去程班次' }"
         >
           <el-input
-            v-model="formData.leaveBanci"
+            v-model="formData.outwardVehicleNum"
             placeholder="请输入去程班次"
             disabled
           />
@@ -108,11 +108,11 @@
         <el-form-item
           class="border__right"
           label="交通工具"
-          prop="gongju"
+          prop="outwardVehicleType"
           :rules="{ required: true, message: '请选择交通工具' }"
         >
           <el-select
-            v-model="formData.gongju"
+            v-model="formData.outwardVehicleType"
             placeholder="请选择交通工具"
             disabled
           >
@@ -128,11 +128,11 @@
         <el-form-item
           class="border-right__none"
           label="开始时间"
-          prop="leaveStartTime"
+          prop="outwardStartTime"
           :rules="{ required: true, message: '请选择开始时间' }"
         >
           <el-date-picker
-            v-model="formData.leaveStartTime"
+            v-model="formData.outwardStartTime"
             type="date"
             placeholder="请选择开始时间"
             disabled
@@ -142,25 +142,25 @@
         <el-form-item
           class="border__right"
           label="结束时间"
-          prop="leaveEndTime"
+          prop="outwardeEndTime"
           :rules="{ required: true, message: '请选择结束时间' }"
         >
           <el-date-picker
-            v-model="formData.leaveEndTime"
+            v-model="formData.outwardeEndTime"
             type="date"
             placeholder="请选择结束时间"
             disabled
           />
         </el-form-item>
 
-        <template v-if="formData.dfc">
+        <template v-if="formData.roundType">
           <el-form-item
             label="往程班次"
-            prop="backBanCi"
+            prop="backVehicleNum"
             :rules="{ required: true, message: '请输入往程班次' }"
           >
             <el-input
-              v-model="formData.backBanCi"
+              v-model="formData.backVehicleNum"
               placeholder="请输入往程班次"
               disabled
             />
@@ -168,12 +168,13 @@
 
           <el-form-item
             label="交通工具"
-            prop="backGongju"
+            prop="backVehicleType"
             :rules="{ required: true, message: '请选择交通工具' }"
           >
             <el-select
-              v-model="formData.bacnGongju"
+              v-model="formData.backVehicleType"
               placeholder="请选择交通工具"
+              disabled
             >
               <el-option
                 v-for="item in vehicleType"
@@ -239,11 +240,11 @@
         <el-form-item
           class="el-form_fullWidth border__right form-item__selection"
           label="外出事由"
-          prop="outReason"
+          prop="awayReasons"
           :rules="{ required: true, message: '请输入外出事由' }"
         >
           <el-input
-            v-model="formData.outReason"
+            v-model="formData.awayReasons"
             placeholder="请输入外出事由"
             disabled
           />
@@ -256,14 +257,19 @@
             { 'form-item__selection': status === 'audit' },
             {
               'form-item__detail-result__none-border_bottom':
-                status === 'detail' && formData.status === 0
+                status === 'detail' && formData.auditResult === 1
             }
           ]"
           label="审核结果"
-          prop="status"
+          prop="auditResult"
           :rules="{ required: true, message: '请选择审核结果' }"
         >
-          <el-select v-model="formData.status" placeholder="请选择审核结果">
+          <el-select
+            v-model="formData.auditResult"
+            placeholder="请选择审核结果"
+            :disabled="status === 'detail'"
+            @change="onStatusChange"
+          >
             <el-option
               v-for="item in outCheckOperation"
               :key="item.value"
@@ -282,23 +288,23 @@
           <el-date-picker
             v-model="formData.auditTime"
             type="date"
-            placeholder="请选择申请时间"
+            placeholder="请选择审核时间"
             disabled
           />
         </el-form-item>
 
         <el-form-item
-          v-if="!(status === 'detail' && formData.status === 1)"
+          v-if="!(status === 'detail' && formData.auditResult === 0)"
           class="el-form_fullWidth form-item__refuse-reason form-item__selection"
           label="拒绝原因"
-          prop="reason"
+          prop="refusalReasons"
         >
           <el-input
-            v-model="formData.reason"
+            v-model="formData.refusalReasons"
             type="textarea"
             placeholder="请输入拒绝原因"
             :autosize="{ minRows: 2, maxRows: 4 }"
-            :disabled="!!formData.status"
+            :disabled="!formData.auditResult"
           />
         </el-form-item>
       </el-form>
@@ -312,7 +318,7 @@
   </div>
 </template>
 <script>
-// import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import {
   sex,
@@ -333,23 +339,23 @@ export default {
       vehicleType,
       outCheckOperation,
       formData: {
-        name: '',
+        correctionName: '',
         sex: '',
-        dfc: 1,
-        cityName: '',
-        destination: '',
-        details: '',
-        gongju: '',
-        leaveBanci: '',
-        leaveStartTime: '',
-        leaveEndTime: '',
-        outReason: '',
-        status: 1,
+        roundType: 1,
+        outwardCityName: '',
+        destinationCityName: '',
+        detailedAddress: '',
+        outwardVehicleType: '',
+        outwardVehicleNum: '',
+        outwardStartTime: '',
+        outwardeEndTime: '',
+        awayReasons: '',
+        auditResult: 0,
         auditTime: '',
-        reason: '',
+        refusalReasons: '',
         createTime: '',
-        backBanCi: '',
-        bacnGongju: '',
+        backVehicleNum: '',
+        backVehicleType: '',
         backStartTime: '',
         backEndTime: '',
         duration: ''
@@ -357,32 +363,32 @@ export default {
     }
   },
 
-  // computed: {
-  //   ...mapState('correctionStaff', [
-  //     'correctionalDetail',
-  //     'correctionalDetailfileLists',
-  //     'correctionalDetailResult'
-  //   ])
-  // },
+  computed: {
+    ...mapState('supervision', ['reportOutResult', 'reportOutDetails'])
+  },
 
   methods: {
-    // ...mapActions('correctionStaff', [
-    //   'getCorrectionalDetail',
-    //   'saveCorrectionalInformation'
-    // ]),
+    ...mapActions('supervision', ['getReportOutDetails', 'approveReportOut']),
 
-    // async gettingData() {
-    //   this.$showLoading()
-    // },
+    async gettingData() {
+      this.$showLoading()
+
+      await this.getReportOutDetails({ applicationId: this.applicationId })
+
+      this.formData = Object.assign({}, this.reportOutDetails)
+    },
 
     onGoBack() {
       this.$router.back()
+    },
+
+    onStatusChange() {
+      this.$set(this.formData, 'refusalReasons', '')
     }
   },
 
   async created() {
-    console.log(this.applicationId, this.status)
-    // await this.gettingData()
+    await this.gettingData()
   }
 }
 </script>

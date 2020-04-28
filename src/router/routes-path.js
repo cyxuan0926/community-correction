@@ -18,6 +18,7 @@ export default {
   // 外出审批
   SUPERVISION_OUT: '/supervision-out/list',
   SUPERVISION_OUT_INFORMATION: '/supervision-out/information',
+  SUPERVISION_OUT_INFORMATION_AUDIT: '/supervision-out/information/audit',
 
   // 报到提醒
   SUPERVISION_REMIND: '/supervision-remind/list',

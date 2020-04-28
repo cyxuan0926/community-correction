@@ -66,35 +66,37 @@ export default {
 
     const statisticsTableCols = [
       {
-        label: '矫正人员姓名'
+        label: '矫正人员姓名',
+        prop: 'realName'
       },
       {
-        label: '接管时间'
-        // prop: 'realName'
+        label: '接管时间',
+        prop: 'handoverTime',
+        minWidth: 100
       },
       {
-        label: '应报到次数'
-        // prop: 'phone'
+        label: '应报到次数',
+        prop: 'shouldReport'
       },
       {
-        label: '正常报到次数'
-        // prop: 'sex'
+        label: '正常报到次数',
+        prop: 'normalReport'
       },
       {
-        label: '异常报到次数'
-        // prop: ''
+        label: '异常报到次数',
+        prop: 'abnormalReport'
       },
       {
-        label: '外出报到次数'
-        // prop: 'address'
+        label: '外出报到次数',
+        prop: 'awayReport'
       },
       {
-        label: '未报到次数'
-        // prop: 'livingPlace'
+        label: '未报到次数',
+        prop: 'notReport'
       },
       {
-        label: '正常报到率'
-        // prop: 'handoverTime'
+        label: '正常报到率',
+        prop: 'normalReportRate'
       }
     ]
 
@@ -107,7 +109,7 @@ export default {
   },
 
   computed: {
-    ...mapState('registration', ['reportDetailLists']),
+    ...mapState('registration', ['reportDetailLists', 'reportStatisticsLists']),
 
     tableCols() {
       if (this.activeTabName === this.tabStatus['STATISTICS'])
@@ -132,16 +134,19 @@ export default {
   },
 
   methods: {
-    ...mapActions('registration', ['getReportDetailsPage']),
+    ...mapActions('registration', [
+      'getReportDetailsPage',
+      'getReportStatisticsPage'
+    ]),
 
     async gettingPageData() {
-      // this.$showLoading()
+      this.$showLoading()
 
-      const { prisonerName, time, status } = this.filterParams
+      const { correctionalName, time, status } = this.filterParams
 
       let params = {
         ...this.pagination,
-        prisonerName,
+        correctionalName,
         status
       }
 
@@ -153,19 +158,27 @@ export default {
         }
       }
 
-      if (this.activeTabName === this.tabStatus['STATISTICS']) return
+      let content, total
+
+      if (this.activeTabName === this.tabStatus['STATISTICS']) {
+        await this.getReportStatisticsPage(params)
+
+        content = this.reportStatisticsLists['content']
+
+        total = this.reportStatisticsLists['totalCount']
+      }
 
       if (this.activeTabName === this.tabStatus['DETAILS']) {
         await this.getReportDetailsPage(params)
 
-        const content = this.reportDetailLists['content']
+        content = this.reportDetailLists['content']
 
-        const total = this.reportDetailLists['totalCount']
-
-        this.$set(this.pageData, 'content', content)
-
-        this.$set(this.pageData, 'totalElements', total)
+        total = this.reportDetailLists['totalCount']
       }
+
+      this.$set(this.pageData, 'content', content)
+
+      this.$set(this.pageData, 'totalElements', total)
     }
   },
 

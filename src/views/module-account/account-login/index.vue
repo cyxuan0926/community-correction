@@ -122,6 +122,7 @@ export default {
   min-height: 100vh;
 
   &-bg {
+    width: 48%;
     height: 100vh;
   }
 }

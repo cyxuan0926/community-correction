@@ -118,11 +118,11 @@ export const status = [
 export const roundType = [
   {
     label: '单程',
-    value: 0
+    value: '0'
   },
   {
     label: '往返',
-    value: 1
+    value: '1'
   }
 ]
 
@@ -142,11 +142,11 @@ export const sex = [
 export const outCheckOperation = [
   {
     label: '通过',
-    value: 1
+    value: 0
   },
   {
     label: '不通过',
-    value: 0
+    value: 1
   }
 ]
 

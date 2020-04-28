@@ -8,5 +8,14 @@ export default {
     state.reportDetailLists.content = list
 
     state.reportDetailLists.totalCount = totalCount
+  },
+
+  [mutationRegistration.GET_REPORT_STATISTICS_LISTS]: (
+    state,
+    { list = [], totalCount = 0 }
+  ) => {
+    state.reportStatisticsLists.content = list
+
+    state.reportStatisticsLists.totalCount = totalCount
   }
 }

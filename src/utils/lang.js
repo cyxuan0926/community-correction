@@ -147,11 +147,12 @@ export function filterObject(obj, predicate) {
  */
 export const filterInput = (
   originValue = '',
-  { filterEl = [], compareK = 'label', showK = 'value', joinSeparator = '' }
+  { filterEl = [], compareK = 'value', showK = 'label', joinSeparator = '' }
 ) => {
   const filterResult = filterEl.filter(el => {
     return el[compareK] === originValue
   })
+
   const result = filterResult.map(item => item[showK])
 
   return result.join(joinSeparator)

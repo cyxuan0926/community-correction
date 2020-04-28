@@ -159,9 +159,13 @@
 </template>
 <script>
 import repetitionButton from '@/components/repetition-button'
+
 import { pagination } from '@/common/mixins'
+
 import routesPath from '@/router/routes-path'
+
 import { RADIUSOPTIONS, REMARKOPTIONS, ISWRITE } from '@/common/constants'
+
 import { mapActions, mapState } from 'vuex'
 
 export default {
@@ -391,6 +395,7 @@ export default {
       'getCorrectionalPage',
       'authCorrectionalStaff'
     ]),
+
     async gettingPageData() {
       this.$showLoading()
 

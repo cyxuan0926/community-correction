@@ -19,7 +19,7 @@ export default [
       },
       {
         name: 'SupervisionOutInformationAudit',
-        path: `${routesPath.SUPERVISION_OUT_INFORMATION}/:id`,
+        path: `${routesPath.SUPERVISION_OUT_INFORMATION_AUDIT}/:id`,
         component: _import(
           'module-supervision/supervision-out/out-information'
         ),
@@ -32,7 +32,7 @@ export default [
       },
       {
         name: 'SupervisionOutInformationDetail',
-        path: `${routesPath.SUPERVISION_OUT_INFORMATION}`,
+        path: `${routesPath.SUPERVISION_OUT_INFORMATION}/:id`,
         component: _import(
           'module-supervision/supervision-out/out-information'
         ),
@@ -41,9 +41,7 @@ export default [
           title: '外出审批详情',
           componentsUnRemoveKeepAlive: ['supervisionOut']
         },
-        props: {
-          status: 'detail'
-        }
+        props: route => ({ applicationId: route.params.id, status: 'detail' })
       },
       {
         name: 'SupervisionRemind',

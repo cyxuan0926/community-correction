@@ -26,17 +26,36 @@
           row.roundType | filterInput({ filterEl: roundType })
         }}</template>
 
-        <template #leaveVehicleType="{ row }">{{
-          row.vehicleType | filterInput({ filterEl: vehicleType })
-        }}</template>
+        <template #vehicleType="{ row }">
+          <!-- 往返 -->
+          <span v-if="row.roundType">{{
+            row.backVehicleType | filterInput({ filterEl: vehicleType })
+          }}</span>
+
+          <!-- 单程 -->
+          <span v-else>{{
+            row.leaveVehicleType | filterInput({ filterEl: vehicleType })
+          }}</span>
+        </template>
+
+        <template #tocityName="{ row }">
+          <!-- 往返 -->
+          <span v-if="row.roundType">{{ row.backTocityName }}</span>
+
+          <!-- 单程 -->
+          <span v-else>{{ row.leaveTocityName }}</span>
+        </template>
 
         <template #status="{ row }">{{
           row.status | filterInput({ filterEl: status })
         }}</template>
 
         <template #operation="{ row }">
-          <el-button v-if="row.status === 0">审批</el-button>
-          <el-button v-else>详情</el-button>
+          <el-button v-if="!row.status" @click="onAudit(row.id)"
+            >审批</el-button
+          >
+
+          <el-button v-else @click="onGetDetails(row.id)">详情</el-button>
         </template>
       </base-table>
     </div>
@@ -56,6 +75,8 @@ import { pagination } from '@/common/mixins'
 import { mapState, mapActions } from 'vuex'
 
 import { status, vehicleType, roundType } from '@/common/constants'
+
+import routesPath from '@/router/routes-path'
 
 export default {
   name: 'supervisionOut',
@@ -98,12 +119,13 @@ export default {
       },
       {
         label: '交通工具',
-        prop: 'leaveVehicleType',
-        slotName: 'leaveVehicleType'
+        prop: 'vehicleType',
+        slotName: 'vehicleType'
       },
       {
         label: '目的城市',
-        prop: 'leaveTocityName'
+        prop: 'tocityName',
+        slotName: 'tocityName'
       },
       {
         label: '申请状态',
@@ -190,6 +212,18 @@ export default {
         'totalElements',
         this.reportOutLists['totalCount']
       )
+    },
+
+    onGetDetails(id) {
+      this.$router.push({
+        path: `${routesPath.SUPERVISION_OUT_INFORMATION}/${id}`
+      })
+    },
+
+    onAudit(id) {
+      this.$router.push({
+        path: `${routesPath.SUPERVISION_OUT_INFORMATION_AUDIT}/${id}`
+      })
     }
   },
 
