@@ -616,11 +616,9 @@ export default {
 
           this.$set(this.formBasicModel, 'handoverTime', handoverTimeDate)
 
-          const isSuccess = await this.saveCorrectionalInformation(
-            this.formBasicModel
-          )
+          await this.saveCorrectionalInformation(this.formBasicModel)
 
-          if (isSuccess) await this.gettingData()
+          if (this.correctionalDetailResult) await this.gettingData()
         }
       })
     }

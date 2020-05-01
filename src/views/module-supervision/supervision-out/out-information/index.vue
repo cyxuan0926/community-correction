@@ -5,7 +5,7 @@
     </p>
 
     <div class="supervision-out-information-form form-information__common">
-      <el-form class="form" :model="formData" inline>
+      <el-form class="form" ref="form" :model="formData" :rules="rules" inline>
         <el-form-item
           label="矫正人员姓名"
           prop="correctionName"
@@ -267,7 +267,7 @@
           <el-select
             v-model="formData.auditResult"
             placeholder="请选择审核结果"
-            :disabled="status === 'detail'"
+            :disabled="status === 'detail' || !!formData.status"
             @change="onStatusChange"
           >
             <el-option
@@ -300,18 +300,23 @@
           prop="refusalReasons"
         >
           <el-input
-            v-model="formData.refusalReasons"
+            v-model.trim="formData.refusalReasons"
             type="textarea"
             placeholder="请输入拒绝原因"
             :autosize="{ minRows: 2, maxRows: 4 }"
-            :disabled="!formData.auditResult"
+            :disabled="!formData.auditResult || !!formData.status"
           />
         </el-form-item>
       </el-form>
     </div>
 
     <div class="supervision-out-button information-button__common">
-      <el-button v-if="status === 'audit'" type="primary">保存</el-button>
+      <el-button
+        v-if="status === 'audit' || !formData.status"
+        type="primary"
+        @click="onSave"
+        >保存</el-button
+      >
 
       <el-button type="primary" @click="onGoBack">返回</el-button>
     </div>
@@ -333,6 +338,13 @@ export default {
   props: ['applicationId', 'status'],
 
   data() {
+    const checkRefusalReasons = (rule, value, callback) => {
+      if (this.formData.auditResult) {
+        if (!value) callback(new Error('请输入拒绝原因'))
+        else callback()
+      } else callback()
+    }
+
     return {
       sex,
       roundType,
@@ -359,6 +371,9 @@ export default {
         backStartTime: '',
         backEndTime: '',
         duration: ''
+      },
+      rules: {
+        refusalReasons: [{ validator: checkRefusalReasons, trigger: 'blur' }]
       }
     }
   },
@@ -384,6 +399,24 @@ export default {
 
     onStatusChange() {
       this.$set(this.formData, 'refusalReasons', '')
+
+      this.$refs.form.clearValidate('refusalReasons')
+    },
+
+    onSave() {
+      const { auditResult, refusalReasons } = this.formData
+
+      this.$refs.form.validate(async () => {
+        this.$showLoading()
+
+        await this.approveReportOut({
+          applicationId: this.applicationId,
+          auditResult,
+          refusalReasons
+        })
+
+        if (this.reportOutResult) this.gettingData()
+      })
     }
   },
 

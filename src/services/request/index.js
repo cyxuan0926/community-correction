@@ -73,6 +73,18 @@ class HttpClient {
   put(url = '', params = {}, config = {}) {
     return this.instance.put(url, Object.assign({ params }, config))
   }
+
+  // put请求(表单)
+  putForm(url = '', data = {}, config = {}) {
+    console.log(qs.stringify(data))
+    return this.instance.put(
+      url,
+      qs.stringify(data),
+      Object.assign({}, config, {
+        header: { 'content-Type': 'application/x-www-form-urlencoded' }
+      })
+    )
+  }
 }
 
 // httpClient 实例

@@ -22,5 +22,5 @@ export const getReportOutDetails = ({ applicationId }) => {
 
 // 外出审批-审批
 export const approveReportOut = params => {
-  return httpClient.put('/away-apply/audit/application', params)
+  return httpClient.putForm('/away-apply/audit/application', params)
 }
