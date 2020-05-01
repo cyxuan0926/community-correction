@@ -76,7 +76,6 @@ class HttpClient {
 
   // put请求(表单)
   putForm(url = '', data = {}, config = {}) {
-    console.log(qs.stringify(data))
     return this.instance.put(
       url,
       qs.stringify(data),
