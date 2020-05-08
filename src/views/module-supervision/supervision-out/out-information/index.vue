@@ -153,7 +153,7 @@
           />
         </el-form-item>
 
-        <template v-if="formData.roundType">
+        <template v-if="formData.roundType === '1'">
           <el-form-item
             label="往程班次"
             prop="backVehicleNum"
@@ -312,7 +312,7 @@
 
     <div class="supervision-out-button information-button__common">
       <el-button
-        v-if="status === 'audit' || !formData.status"
+        v-if="status === 'audit' && !formData.status"
         type="primary"
         @click="onSave"
         >保存</el-button
@@ -412,7 +412,8 @@ export default {
         await this.approveReportOut({
           applicationId: this.applicationId,
           auditResult,
-          refusalReasons
+          refusalReasons,
+          type: '1'
         })
 
         if (this.reportOutResult) this.gettingData()
