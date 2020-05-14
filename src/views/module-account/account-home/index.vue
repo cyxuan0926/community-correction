@@ -22,7 +22,7 @@
           </div>
 
           <div>
-            {{ reportRemindNearbyPersons || '10位矫正人员报到时间只剩1天' }}
+            {{ reportRemindNearbyPersons }}
           </div>
         </div>
 
@@ -33,7 +33,7 @@
             <span>报到范围内未报到</span>
           </div>
 
-          <div>未报到人数：{{ reportRemindUnreportPersons || 28 }}</div>
+          <div>未报到人数：{{ reportRemindUnreportPersons }}</div>
         </div>
       </div>
 
@@ -49,11 +49,35 @@
         <base-table
           stripe
           :cols="tabelCols"
-          :data="tableData"
+          :data="reportOutLists.content"
           empty-text="暂无外出申请数据"
         >
-          <template #operation>
-            <el-link :underline="false">审核</el-link>
+          <template #roundType="{ row }">{{
+            row.roundType | filterInput({ filterEl: roundType })
+          }}</template>
+
+          <template #vehicleType="{ row }">
+            <!-- 往返 -->
+            <span v-if="row.roundType">{{
+              row.backVehicleType | filterInput({ filterEl: vehicleType })
+            }}</span>
+
+            <!-- 单程 -->
+            <span v-else>{{
+              row.leaveVehicleType | filterInput({ filterEl: vehicleType })
+            }}</span>
+          </template>
+
+          <template mplate #tocityName="{ row }">
+            <!-- 往返 -->
+            <span v-if="row.roundType">{{ row.backTocityName }}</span>
+
+            <!-- 单程 -->
+            <span v-else>{{ row.leaveTocityName }}</span>
+          </template>
+
+          <template #operation="{ row }">
+            <el-button @click="onAudit(row.id)">审批</el-button>
           </template>
         </base-table>
       </div>
@@ -68,34 +92,58 @@
         :picker-options="pickerOptions"
       />
 
-      <el-calendar v-model="dateMonth" @click.native.stop="onClosePopover">
+      <el-calendar v-model="dateMonth">
         <template #dateCell="{ data: { isSelected, day, type }}">
           <!-- 不是当月的日期/当前月无特殊内容的日期 -->
           <span
-            v-if="type !== 'current-month'"
-            :class="['calendar-day_nonecurrntmonth', 'calendar-day_disabled']"
+            v-if="
+              type !== 'current-month' ||
+                !calendarMonthReportInfomations['showDays'].includes(day)
+            "
+            :class="[
+              'calendar-day_nonecurrntmonth',
+              { 'calendar-day_disabled': type !== 'current-month' },
+              { 'calendar-day_noreport': day === Today },
+              { 'calendar-day_default': type === 'current-month' }
+            ]"
             @click.stop
           >
             {{ day | toDateString('dd', false) }}</span
           >
-
           <!-- 当月有特殊内容的日期 -->
           <el-popover
             v-else
             v-model="showDay[day]"
-            placement="right"
-            trigger="manual"
-            content="dadkasd"
+            placement="bottom"
+            width="200"
+            trigger="click"
+            :content="calendarOnedayReportInfofomations"
             @click.stop
           >
             <div
               slot="reference"
-              :class="day === Today ? 'calendar-day_noreport' : ''"
+              :class="calendarMonthReportInfomations['dayConfigs'][day]"
               @click.stop="onGetDayDetails(day)"
             >
               {{ day | toDateString('dd', false) }}
             </div>
           </el-popover>
+          <!-- <el-popover
+            v-else
+            v-model="showDay[day]"
+            placement="top"
+            trigger="manual"
+            :content="calendarOnedayReportInfofomations"
+            @click.stop
+          >
+            <div
+              slot="reference"
+              :class="calendarMonthReportInfomations['dayConfigs'][day]"
+              @click.stop="onGetDayDetails(day)"
+            >
+              {{ day | toDateString('dd', false) }}
+            </div>
+          </el-popover> -->
         </template>
       </el-calendar>
     </div>
@@ -105,6 +153,8 @@
 import { toDateString } from '@/utils/lang'
 
 import { mapState, mapActions } from 'vuex'
+
+import routesPath from '@/router/routes-path'
 
 const NOW = Date.now()
 
@@ -135,55 +185,44 @@ export default {
       tabelCols: [
         {
           label: '矫正人员姓名',
-          prop: 'name',
+          prop: 'realName',
           minWidth: '95px'
         },
         {
           label: '判处类型',
-          prop: 'type'
+          prop: 'sentenceType'
         },
         {
           label: '申请时间',
-          prop: 'time',
+          prop: 'createTime',
           minWidth: '130px'
         },
         {
           label: '出发时间',
-          prop: 'out',
+          prop: 'leaveStartTime',
           minWidth: '130px'
         },
         {
           label: '单程往返',
-          prop: 'fc'
+          prop: 'roundType',
+          slotName: 'roundType'
         },
         {
           label: '交通工具',
-          prop: 'gj'
+          prop: 'vehicleType',
+          slotName: 'vehicleType'
         },
         {
           label: '目的城市',
-          prop: 'city'
+          prop: 'tocityName',
+          slotName: 'tocityName'
         },
         {
           label: '操作',
           slotName: 'operation',
-          prop: 'cz',
           minWidth: '50px'
         }
       ],
-
-      basciData: {
-        index: 1,
-        name: '张三丰',
-        type: '裁定假释',
-        time: '2020-02-02 10:00:00',
-        out: '2020-02-02 10:00:00',
-        fc: '单程',
-        gj: '火车',
-        city: '乌鲁木齐'
-      },
-
-      tableData: [],
 
       showDay: []
     }
@@ -195,7 +234,9 @@ export default {
       'calendarOnedayReportInfofomations',
       'reportRemindNearbyPersons',
       'reportRemindUnreportPersons'
-    ])
+    ]),
+
+    ...mapState('supervision', ['reportOutLists'])
   },
 
   methods: {
@@ -205,6 +246,8 @@ export default {
       'getReportRemindOfReportNearby',
       'getReportRemindOfUnreportPersons'
     ]),
+
+    ...mapActions('supervision', ['getReportOutLists']),
 
     async onLoadWeatherView() {
       try {
@@ -230,27 +273,37 @@ export default {
     },
 
     // 获取具体某一天的数据
-    onGetDayDetails(day) {
-      console.log(day)
-      this.$set(this.showDay, day, !this.showDay[day])
+    async onGetDayDetails(day) {
+      this.calendarMonthReportInfomations['showDays'].forEach(item => {
+        if (item !== day) this.$set(this.showDay, item, false)
+      })
+
+      await this.getCalendarOfOnedayReportDetails({ day })
     },
 
-    onClosePopover() {
-      this.showDay = []
+    onAudit(id) {
+      this.$router.push({
+        path: `${routesPath.SUPERVISION_OUT_INFORMATION_AUDIT}/${id}`
+      })
+    },
+
+    getIndexOfDay(day) {
+      return toDateString(day, 'dd', false)
     }
   },
 
-  async mounted() {
-    this.tableData = new Array(9).fill(this.basciData)
-    // this.$showLoading()
-    await this.onLoadWeatherView()
-    // await Promise.all([
-    //   this.onLoadWeatherView(),
-    //   this.getCalendarOfMonthReportDetails(),
-    //   this.getReportRemindOfReportNearby(),
-    //   this.getReportRemindOfUnreportPersons()
-    // ])
-    // this.$hideLoading()
+  async created() {
+    this.$showLoading()
+
+    await Promise.all([
+      this.onLoadWeatherView(),
+      this.getCalendarOfMonthReportDetails(),
+      this.getReportRemindOfReportNearby(),
+      this.getReportRemindOfUnreportPersons(),
+      this.getReportOutLists({ page: 1, rows: 10, auditPending: 1 })
+    ])
+
+    this.$hideLoading()
   }
 }
 </script>
@@ -366,10 +419,11 @@ export default {
           text-align: center;
           width: 100%;
           padding: 1px 0px;
-          cursor: not-allowed;
+          // cursor: not-allowed;
 
           div,
           &.calendar-day_nonecurrntmonth {
+            width: auto;
             padding: 10px 14px;
           }
 
@@ -414,6 +468,10 @@ export default {
 
   .calendar-day_disabled {
     cursor: not-allowed;
+  }
+
+  .calendar-day_default {
+    cursor: default;
   }
 }
 </style>

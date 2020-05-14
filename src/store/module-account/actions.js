@@ -97,30 +97,27 @@ export default {
     try {
       const { data } = await accountAPI.getCalendarOfMonthReportDetails()
 
-      const filterDetails = data.map(item => {
-        switch (item.state) {
-          case '1':
-            item.className = 'calendar-day_report'
-            break
-          case '2':
-            item.className = 'calendar-day_noreport'
-            break
-          case '3':
-            item.className = 'calendar-day_danger'
-            break
-          case '0':
-            item.className = ''
-            break
-          default:
-            break
+      let showDays = [],
+        dayConfigs = []
+
+      data.forEach(item => {
+        if (item.state !== '0') {
+          const classObj = {
+            '1': ['calendar-day_report'],
+            '2': ['calendar-day_noreport'],
+            '3': ['calendar-day_danger']
+          }
+
+          showDays.push(item.day)
+
+          dayConfigs[item.day] = classObj[item.state]
         }
-        return item
       })
 
-      commit(
-        mutationsAccount.SET_CALENDAR_MONTH_REPORT_INFORMATIONS,
-        filterDetails
-      )
+      commit(mutationsAccount.SET_CALENDAR_MONTH_REPORT_INFORMATIONS, {
+        showDays,
+        dayConfigs
+      })
 
       return true
     } catch (err) {

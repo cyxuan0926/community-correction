@@ -23,7 +23,7 @@ export default {
   accountJurisdictionAreaInfo: getAccountJurisdictionAreaInfo(),
 
   // 日历-一个月的数据
-  calendarMonthReportInfomations: [],
+  calendarMonthReportInfomations: { showDays: [], dayConfigs: [] },
 
   // 日历-某一天具体的数据
   calendarOnedayReportInfofomations: '',

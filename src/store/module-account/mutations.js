@@ -26,9 +26,10 @@ export default {
 
   [mutationsAccount.SET_CALENDAR_MONTH_REPORT_INFORMATIONS]: (
     state,
-    calendarMonthReportInfomations
+    { showDays, dayConfigs }
   ) => {
-    state.calendarMonthReportInfomations = calendarMonthReportInfomations
+    state.calendarMonthReportInfomations.showDays = showDays
+    state.calendarMonthReportInfomations.dayConfigs = dayConfigs
   },
 
   [mutationsAccount.SET_CALENDAR_ONEDAY_REPORT_INFORMATIONS]: (
