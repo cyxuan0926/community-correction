@@ -9,7 +9,7 @@
         <div class="registration-item_warnning">
           <strong>报到提醒</strong>
 
-          <el-link>
+          <el-link @click="onMore('SUPERVISION_REMIND')">
             <strong>更多 ></strong>
           </el-link>
         </div>
@@ -41,7 +41,7 @@
         <div class="supervision-item_title">
           <strong>外出申请报到</strong>
 
-          <el-link>
+          <el-link @click="onMore('SUPERVISION_OUT')">
             <strong>更多 ></strong>
           </el-link>
         </div>
@@ -289,6 +289,10 @@ export default {
 
     getIndexOfDay(day) {
       return toDateString(day, 'dd', false)
+    },
+
+    onMore(name) {
+      this.$router.push({ path: `${routesPath[name]}` })
     }
   },
 
