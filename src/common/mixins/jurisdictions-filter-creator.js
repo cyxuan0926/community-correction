@@ -1,5 +1,6 @@
 // 省-市-区县-司法所联动
 import { roles } from '@/common/constants'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -45,24 +46,12 @@ export default {
   },
 
   computed: {
-    // 司法部账户
-    isJudiciaryAccount() {
-      return this.$store.getters['account/role'] === roles.JUDICIARY_ACCOUNT
-    },
-
-    // 司法厅账户
-    isJusticeDepartmentAccount() {
-      return (
-        this.$store.getters['account/role'] === roles.JUSTICE_DEPARTMENT_ACCOUNT
-      )
-    },
-
-    // 司法局账户
-    isJusticeBureauAccount() {
-      return (
-        this.$store.getters['account/role'] === roles.JUSTICE_BUREAU_ACCOUNT
-      )
-    }
+    ...mapGetters([
+      'account/isJudiciaryAccount',
+      'account/isJusticeDepartmentAccount',
+      'account/isJusticeBureauAccount',
+      'account/isJudiceOfficeAccount'
+    ])
   },
 
   methods: {
@@ -269,22 +258,22 @@ export default {
     }
   },
 
-  async created() {
+  created() {
     if (this.isJudiciaryAccount) {
       // 司法部
       this.createCityFilter()
       this.createProvinceFilter(true)
-    }
-    if (this.isJusticeDepartmentAccount) {
+    }else if (this.isJusticeDepartmentAccount) {
       // 司法厅
       this.createCountyFilter()
       this.createCityFilter()
-    }
-    if (this.isJusticeBureauAccount) {
-      this.createJurisdictionFilter()
+    }else if (this.isJusticeBureauAccount) {
+      //this.createJurisdictionFilter()
       this.createCountyFilter()
-      this.createCityFilter()
-      this.createProvinceFilter(true)
+      // this.createCityFilter()
+      // this.createProvinceFilter(true)
+    }else {
+      this.createJurisdictionFilter()
     }
   }
 }

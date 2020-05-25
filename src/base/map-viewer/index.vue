@@ -15,7 +15,7 @@
 </template>
 <script>
 // 需要传过来得是地图得配置选项
-import { MapLoader } from '@/utils/helper'
+import AmapUtil from '@/utils/helper'
 
 export default {
   name: 'MapViewer',
@@ -79,31 +79,24 @@ export default {
           mapClass = {}
         } = this.mapConfigs
 
-        const mapInstance = await MapLoader()
-
-        this.map = await new mapInstance.Map(this.$refs.map, {
+        const utilIns = await AmapUtil.getMapInstance().loadMap({
+          id: this.$refs.map,
           zoomEnable: false,
           ...mapClass
         })
-
-        await new mapInstance.Circle({
-          map: this.map,
+        
+        utilIns
+        .addCircle({
           radius: this.radius,
-          strokeColor: '#3366ff',
-          strokeOpacity: 0.3,
-          strokeWeight: 3,
-          fillColor: '#ffa500',
-          fillOpacity: 0.35,
           ...circleConfigs
         })
-
-        await new mapInstance.Marker({
-          map: this.map,
-          icon: 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png',
+        .addMarks({
           ...markerConfigs
         })
+        .setFitView()
 
-        await this.map.setFitView()
+        //this.map = utilIns.map
+
       } catch (err) {
         Promise.reject(err)
       }
@@ -122,7 +115,7 @@ export default {
 <style lang="scss" scoped>
 .map-dialog {
   ::v-deep .el-dialog {
-    width: 90%;
+    width: 64%;
 
     &__header {
       display: none;

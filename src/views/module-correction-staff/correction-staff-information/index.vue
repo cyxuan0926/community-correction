@@ -372,9 +372,9 @@
             <span
               class="addressDetail"
               :key="address.id"
-              @click="onMapShow(formSupervisionModel.addressList[index])"
-              >{{ address.addressDetail }}</span
-            >
+              >{{ address.addressDetail }}
+                <a @click.prevent="onMapShow(formSupervisionModel.addressList[index])">点击查看</a>
+              </span>
           </template>
 
           <label class="label-radius">有效范围</label>
@@ -745,6 +745,10 @@ export default {
             .addressDetail {
               width: 70%;
               cursor: pointer;
+
+              a {
+                color: #409eff;
+              }
             }
 
             .label-radius {

@@ -36,6 +36,7 @@ router.beforeEach((to, from, next) => {
 // 路由权限校验
 router.beforeEach((to, from, next) => {
   const auth = store.state.account.authorities
+  console.log('======= beforeEach', auth)
 
   if (hasAuth(auth)) next()
   else next({ path: routes.HOME, replace: true })

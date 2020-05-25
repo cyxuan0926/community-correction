@@ -10,7 +10,7 @@ export default [
       {
         name: 'Registration',
         path: routesPath.REGISTRATION_LIST,
-        component: _import('module-registration'),
+        component: _import('module-registration/index.vue'),
         meta: { title: '报到统计' }
       }
     ]

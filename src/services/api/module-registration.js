@@ -9,3 +9,13 @@ export const getReportDetailsPage = params => {
 export const getReportStatisticsPage = params => {
   return httpClient.get('/report/Statistics', params)
 }
+
+// 非审核-地图打点分布列表
+export const getReportMapmarks = params => {
+  return httpClient.get('/report/reportDetails/findPage', params)
+}
+
+// 非审核-地图
+export const getReportHistory = params => {
+  return httpClient.get('/report/reportDetails/findPage', params)
+}
