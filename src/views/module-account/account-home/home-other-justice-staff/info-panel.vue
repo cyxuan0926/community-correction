@@ -4,34 +4,35 @@
             <tbody>
                 <tr>
                     <td width="25%">姓名：</td>
-                    <td width="25%">张三</td>
+                    <td width="25%">{{ infoData.realName }}</td>
                     <td width="25%">罪名：</td>
-                    <td width="25%">欺诈罪</td>
+                    <td width="25%">{{ infoData.charge }}</td>
                 </tr>
                 <tr>
                     <td>报到规则：</td>
-                    <td>每月18日</td>
+                    <td>每月{{ infoData.reportingDay }}日</td>
                     <td>接管日期：</td>
-                    <td>2019-10-24</td>
+                    <td>{{ infoData.handoverTime }}</td>
                 </tr>
                 <tr>
                     <td>应报到日期：</td>
-                    <td>每月18日</td>
+                    <td>{{ infoData.shouldTime }}</td>
                     <td>所属司法所：</td>
-                    <td>湖北省司法所</td>
+                    <td>{{ infoData.jurisdictionName }}</td>
                 </tr>
                 <tr>
                     <td>历史报到日期：</td>
                     <td colspan="3">
                         <el-select 
-                            v-model="historyReportDate" 
+                            v-model="selectReportDate" 
                             placeholder="请选择历史报到日期"
                             :change="handleHistoryReportChange">
                             <el-option
-                                v-for="item in historyReportDateOps"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                v-for="item in reportDateList"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                                :class="{'has-reportError': reportDetailedAddress[item][0].status == 5}">
                             </el-option>
                         </el-select>
                     </td>
@@ -41,10 +42,12 @@
                     <td>外出请假情况：</td>
                     <td colspan="3">
                         <div class="info__panel__scroll" @scroll.stop>
-                            <p>2019年12月20日08点去湖北省司法所，11点按时返回；</p>
-                            <p>2019年12月25日09点去湖北省司法所，11点30未按时返回；下午7点才返回；</p>
-                            <p>2019年12月25日09点去湖北省司法所，11点30未按时返回；下午7点才返回；</p>
-                            <p>2019年12月25日09点去湖北省司法所，11点30未按时返回；下午7点才返回；</p>
+                            <template v-if="reportAddressList.length">
+                                <p v-for="(r, index) in reportAddressList" :key="r.id">{{r.address}}<span v-if="index != reportAddressList.length - 1">；</span></p>
+                            </template>
+                            <template v-else>
+                                <p class="info__panel__noresult">暂无外出请假数据</p>
+                            </template>
                         </div>
                     </td>
                 </tr>
@@ -54,50 +57,54 @@
 </template>
 
 <script>
-    import { getReportHistory } from '@/services/api/module-registration'
+    import { getReportHistoryDate } from '@/services/api/module-registration'
     const now = Date.now()
     export default {
         name: 'info-panel',
         
         props: {
-            // infoData: {
-            //     type: Object,
-            //     default: {}
-            // }
+            infoData: Object
         },
 
         data() {
             return {
-                historyReportDate: '2020-05-01',
-                historyReportDateOps: [{
-                    label: '2020-05-01',
-                    value: '2020-05-01'
-                },{
-                    label: '2020-05-02',
-                    value: '2020-05-02'
-                },{
-                    label: '2020-05-03',
-                    value: '2020-05-03'
-                }],
-                tableData: [{
-                    id: '12987122',
-                    name: '王小虎',
-                    amount1: '234',
-                    amount2: '3.2',
-                    amount3: 10
-                }, {
-                    id: '12987123',
-                    name: '王小虎',
-                    amount1: '165',
-                    amount2: '4.43',
-                    amount3: 12
-                }]
+                selectReportDate: '',
+                reportDateList: [],
+                reportDetailedAddress: {},
+                reportAddressList: []
+            }
+        },
+
+        watch: {
+            infoData() {
+                this.setReportData()
             }
         },
 
         methods: {
-            async handleHistoryReportChange() {
-                const reportHistoryList = await getReportHistory(this.historyReportDate)
+            setReportData() {
+                this.infoData.historyDates.forEach(d => {
+                    const rt = d.reportTime
+                    if( !this.reportDateList.includes(rt) ) {
+                        this.reportDateList.push(rt)
+                    }
+                    (this.reportDetailedAddress[rt] = this.reportDetailedAddress[rt] || []).push({
+                        id: d.id,
+                        status: d.status,
+                        address: `${d.leaveTime}去${d.detailedAddress}，${d.backTime}返回`
+                    })
+                });
+                this.selectReportDate = this.reportDateList[0]
+                this.setReportAddressList()
+            },
+
+            setReportAddressList() {
+                this.reportAddressList = this.reportDetailedAddress[ this.selectReportDate ]
+            },
+            
+            handleHistoryReportChange(val) {
+                this.selectReportDate = val
+                this.setReportAddressList()
             }
         }
     }
@@ -121,14 +128,18 @@
                     height: 50px;
                     overflow-x: hidden;
                     overflow-y: auto;
+
+                    .info__panel__noresult {
+                        padding-top: 16px;
+                        color: #999;
+                        text-align: center
+                    }   
                 }
             }
         }
+    }
 
-        .info__panel__scroll {
-                    height: 50px;
-                    overflow-x: hidden;
-                    overflow-y: auto;
-                }
+    .el-select-dropdown__item.has-reportError {
+        color: red !important;
     }
 </style>

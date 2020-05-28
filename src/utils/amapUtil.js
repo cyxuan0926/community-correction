@@ -128,14 +128,16 @@ export default class AmapUtil {
 
     addMarks( marks ) {
         marks = Array.isArray(marks) ? marks : [marks]
-        this.marks = marks.map(m => {
-            let { position, ...props } = m
-            let mk = new this.AmapConstructor.Marker({
-                position
+        if( marks.length ) {
+            this.marks = marks.map(m => {
+                let { config, ...props } = m
+                let mk = new this.AmapConstructor.Marker({
+                    ...config
+                })
+                return Object.assign(mk, props)
             })
-            return Object.assign(mk, props)
-        })
-        this.map.add( this.marks )
+            this.map.add( this.marks )
+        }
         return this
     }
 
@@ -165,9 +167,7 @@ export default class AmapUtil {
     }
 
     addDistrictLayerProvince( config ) {
-        console.log(config)
         this.districtLayerProvince = new this.AmapConstructor.DistrictLayer.Province( mergeWith({}, defaultDisProvinceConfig, config) )
-        console.log( mergeWith(defaultDisProvinceConfig, config) )
         this.map.add( this.districtLayerProvince )
         return this
     }
@@ -219,7 +219,6 @@ export default class AmapUtil {
                 geocoder.getLocation(address, function(status, result) {
                     if (status === 'complete' && result.info === 'OK') {
                         // result中对应详细地理坐标信息
-                        console.log(result)
                         resolve(result.geocodes)
                     }else {
                         reject()

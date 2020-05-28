@@ -28,9 +28,10 @@
     import AmapUtil from '@/utils/helper'
     import InfoPanel from './info-panel.vue'
     import debounce from 'lodash/debounce'
-    import { mapGetters } from 'vuex'
-    import { getReportMapmarks } from '@/services/api/module-registration'
-
+    import { mapState, mapGetters } from 'vuex'
+    import { getReportMapmarks, getReportDetails, getReportHistoryDate } from '@/services/api/module-registration'
+    import { URLConfig } from '@/services/urls'
+     
     export default {
         name: 'home-other-justice-staff',
 
@@ -39,78 +40,50 @@
         },
 
         computed: {
-            ...mapGetters([
-                'account/isJudiciaryAccount',
-                'account/isJusticeDepartmentAccount',
-                'account/isJusticeBureauAccount',
-                'account/isJudiceOfficeAccount'
+            ...mapState('account', ['accountJurisdictionAreaInfo']),
+
+            ...mapGetters('account', [
+                'getJusticeCode',
+                'isJudiciaryAccount',
+                'isJusticeDepartmentAccount',
+                'isJusticeBureauAccount',
+                'isJudiceOfficeAccount'
             ])
         },
 
         data() {
             return {
                 instance: null,
-                mapCenterAddress: '中国',
-                infoData: {},
-                markList: [
-                    {   
-                        mkid: 1234324423,
-                        position: [114.222995, 30.608725]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [114.329533, 30.620461]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [114.217745, 30.512932]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [114.363267, 30.535269]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [114.407621, 30.49732]
-                    }, 
-                    {
-                        mkid: 1234324423,
-                        position: [114.407621, 30.49732]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [114.427307, 30.606648]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [113.012181, 28.198226]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [112.904387, 28.03851]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [112.592975, 26.884069]
-                    },
-                    {
-                        mkid: 1234324423,
-                        position: [112.708859, 26.895487]
-                    }
-                ],
-                desc: '测试测试标题',
+                infoData: {
+                    historyDates: [],
+                    //selectReportDate: ''
+                },
+                markList: [],
                 isInfowinOpen: false
             }
         },
+
         methods: {
             async initAMap() {
                 try {
                     const that = this
                     const utilIns = that.instance = AmapUtil.getMapInstance()
+                    const adCode = that.getJusticeCode.adCode
+                    const { data } = await getReportMapmarks()
                     await utilIns.loadMap({id: 'homeMap'})
                     await utilIns.loadPlugin('Geocoder')
 
-                    that.markList = await getReportMapmarks()
+                    if( data && data.length ) {
+                        that.markList = data.filter(m => m.lng && m.lat && m.username).map(m => ({
+                            mkId: m.id,
+                            mkUsername: m.username,
+                            config: {
+                                position: [m.lng, m.lat],
+                                icon: `${URLConfig.publicApiHost}/static/img/mark_bs0${m.status != 1 && m.status != 2 ? '3' : m.status }.png`
+                            }
+                            
+                        }))
+                    }
 
                     utilIns
                     .addDistrictLayerWorld()
@@ -122,32 +95,43 @@
                         closeWhenClickMap: true
                     })
                     .addMarks(that.markList)
-                    .bindMarkEvent('click', (e) => {
-                        const pos = e.target._position
-                        utilIns.infoWindow.open( utilIns.map, pos )
+                    .bindMarkEvent('click', async (e) => {
+                        const { _position, mkId, mkUsername } = e.target
+                        const { data } = await getReportDetails({
+                            id: mkId
+                        })
+                        data.historyDates = (await getReportHistoryDate({
+                            username: mkUsername
+                        })).data || []
+                        //data.selectReportDate = data.historyDates[0]
+
+                        utilIns.infoWindow.open( utilIns.map, _position )
                         if( utilIns.currentZoom >= utilIns.maxZoom ) {
-                            utilIns.map.setCenter(pos, false, 400 )
+                            utilIns.map.setCenter(_position, false, 400 )
                         }else {
-                            utilIns.map.setZoomAndCenter(utilIns.maxZoom, pos, false, 400 )
+                            utilIns.map.setZoomAndCenter(utilIns.maxZoom, _position, false, 400 )
                         }
+
                         that.isInfowinOpen = true
+                        that.infoData = data
                     })
                     .bindMapEvent('zoomchange', debounce((e) => {
-                        if( (utilIns.currentZoom = utilIns.map.getZoom()) >=  utilIns.maxZoom - 2) {
+                        if( (utilIns.currentZoom = utilIns.map.getZoom()) >  utilIns.maxZoom ) {
                             utilIns.hideDistrictLayer()
                         }else {
                             utilIns.showDistrictLayer()
                         }
                     }, 300))
-                    this.isJudiciaryAccount = true
-                    if( !this.isJudiciaryAccount ) {
-                        const location = await utilIns.getLocation(this.mapCenterAddress)
-                        this.mapCenterAddress = location && location.length && location[0].adcode
+                    
+                    if( !that.isJudiciaryAccount && adCode ) {
+                        // const location = await utilIns.getLocation(this.mapCenterAddress)
+                        // this.mapCenterAddress = location && location.length && location[0].adcode
+                        
                         utilIns.addDistrictLayerProvince({
-                            adcode: [this.mapCenterAddress]
+                            adcode: [adCode]
                         })
                     }
-                    utilIns.setCity(this.mapCenterAddress)
+                    utilIns.setCity(adCode)
 
                 } catch (err) {
                     Promise.reject(err)
@@ -159,7 +143,7 @@
             },
 
             toDetail() {
-                this.$router.push(routesPath.REGISTRATION)
+                this.$router.push(routesPath.REPORT_DETAIL_LIST)
             }
         },
 

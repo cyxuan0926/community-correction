@@ -66,7 +66,8 @@ export default {
     try {
       // accountJurisdictionAreaInfoResult = false
       let menusResult = false,
-        publicUserInfoResult = false
+        publicUserInfoResult = false,
+        accountJurisdictionAreaInfoResult = false
 
       const tokenResult = await dispatch('getToken', { username, password })
 
@@ -80,13 +81,12 @@ export default {
 
         publicUserInfoResult = await dispatch('getPublicUserInfo')
 
-        // accountJurisdictionAreaInfoResult = await dispatch(
-        //   'getAccountByUserName',
-        //   { username }
-        // )
+        accountJurisdictionAreaInfoResult = await dispatch(
+          'getAccountByUserName',
+          { username }
+        )
       }
       return tokenResult && menusResult && publicUserInfoResult
-      // accountJurisdictionAreaInfoResult
     } catch (err) {
       Promise.reject(err)
     }

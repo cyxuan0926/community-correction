@@ -8,6 +8,7 @@
 <script>
   import homeJusticeStaff from './home-justice-staff/index.vue'
   import homeOtherJusticeStaff from './home-other-justice-staff/index.vue'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'home',
@@ -17,10 +18,8 @@
       homeOtherJusticeStaff
     },
 
-    data() {
-      return {
-        isJusticeStaff: false
-      }
+    computed: {
+      ...mapGetters('account', ['isJusticeStaff'])
     }
   }
 </script>

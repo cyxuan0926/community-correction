@@ -15,19 +15,19 @@ export default {
 
     const provinceFilterItem = {
       ...basicFilterItem,
-      name: 'provinceName',
+      name: 'provinceCode',
       placeholder: '请选择省份'
     }
 
     const cityFilterItem = {
       ...basicFilterItem,
-      name: 'cityName',
+      name: 'cityCode',
       placeholder: '请选择市'
     }
 
     const countyFilterItem = {
       ...basicFilterItem,
-      name: 'areaName',
+      name: 'areaCode',
       placeholder: '请选择区县'
     }
 
@@ -46,11 +46,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'account/isJudiciaryAccount',
-      'account/isJusticeDepartmentAccount',
-      'account/isJusticeBureauAccount',
-      'account/isJudiceOfficeAccount'
+    ...mapGetters('account', [
+      'getJusticeCode',
+      'isJudiciaryAccount',
+      'isJusticeDepartmentAccount',
+      'isJusticeBureauAccount',
+      'isJudiceOfficeAccount'
     ])
   },
 
@@ -61,9 +62,9 @@ export default {
       filterItems = [],
       filterParams = {}
     }) {
-      if (name === 'provinceName') {
-        if (filterItems.some(item => item.name === 'cityName')) {
-          const index = filterItems.findIndex(item => item.name === 'cityName')
+      if (name === 'provinceCode') {
+        if (filterItems.some(item => item.name === 'cityCode')) {
+          const index = filterItems.findIndex(item => item.name === 'cityCode')
           if (value) {
             await this.initOrganizationData({
               actionName: 'getCities',
@@ -77,14 +78,14 @@ export default {
             })
           } else this.$set(filterItems[index], 'options', [])
 
-          this.$set(filterParams, 'cityName', null)
+          this.$set(filterParams, 'cityCode', null)
 
-          if (filterItems.some(item => item.name === 'areaName')) {
+          if (filterItems.some(item => item.name === 'areaCode')) {
             const index = filterItems.findIndex(
-              item => item.name === 'areaName'
+              item => item.name === 'areaCode'
             )
 
-            this.$set(filterParams, 'areaName', null)
+            this.$set(filterParams, 'areaCode', null)
 
             this.$set(filterItems[index], 'options', [])
           }
@@ -96,8 +97,8 @@ export default {
           )
 
           if (
-            filterItems.some(item => item.name === 'cityName') ||
-            filterItems.some(item => item.name === 'areaName')
+            filterItems.some(item => item.name === 'cityCode') ||
+            filterItems.some(item => item.name === 'areaCode')
           ) {
             this.$set(filterItems[index], 'options', [])
           } else {
@@ -116,9 +117,9 @@ export default {
         }
       }
 
-      if (name === 'cityName') {
-        if (filterItems.some(item => item.name === 'areaName')) {
-          const index = filterItems.findIndex(item => item.name === 'areaName')
+      if (name === 'cityCode') {
+        if (filterItems.some(item => item.name === 'areaCode')) {
+          const index = filterItems.findIndex(item => item.name === 'areaCode')
 
           if (value) {
             await this.initOrganizationData({
@@ -133,7 +134,7 @@ export default {
             })
           } else this.$set(filterItems[index], 'options', [])
 
-          this.$set(filterParams, 'areaName', null)
+          this.$set(filterParams, 'areaCode', null)
         }
 
         if (filterItems.some(item => item.name === 'jurisdictionCode')) {
@@ -141,14 +142,14 @@ export default {
             item => item.name === 'jurisdictionCode'
           )
 
-          if (filterItems.some(item => item.name === 'areaName')) {
+          if (filterItems.some(item => item.name === 'areaCode')) {
             this.$set(filterItems[index], 'options', [])
           } else {
             if (value) {
               this.initOrganizationData({
                 actionName: 'getJurisdictions',
                 actionPayload: {
-                  pid: value
+                  adCode: value
                 },
                 filterItem: filterItems[index],
                 stateName: 'jurisdictions',
@@ -161,7 +162,7 @@ export default {
         }
       }
 
-      if (name === 'areaName') {
+      if (name === 'areaCode') {
         if (filterItems.some(item => item.name === 'jurisdictionCode')) {
           const index = filterItems.findIndex(
             item => item.name === 'jurisdictionCode'
@@ -171,7 +172,7 @@ export default {
             this.initOrganizationData({
               actionName: 'getJurisdictions',
               actionPayload: {
-                pid: value
+                adCode: value
               },
               filterItem: filterItems[index],
               stateName: 'jurisdictions',
@@ -221,6 +222,7 @@ export default {
     async createProvinceFilter(isInitData) {
       await this.initOrganizationData({
         actionName: 'getProvinces',
+        actionPayload,
         filterItem: this.provinceFilterItem,
         stateName: 'provinceLists',
         isInitData
@@ -228,52 +230,70 @@ export default {
     },
 
     // 市
-    async createCityFilter(isInit) {
+    async createCityFilter(isInitData, actionPayload = {}) {
       await this.initOrganizationData({
         actionName: 'getCities',
+        actionPayload,
         filterItem: this.cityFilterItem,
         stateName: 'cityLists',
-        isInit
+        isInitData
       })
     },
 
     // 区县
-    async createCountyFilter(isInit) {
+    async createCountyFilter(isInitData, actionPayload = {}) {
       await this.initOrganizationData({
         actionName: 'getCounties',
+        actionPayload,
         filterItem: this.countyFilterItem,
         stateName: 'countyLists',
-        isInit
+        isInitData
       })
     },
 
     // 司法机构
-    async createJurisdictionFilter(isInit) {
+    async createJurisdictionFilter(isInitData, actionPayload = {}) {
       await this.initOrganizationData({
         actionName: 'getJurisdictions',
+        actionPayload,
         filterItem: this.jurisdictionFilterItem,
         stateName: 'jurisdictions',
-        isInit
+        isInitData
       })
     }
   },
 
   created() {
+    
+    // 司法部 省 市
     if (this.isJudiciaryAccount) {
-      // 司法部
       this.createCityFilter()
       this.createProvinceFilter(true)
+    
+    // 司法厅 市 区县
     }else if (this.isJusticeDepartmentAccount) {
-      // 司法厅
+      let provinceCode = this.getJusticeCode.provinceCode
       this.createCountyFilter()
-      this.createCityFilter()
+      this.createCityFilter(true, {
+        provinceCode
+      })
+      this.filterParams.provinceCode = provinceCode
+    
+    // 市司法局 区县
     }else if (this.isJusticeBureauAccount) {
-      //this.createJurisdictionFilter()
-      this.createCountyFilter()
-      // this.createCityFilter()
-      // this.createProvinceFilter(true)
+      let cityCode = this.getJusticeCode.cityCode
+      this.createCountyFilter(true, {
+        cityCode
+      })
+      this.filterParams.cityCode = cityCode
+    // 区县司法局 司法所
     }else {
-      this.createJurisdictionFilter()
+      let areaCode = this.getJusticeCode.areaCode
+      this.createJurisdictionFilter(true, {
+        adCode: areaCode
+      })
+      this.filterParams.areaCode = areaCode
     }
+
   }
 }
