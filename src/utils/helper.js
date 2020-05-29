@@ -1,5 +1,4 @@
 import { MessageBox } from 'element-ui'
-import { URLConfig } from '@/services/urls'
 import * as lang from './lang'
 
 export { default } from './amapUtil'

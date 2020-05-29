@@ -91,7 +91,7 @@ export default {
           ...circleConfigs
         })
         .addMarks({
-          ...markerConfigs
+          config: markerConfigs
         })
         .setFitView()
 

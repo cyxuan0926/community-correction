@@ -1,5 +1,4 @@
 // 省-市-区县-司法所联动
-import { roles } from '@/common/constants'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -222,7 +221,6 @@ export default {
     async createProvinceFilter(isInitData) {
       await this.initOrganizationData({
         actionName: 'getProvinces',
-        actionPayload,
         filterItem: this.provinceFilterItem,
         stateName: 'provinceLists',
         isInitData

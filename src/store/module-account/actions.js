@@ -66,8 +66,7 @@ export default {
     try {
       // accountJurisdictionAreaInfoResult = false
       let menusResult = false,
-        publicUserInfoResult = false,
-        accountJurisdictionAreaInfoResult = false
+        publicUserInfoResult = false
 
       const tokenResult = await dispatch('getToken', { username, password })
 
@@ -81,7 +80,7 @@ export default {
 
         publicUserInfoResult = await dispatch('getPublicUserInfo')
 
-        accountJurisdictionAreaInfoResult = await dispatch(
+        await dispatch(
           'getAccountByUserName',
           { username }
         )

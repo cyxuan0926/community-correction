@@ -4,10 +4,13 @@
             <div class="maplayer__header">
                 <div class="maplayer__header__flex">
                     <div class="maplayer__header__flex__form"></div>
+                    <el-button type="primary" icon="el-icon-full-screen" @click="handleToggle" v-if="$fullscreen.support">全屏展示</el-button>
                     <el-button type="primary" @click="toDetail">报表展示</el-button>
                 </div>
             </div>
-            <div class="maplayer__content" id="homeMap"></div>
+            <fullscreen ref="fullscreen" @change="handleFullscreenChange">
+                <div class="maplayer__content" id="homeMap"></div>
+            </fullscreen>
             <div class="maplayer__amap__infowin" ref="mapInfoWin" :style="{'visibility': isInfowinOpen ? 'visible' : 'hidden'}">
                 <div class="maplayer__amap__infowin__header">
                     <span class="maplayer__amap__infowin__header__btn-close" @click="handleInfowinClose">
@@ -59,7 +62,8 @@
                     //selectReportDate: ''
                 },
                 markList: [],
-                isInfowinOpen: false
+                isInfowinOpen: false,
+                isFullscreen: false
             }
         },
 
@@ -90,7 +94,7 @@
                     .addDistrictLayerCountry()
                     .addInfoWindow({
                         content: that.$refs.mapInfoWin,
-                        offset: new AMap.Pixel(0, -48),
+                        offset: utilIns.getOffset(0, -48),
                         isCustom: true,
                         closeWhenClickMap: true
                     })
@@ -115,7 +119,7 @@
                         that.isInfowinOpen = true
                         that.infoData = data
                     })
-                    .bindMapEvent('zoomchange', debounce((e) => {
+                    .bindMapEvent('zoomchange', debounce(() => {
                         if( (utilIns.currentZoom = utilIns.map.getZoom()) >  utilIns.maxZoom ) {
                             utilIns.hideDistrictLayer()
                         }else {
@@ -144,6 +148,14 @@
 
             toDetail() {
                 this.$router.push(routesPath.REPORT_DETAIL_LIST)
+            },
+
+            handleFullscreenChange(val) {
+                this.isFullscreen = val
+            },
+
+            handleToggle() {
+                this.$refs['fullscreen'].toggle() 
             }
         },
 
@@ -161,9 +173,9 @@
             left: 0;
             width: 100%;
             overflow: hidden;
-            background-color: #fff;
             padding: 0 16px;
             box-sizing: border-box;
+            z-index: 11;
 
             &__flex {
                 display: flex;
@@ -180,10 +192,12 @@
 
         .maplayer__content {
             position: absolute;
-            top: 56px;
+            top: 0;
             left: 0;
             bottom: 0;
-            width: 100%;
+            right: 0;
+            z-index: 9;
+            overflow: hidden
         }
 
         .maplayer__amap__infowin {

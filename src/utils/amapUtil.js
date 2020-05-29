@@ -77,7 +77,7 @@ export default class AmapUtil {
     }
 
     loadPlugin( plugins ) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             plugins = (Array.isArray(plugins) ? plugins : [plugins]).map(p => p.startsWith('AMap.') ? p : 'AMap.' + p)
             this.AmapConstructor.plugin( plugins, () => {
                 plugins.forEach(p => {
@@ -102,7 +102,7 @@ export default class AmapUtil {
     setMap(constructor, config) {
         this.AmapConstructor = constructor
         let {id, ...mapConfig} = config
-        this.map = new this.AmapConstructor.Map(id, mergeWith({}, defaultMapConfig, config))
+        this.map = new this.AmapConstructor.Map(id, mergeWith({}, defaultMapConfig, mapConfig))
         return this
     }
 
@@ -226,5 +226,9 @@ export default class AmapUtil {
                 })
             }
         })
+    }
+
+    getOffset(x, y) {
+        return new this.AmapConstructor.Pixel(x, y)
     }
 }
