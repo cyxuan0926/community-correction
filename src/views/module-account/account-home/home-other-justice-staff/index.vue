@@ -83,7 +83,7 @@
                             mkUsername: m.username,
                             config: {
                                 position: [m.lng, m.lat],
-                                icon: `${URLConfig.publicApiHost}/static/img/mark_bs0${m.status != 1 && m.status != 2 ? '3' : m.status }.png`
+                                icon: `${URLConfig.webHost}/static/img/mark_bs0${m.status != 1 && m.status != 2 ? '3' : m.status }.png`
                             }
                             
                         }))
