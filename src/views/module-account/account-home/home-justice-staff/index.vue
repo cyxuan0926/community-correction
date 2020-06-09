@@ -313,8 +313,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  &__content {
+.home__main-staff {
+  .home__content {
     &-information {
       padding-bottom: 15px;
       display: flex;
@@ -478,4 +478,5 @@ export default {
     cursor: default;
   }
 }
+
 </style>

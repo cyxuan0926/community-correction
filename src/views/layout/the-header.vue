@@ -57,7 +57,7 @@ export default {
   methods: {
     async onLogout() {
       try {
-        await helper.$confirm('是否退出登陆?')
+        await helper.$confirm('是否退出登录?')
 
         this.$store.dispatch('global/logout')
         this.$router.push(routesPath.ACCOUNT_LOGIN)
