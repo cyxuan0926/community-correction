@@ -68,7 +68,7 @@
             }}</span>
           </template>
 
-          <template mplate #tocityName="{ row }">
+          <template #tocityName="{ row }">
             <!-- 往返 -->
             <span v-if="row.roundType">{{ row.backTocityName }}</span>
 
@@ -219,8 +219,7 @@ export default {
         },
         {
           label: '操作',
-          slotName: 'operation',
-          minWidth: '50px'
+          slotName: 'operation'
         }
       ],
 

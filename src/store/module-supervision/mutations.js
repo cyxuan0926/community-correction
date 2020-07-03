@@ -24,7 +24,7 @@ export default {
     state.reportOutDetails = detail
   },
 
-  [mutationSupervision.SET_REPORT_REMIND_RESULT]: (state, result) => {
+  [mutationSupervision.SET_REPORT_OUT_RESULT]: (state, result) => {
     state.reportOutResult = result
   },
   [mutationSupervision.SET_REPORT_OUT_RESULT]: (state, result) => {

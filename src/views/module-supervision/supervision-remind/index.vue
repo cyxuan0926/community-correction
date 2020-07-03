@@ -106,7 +106,7 @@ export default {
     async onRemind() {
       this.$showLoading()
 
-      // await this.sendReportRemind()
+      await this.sendReportRemind()
 
       if (this.reportRemindResult) {
         Message.closeAll()
