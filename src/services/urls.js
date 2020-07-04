@@ -5,21 +5,24 @@ const config = {
   dev: {
     publicApiHost: 'http://qa-auth-api.yuwugongkai.com',
     apiHost: 'http://qa-correction-api.yuwugongkai.com',
-    mapKey: '9415fa5f5fd07290d579f5de39ace82f'
+    mapKey: '9415fa5f5fd07290d579f5de39ace82f',
+    webHost: 'http://qa-correction.yuwugongkai.com/'
   },
 
   // 测试环境
   staging: {
     publicApiHost: 'http://qa-auth-api.yuwugongkai.com',
     apiHost: 'http://qa-correction-api.yuwugongkai.com',
-    mapKey: '9415fa5f5fd07290d579f5de39ace82f'
+    mapKey: '9415fa5f5fd07290d579f5de39ace82f',
+    webHost: 'http://qa-correction.yuwugongkai.com/'
   },
 
   // 线上环境
   prod: {
     publicApiHost: 'https://auth-api.yuwugongkai.com',
     apiHost: '',
-    mapKey: '9415fa5f5fd07290d579f5de39ace82f'
+    mapKey: '9415fa5f5fd07290d579f5de39ace82f',
+    webHost: 'http://qa-correction.yuwugongkai.com/'
   }
 }
 

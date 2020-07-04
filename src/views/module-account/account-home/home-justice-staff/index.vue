@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home__main-staff">
     <div class="home__content-information">
       <div class="information-item_registration">
         <div class="registration-item_weather">
@@ -161,7 +161,7 @@ const NOW = Date.now()
 const TIME = toDateString(NOW, 'yyyy-MM-dd')
 
 export default {
-  name: 'home',
+  name: 'home-justice-staff',
 
   data() {
     return {
@@ -312,8 +312,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  &__content {
+.home__main-staff {
+  .home__content {
     &-information {
       padding-bottom: 15px;
       display: flex;
@@ -454,6 +454,7 @@ export default {
   //   border-radius: 50%;
   // }
 
+
   .calendar-day_report {
     background-color: #ddfcc8;
     border-radius: 50%;
@@ -477,4 +478,5 @@ export default {
     cursor: default;
   }
 }
+
 </style>

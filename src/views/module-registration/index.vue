@@ -186,7 +186,6 @@ export default {
     const initFilterItems = this.allFilterItems.slice(0)
 
     initFilterItems.splice(-1, 1)
-
     this.filterItems = [...initFilterItems]
 
     await this.gettingPageData()

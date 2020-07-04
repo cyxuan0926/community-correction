@@ -50,6 +50,6 @@ export const getCounties = ({
 }
 
 // 司法所
-export const getJurisdictions = ({ pid = 0 }) => {
-  return httpClient.get('/sys/jurisdiction/queryJurisdictionsByPid', { pid })
+export const getJurisdictions = ({ adCode = 100000000000 }) => {
+  return httpClient.get('/sys/jurisdiction/queryJurisdictionsAdCode', { adCode })
 }

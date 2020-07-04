@@ -153,14 +153,14 @@ export const outCheckOperation = [
 // 账户角色
 export const roles = {
   // 司法部账户
-  JUDICIARY_ACCOUNT: 'judiciary_account',
+  JUDICIARY_ACCOUNT: 1,
 
   // 司法厅账户
-  JUSTICE_DEPARTMENT_ACCOUNT: 'justice_department_account',
+  JUSTICE_DEPARTMENT_ACCOUNT: 2,
 
   // 司法局账户
-  JUSTICE_BUREAU_ACCOUNT: 'justice_bureau_account',
+  JUSTICE_BUREAU_ACCOUNT: 3,
 
   // 司法所账户
-  JUSTICE_OFFICE_ACCOUNT: 'justice_office_account'
+  JUSTICE_OFFICE_ACCOUNT: 4
 }

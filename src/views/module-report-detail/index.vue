@@ -11,11 +11,15 @@
     </div>
 
     <div class="supervision-remind_content content">
-      <base-table :cols="tableCols" :data="[]" stripe />
+      <base-table :cols="tableCols" :data="pageData.content" stripe>
+        <template #status="{ row }">{{
+            row.status | filterInput({ filterEl: registrationStatus })
+          }}</template>
+      </base-table>
     </div>
 
     <base-pagination
-      :total="0"
+      :total="pageData.totalElements"
       :page-size.sync="pagination.rows"
       :current-page.sync="pagination.page"
       @size-change="onSizeChange"
@@ -30,7 +34,7 @@ import {
   jurisdictionsFilterCreator
 } from '@/common/mixins'
 
-// import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'reportDetailList',
@@ -42,30 +46,35 @@ export default {
   },
 
   computed: {
-    // ...mapState('supervision', ['reportRemindLists', 'reportRemindResult'])
+    ...mapState('registration', ['reportDetailLists']),
+
     tableCols() {
       return this.commonRegistrationDetailTableCols
     }
   },
 
   methods: {
-    // ...mapActions('supervision', ['getReportRemindLists', 'sendReportRemind']),
+    ...mapActions('registration', [
+      'getReportDetailsPage',
+    ]),
 
     async gettingPageData() {
-      // this.$showLoading()
-
+      let content, total
       const params = {
         ...this.pagination,
         ...this.filterParams
       }
-
-      console.log(params)
+      await this.getReportDetailsPage(params)
+      content = this.reportDetailLists['content']
+      total = this.reportDetailLists['totalCount']
+      this.$set(this.pageData, 'content', content)
+      this.$set(this.pageData, 'totalElements', total)
     }
   },
 
   async created() {
     this.filterItems = [...this.hasFilterItems, ...this.allFilterItems]
-    await this.gettingPageData()
+    this.gettingPageData()
   }
 }
 </script>

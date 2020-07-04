@@ -80,13 +80,12 @@ export default {
 
         publicUserInfoResult = await dispatch('getPublicUserInfo')
 
-        // accountJurisdictionAreaInfoResult = await dispatch(
-        //   'getAccountByUserName',
-        //   { username }
-        // )
+        await dispatch(
+          'getAccountByUserName',
+          { username }
+        )
       }
       return tokenResult && menusResult && publicUserInfoResult
-      // accountJurisdictionAreaInfoResult
     } catch (err) {
       Promise.reject(err)
     }
