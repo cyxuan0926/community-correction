@@ -715,6 +715,11 @@ export default {
 
     ::v-deep .form-img {
       width: 34.3%;
+
+      .el-image__inner {
+        width: 100%;
+        height: auto;
+      }
     }
 
     .form-supervision {

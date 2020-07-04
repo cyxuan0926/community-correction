@@ -5,46 +5,84 @@
         <div class="registration-item_weather">
           <div id="weather-view-he" />
         </div>
+
         <div class="registration-item_warnning">
           <strong>报到提醒</strong>
-          <el-link>
+
+          <el-link @click="onMore('SUPERVISION_REMIND')">
             <strong>更多 ></strong>
           </el-link>
         </div>
+
         <div class="registration-item_near">
           <div>
             <i class="el-icon-ship icon" />
+
             <span>临近报到</span>
           </div>
-          <div>10位矫正人员报到时间只剩1天</div>
+
+          <div>
+            {{ reportRemindNearbyPersons }}
+          </div>
         </div>
+
         <div class="registration-item_late">
           <div>
             <i class="el-icon-ship icon" />
+
             <span>报到范围内未报到</span>
           </div>
-          <div>未报到人数：28</div>
+
+          <div>未报到人数：{{ reportRemindUnreportPersons }}</div>
         </div>
       </div>
+
       <div class="information-item_supervision">
         <div class="supervision-item_title">
           <strong>外出申请报到</strong>
-          <el-link>
+
+          <el-link @click="onMore('SUPERVISION_OUT')">
             <strong>更多 ></strong>
           </el-link>
         </div>
+
         <base-table
           stripe
           :cols="tabelCols"
-          :data="tableData"
+          :data="reportOutLists.content"
           empty-text="暂无外出申请数据"
         >
-          <template #operation>
-            <el-link :underline="false">审核</el-link>
+          <template #roundType="{ row }">{{
+            row.roundType | filterInput({ filterEl: roundType })
+          }}</template>
+
+          <template #vehicleType="{ row }">
+            <!-- 往返 -->
+            <span v-if="row.roundType">{{
+              row.backVehicleType | filterInput({ filterEl: vehicleType })
+            }}</span>
+
+            <!-- 单程 -->
+            <span v-else>{{
+              row.leaveVehicleType | filterInput({ filterEl: vehicleType })
+            }}</span>
+          </template>
+
+          <template #tocityName="{ row }">
+            <!-- 往返 -->
+            <span v-if="row.roundType">{{ row.backTocityName }}</span>
+
+            <!-- 单程 -->
+            <span v-else>{{ row.leaveTocityName }}</span>
+          </template>
+
+          <template #operation="{ row }">
+            <el-button @click="onAudit(row.id)">审批</el-button>
           </template>
         </base-table>
       </div>
     </div>
+
     <div class="home__content-calendar">
       <el-date-picker
         v-model="dateMonth"
@@ -52,24 +90,60 @@
         placeholder="选择月"
         value-format="timestamp"
         :picker-options="pickerOptions"
-        @change="onMonthPickerChange"
       />
+
       <el-calendar v-model="dateMonth">
         <template #dateCell="{ data: { isSelected, day, type }}">
           <!-- 不是当月的日期/当前月无特殊内容的日期 -->
           <span
-            v-if="type !== 'current-month'"
-            :class="['calendar-day_nonecurrntmonth', 'calendar-day_disabled']"
+            v-if="
+              type !== 'current-month' ||
+                !calendarMonthReportInfomations['showDays'].includes(day)
+            "
+            :class="[
+              'calendar-day_nonecurrntmonth',
+              { 'calendar-day_disabled': type !== 'current-month' },
+              { 'calendar-day_noreport': day === Today },
+              { 'calendar-day_default': type === 'current-month' }
+            ]"
             @click.stop
           >
             {{ day | toDateString('dd', false) }}</span
           >
           <!-- 当月有特殊内容的日期 -->
-          <el-popover v-else placement="right" trigger="click">
-            <div slot="reference" :class="isSelected ? 'red' : ''">
+          <el-popover
+            v-else
+            v-model="showDay[day]"
+            placement="bottom"
+            width="200"
+            trigger="click"
+            :content="calendarOnedayReportInfofomations"
+            @click.stop
+          >
+            <div
+              slot="reference"
+              :class="calendarMonthReportInfomations['dayConfigs'][day]"
+              @click.stop="onGetDayDetails(day)"
+            >
               {{ day | toDateString('dd', false) }}
             </div>
           </el-popover>
+          <!-- <el-popover
+            v-else
+            v-model="showDay[day]"
+            placement="top"
+            trigger="manual"
+            :content="calendarOnedayReportInfofomations"
+            @click.stop
+          >
+            <div
+              slot="reference"
+              :class="calendarMonthReportInfomations['dayConfigs'][day]"
+              @click.stop="onGetDayDetails(day)"
+            >
+              {{ day | toDateString('dd', false) }}
+            </div>
+          </el-popover> -->
         </template>
       </el-calendar>
     </div>
@@ -77,6 +151,10 @@
 </template>
 <script>
 import { toDateString } from '@/utils/lang'
+
+import { mapState, mapActions } from 'vuex'
+
+import routesPath from '@/router/routes-path'
 
 const NOW = Date.now()
 
@@ -88,6 +166,8 @@ export default {
   data() {
     return {
       dateMonth: NOW,
+
+      Today: TIME,
 
       pickerOptions: {
         disabledDate: time => {
@@ -105,59 +185,69 @@ export default {
       tabelCols: [
         {
           label: '矫正人员姓名',
-          prop: 'name',
+          prop: 'realName',
           minWidth: '95px'
         },
         {
           label: '判处类型',
-          prop: 'type'
+          prop: 'sentenceType'
         },
         {
           label: '申请时间',
-          prop: 'time',
+          prop: 'createTime',
           minWidth: '130px'
         },
         {
           label: '出发时间',
-          prop: 'out',
+          prop: 'leaveStartTime',
           minWidth: '130px'
         },
         {
           label: '单程往返',
-          prop: 'fc'
+          prop: 'roundType',
+          slotName: 'roundType'
         },
         {
           label: '交通工具',
-          prop: 'gj'
+          prop: 'vehicleType',
+          slotName: 'vehicleType'
         },
         {
           label: '目的城市',
-          prop: 'city'
+          prop: 'tocityName',
+          slotName: 'tocityName'
         },
         {
           label: '操作',
-          slotName: 'operation',
-          prop: 'cz',
-          minWidth: '50px'
+          slotName: 'operation'
         }
       ],
 
-      basciData: {
-        index: 1,
-        name: '张三丰',
-        type: '裁定假释',
-        time: '2020-02-02 10:00:00',
-        out: '2020-02-02 10:00:00',
-        fc: '单程',
-        gj: '火车',
-        city: '乌鲁木齐'
-      },
-
-      tableData: []
+      showDay: []
     }
   },
 
+  computed: {
+    ...mapState('account', [
+      'calendarMonthReportInfomations',
+      'calendarOnedayReportInfofomations',
+      'reportRemindNearbyPersons',
+      'reportRemindUnreportPersons'
+    ]),
+
+    ...mapState('supervision', ['reportOutLists'])
+  },
+
   methods: {
+    ...mapActions('account', [
+      'getCalendarOfMonthReportDetails',
+      'getCalendarOfOnedayReportDetails',
+      'getReportRemindOfReportNearby',
+      'getReportRemindOfUnreportPersons'
+    ]),
+
+    ...mapActions('supervision', ['getReportOutLists']),
+
     async onLoadWeatherView() {
       try {
         await (function(d) {
@@ -181,16 +271,42 @@ export default {
       }
     },
 
-    // 月份选择器
-    onMonthPickerChange(time) {
-      console.log(time, toDateString(time, 'yyyy-MM'))
+    // 获取具体某一天的数据
+    async onGetDayDetails(day) {
+      this.calendarMonthReportInfomations['showDays'].forEach(item => {
+        if (item !== day) this.$set(this.showDay, item, false)
+      })
+
+      await this.getCalendarOfOnedayReportDetails({ day })
+    },
+
+    onAudit(id) {
+      this.$router.push({
+        path: `${routesPath.SUPERVISION_OUT_INFORMATION_AUDIT}/${id}`
+      })
+    },
+
+    getIndexOfDay(day) {
+      return toDateString(day, 'dd', false)
+    },
+
+    onMore(name) {
+      this.$router.push({ path: `${routesPath[name]}` })
     }
   },
 
-  async mounted() {
-    console.log(TIME)
-    this.tableData = new Array(9).fill(this.basciData)
-    await this.onLoadWeatherView()
+  async created() {
+    this.$showLoading()
+
+    await Promise.all([
+      this.onLoadWeatherView(),
+      this.getCalendarOfMonthReportDetails(),
+      this.getReportRemindOfReportNearby(),
+      this.getReportRemindOfUnreportPersons(),
+      this.getReportOutLists({ page: 1, rows: 10, auditPending: 1 })
+    ])
+
+    this.$hideLoading()
   }
 }
 </script>
@@ -306,9 +422,11 @@ export default {
           text-align: center;
           width: 100%;
           padding: 1px 0px;
+          // cursor: not-allowed;
 
           div,
           &.calendar-day_nonecurrntmonth {
+            width: auto;
             padding: 10px 14px;
           }
 
@@ -316,22 +434,7 @@ export default {
             color: $--color-text-primary;
             margin: 0px auto;
             width: 10%;
-          }
-
-          &.calendar-day_noreport {
-            background-color: #fefdc5;
-          }
-
-          &.calendar-day_report {
-            background-color: #ddfcc8;
-          }
-
-          &.calendar-day_danger {
-            background-color: #eb333d;
-          }
-
-          &.calendar-today_normal {
-            background-color: $--color-primary;
+            cursor: pointer;
           }
         }
       }
@@ -346,13 +449,32 @@ export default {
     display: none !important;
   }
 
-  .red {
-    background-color: red;
+  // .calendar-day_noreport {
+  //   background-color: #fefdc5;
+  //   border-radius: 50%;
+  // }
+
+  .calendar-day_report {
+    background-color: #ddfcc8;
+    border-radius: 50%;
+  }
+
+  .calendar-day_danger {
+    background-color: #eb333d;
+    border-radius: 50%;
+  }
+
+  .calendar-today_normal {
+    background-color: $--color-primary;
     border-radius: 50%;
   }
 
   .calendar-day_disabled {
     cursor: not-allowed;
+  }
+
+  .calendar-day_default {
+    cursor: default;
   }
 }
 </style>

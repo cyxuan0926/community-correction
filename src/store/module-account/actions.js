@@ -104,7 +104,8 @@ export default {
         if (item.state !== '0') {
           const classObj = {
             '1': ['calendar-day_report'],
-            '2': ['calendar-day_noreport'],
+            '2': [''],
+            // '2': ['calendar-day_noreport'],
             '3': ['calendar-day_danger']
           }
 

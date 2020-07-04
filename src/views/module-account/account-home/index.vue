@@ -156,6 +156,8 @@ import { mapState, mapActions } from 'vuex'
 
 import routesPath from '@/router/routes-path'
 
+import { vehicleType, roundType } from '@/common/constants'
+
 const NOW = Date.now()
 
 const TIME = toDateString(NOW, 'yyyy-MM-dd')
@@ -204,12 +206,12 @@ export default {
         },
         {
           label: '单程往返',
-          prop: 'roundType',
+          // prop: 'roundType',
           slotName: 'roundType'
         },
         {
           label: '交通工具',
-          prop: 'vehicleType',
+          // prop: 'vehicleType',
           slotName: 'vehicleType'
         },
         {
@@ -223,7 +225,11 @@ export default {
         }
       ],
 
-      showDay: []
+      showDay: [],
+
+      vehicleType,
+
+      roundType
     }
   },
 
@@ -449,10 +455,10 @@ export default {
     display: none !important;
   }
 
-  .calendar-day_noreport {
-    background-color: #fefdc5;
-    border-radius: 50%;
-  }
+  // .calendar-day_noreport {
+  //   background-color: #fefdc5;
+  //   border-radius: 50%;
+  // }
 
   .calendar-day_report {
     background-color: #ddfcc8;
