@@ -82,10 +82,10 @@ export default {
         label: '正常报到次数',
         prop: 'normalReport'
       },
-      {
-        label: '异常报到次数',
-        prop: 'abnormalReport'
-      },
+      // {
+      //   label: '异常报到次数',
+      //   prop: 'abnormalReport'
+      // },
       {
         label: '外出报到次数',
         prop: 'awayReport'

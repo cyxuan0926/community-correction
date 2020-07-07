@@ -103,7 +103,8 @@ export default {
               backVehicleNum: trip.vehicleNum,
               backVehicleType: trip.vehicleType,
               backStartTime: trip.startTime,
-              backEndTime: trip.endTime
+              backEndTime: trip.endTime,
+              backDetailedAddress: trip.detailedAddress
             })
           }
         })

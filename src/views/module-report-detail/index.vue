@@ -15,6 +15,10 @@
         <template #status="{ row }">{{
             row.status | filterInput({ filterEl: registrationStatus })
           }}</template>
+
+        <template #registVideo>
+          <base-video videoUrl />
+        </template>
       </base-table>
     </div>
 

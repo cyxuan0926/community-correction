@@ -210,9 +210,23 @@
               disabled
             />
           </el-form-item>
+
+          <el-form-item
+            class="el-form_fullWidth border__right el-form__detailedAddress"
+            label="返程详细地址"
+            prop="backDetailedAddress"
+            :rules="{ required: true, message: '请输入返程详细地址' }"
+          >
+            <el-input
+              v-model="formData.backDetailedAddress"
+              placeholder="请输入返程详细地址"
+              disabled
+            />
+          </el-form-item>
         </template>
 
         <el-form-item
+          class="border-right__none"
           label="时长（天）"
           prop="duration"
           :rules="{ required: true, message: '请输入时长（天）' }"
@@ -225,6 +239,7 @@
         </el-form-item>
 
         <el-form-item
+          class="border__right"
           label="申请时间"
           prop="createTime"
           :rules="{ required: true, message: '请选择申请时间' }"
@@ -459,12 +474,18 @@ export default {
           padding-left: 3%;
 
           ::v-deep .el-form-item__content {
-            width: 86%;
+            width: 86.5%;
             .el-input,
             .el-select,
             .el-date-editor {
               width: 100%;
             }
+          }
+        }
+
+        &.el-form__detailedAddress {
+          ::v-deep .el-form-item__content {
+            width: 88.3%
           }
         }
 

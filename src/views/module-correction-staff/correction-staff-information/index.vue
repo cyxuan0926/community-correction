@@ -749,7 +749,7 @@ export default {
 
             .addressDetail {
               width: 70%;
-              cursor: pointer;
+              // cursor: pointer;
 
               a {
                 color: #409eff;

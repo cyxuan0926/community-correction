@@ -57,8 +57,8 @@
 </template>
 
 <script>
-    import { getReportHistoryDate } from '@/services/api/module-registration'
-    const now = Date.now()
+    // import { getReportHistoryDate } from '@/services/api/module-registration'
+    // const now = Date.now()
     export default {
         name: 'info-panel',
         

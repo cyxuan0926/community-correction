@@ -34,7 +34,17 @@ export default {
       {
         label: '报到地址定位',
         prop: 'detailAddress',
+        minWidth: 140,
         showOverflowTooltip: true
+      },
+      {
+        label: '报到视频',
+        slotName: 'registVideo'
+      },
+      {
+        label: '报到朗读内容',
+        prop: '',
+        minWidth: 140
       },
       {
         label: '报到状态',

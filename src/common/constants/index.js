@@ -60,18 +60,18 @@ export const REGISTRATION = [
     label: '外出报到',
     value: 2
   },
-  {
-    label: '迟到报到',
-    value: 3
-  },
+  // {
+  //   label: '迟到报到',
+  //   value: 3
+  // },
   {
     label: '未报到',
     value: 4
-  },
-  {
-    label: '异常报到',
-    value: 5
   }
+  // {
+  //   label: '异常报到',
+  //   value: 5
+  // }
 ]
 
 // 交通工具类型
