@@ -66,7 +66,7 @@ export const REGISTRATION = [
   // },
   {
     label: '未报到',
-    value: 4
+    value: 3
   }
   // {
   //   label: '异常报到',
