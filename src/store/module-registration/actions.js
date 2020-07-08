@@ -2,12 +2,25 @@ import * as registrationAPI from '@/services/api/module-registration'
 
 import { mutationRegistration } from './mutation-types'
 
+import { URLConfig } from '@/services/urls'
+
 export default {
   async getReportDetailsPage({ commit }, params) {
     try {
       const { data } = await registrationAPI.getReportDetailsPage(params)
 
-      const { list, totalCount } = data
+      const { totalCount } = data
+
+      let { list } = data
+
+      list = list.map(item => {
+        const { video } = item
+
+        return {
+          ...item,
+          videoUrl: video ? `${ URLConfig.publicApiHost }/files/${ video }` : ''
+        }
+      })
 
       commit(mutationRegistration.GET_REPORT_DETAIL_LISTS, {
         list,

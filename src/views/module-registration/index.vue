@@ -17,11 +17,14 @@
       </el-tabs>
 
       <base-table
-        class="table-tabs_card"
         :cols="tableCols"
         :data="pageData.content"
         stripe
       >
+        <template #registVideo="{ row }">
+          <base-video :videoUrl="row.videoUrl" />
+        </template>
+
         <template #status="{ row }">{{
           row.status | filterInput({ filterEl: registrationStatus })
         }}</template>

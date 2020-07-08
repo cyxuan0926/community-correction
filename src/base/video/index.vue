@@ -1,9 +1,9 @@
 <template>
   <div class="video">
-    <div class="video-placeholder" v-if="!videoUrl">
+    <!-- <div class="video-placeholder" >
       <i class="iconfont icon-video" />
-    </div>
-    <video controls v-else>
+    </div> -->
+    <video controls v-if="videoUrl">
       <source :src="videoUrl" type="video/mp4" />
       <source :src="videoUrl" type="video/webm" />
       <source :src="videoUrl" type="video/ogg" />

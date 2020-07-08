@@ -29,21 +29,23 @@ export default {
       },
       {
         label: '实际报到时间',
-        prop: 'realityTime'
+        prop: 'realityTime',
+        minWidth: 120
       },
       {
         label: '报到地址定位',
         prop: 'detailAddress',
-        minWidth: 140,
+        minWidth: 150,
         showOverflowTooltip: true
       },
       {
         label: '报到视频',
-        slotName: 'registVideo'
+        slotName: 'registVideo',
+        minWidth: 200
       },
       {
         label: '报到朗读内容',
-        prop: '',
+        prop: 'readContent',
         minWidth: 140
       },
       {

@@ -12,13 +12,13 @@
 
     <div class="supervision-remind_content content">
       <base-table :cols="tableCols" :data="pageData.content" stripe>
+        <template #registVideo="{ row }">
+          <base-video :videoUrl="row.videoUrl" />
+        </template>
+
         <template #status="{ row }">{{
             row.status | filterInput({ filterEl: registrationStatus })
           }}</template>
-
-        <template #registVideo>
-          <base-video videoUrl />
-        </template>
       </base-table>
     </div>
 
