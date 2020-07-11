@@ -318,6 +318,8 @@
             v-model.trim="formData.refusalReasons"
             type="textarea"
             placeholder="请输入拒绝原因"
+            maxlength="30"
+            show-word-limit
             :autosize="{ minRows: 2, maxRows: 4 }"
             :disabled="!formData.auditResult || !!formData.status"
           />
