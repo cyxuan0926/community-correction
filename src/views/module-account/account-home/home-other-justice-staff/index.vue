@@ -76,7 +76,7 @@
                     const adCode = that.getJusticeCode.adCode
                     const { data } = await getReportMapmarks()
                     await utilIns.loadMap({id: 'homeMap'})
-                    //await utilIns.loadPlugin('Geocoder')
+                    await utilIns.loadPlugin('DistrictLayer')
 
                     if( data && data.length ) {
                         that.markList = data.filter(m => m.lng && m.lat && m.username).map(m => ({
