@@ -130,12 +130,15 @@ export default class AmapUtil {
         marks = Array.isArray(marks) ? marks : [marks]
         if( marks.length ) {
             this.marks = marks.map(m => {
-                let { config, ...props } = m
+                let { content, position, ...props } = m
                 let mk = new this.AmapConstructor.Marker({
-                    ...config
+                    position,
+                    content,
+                    offset: new this.AmapConstructor.Pixel(-9.5, -32)
                 })
                 return Object.assign(mk, props)
             })
+            console.log( this.marks )
             this.map.add( this.marks )
         }
         return this
