@@ -248,7 +248,12 @@ export default {
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',
         defaultTime: ['00:00:00', '23:59:59'],
-        valueFormat: 'yyyy-MM-dd HH:mm:ss'
+        valueFormat: 'yyyy-MM-dd HH:mm:ss',
+        pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+        }
       }
     ]
 
