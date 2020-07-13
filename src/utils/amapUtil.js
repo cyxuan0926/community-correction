@@ -138,7 +138,6 @@ export default class AmapUtil {
                 })
                 return Object.assign(mk, props)
             })
-            console.log( this.marks )
             this.map.add( this.marks )
         }
         return this
