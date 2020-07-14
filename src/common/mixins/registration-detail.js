@@ -5,23 +5,33 @@ export default {
     const commonRegistrationDetailTableCols = [
       {
         label: '省份',
-        prop: 'provinceName'
+        prop: 'provinceName',
+        width: 60,
+        showOverflowTooltip: true
       },
       {
         label: '地市',
-        prop: 'cityName'
+        prop: 'cityName',
+        width: 60,
+        showOverflowTooltip: true
       },
       {
         label: '机构名称',
-        prop: 'jurisdictionName'
+        prop: 'jurisdictionName',
+        minWidth: 60,
+        showOverflowTooltip: true
       },
       {
         label: '矫正人员姓名',
-        prop: 'prisonerName'
+        prop: 'prisonerName',
+        minWidth: 80,
+        showOverflowTooltip: true
       },
       {
         label: '判处类型',
-        prop: 'sentenceType'
+        minWidth: 65,
+        prop: 'sentenceType',
+        showOverflowTooltip: true
       },
       {
         label: '应报到时间',
@@ -35,7 +45,6 @@ export default {
       {
         label: '报到地址定位',
         prop: 'detailAddress',
-        minWidth: 150,
         showOverflowTooltip: true
       },
       {
@@ -45,13 +54,13 @@ export default {
       },
       {
         label: '报到朗读内容',
-        prop: 'readContent',
-        minWidth: 140
+        prop: 'readContent'
       },
       {
         label: '报到状态',
         prop: 'status',
-        slotName: 'status'
+        slotName: 'status',
+        minWidth: 65
       }
     ]
     const allFilterItems = [
