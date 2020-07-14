@@ -28,7 +28,7 @@
 
         <template #vehicleType="{ row }">
           <!-- 往返 -->
-          <span v-if="row.roundType">{{
+          <span v-if="row.roundType === '1'">{{
             row.backVehicleType | filterInput({ filterEl: vehicleType })
           }}</span>
 
@@ -40,7 +40,7 @@
 
         <template #tocityName="{ row }">
           <!-- 往返 -->
-          <span v-if="row.roundType">{{ row.backTocityName }}</span>
+          <span v-if="row.roundType === '1'">{{ row.backTocityName }}</span>
 
           <!-- 单程 -->
           <span v-else>{{ row.leaveTocityName }}</span>
