@@ -43,7 +43,7 @@
                     <td colspan="3">
                         <div class="info__panel__scroll" @scroll.stop>
                             <template v-if="reportAddressList.length">
-                                <p v-for="(r, index) in reportAddressList" :key="r.id">{{r.address}}<span v-if="index != reportAddressList.length - 1">；</span></p>
+                                <p v-for="(r, index) in reportAddressList" :key="r.id + index">{{r.address}}<span v-if="index != reportAddressList.length - 1">；</span></p>
                             </template>
                             <template v-else>
                                 <p class="info__panel__noresult">暂无外出请假数据</p>

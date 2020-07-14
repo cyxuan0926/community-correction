@@ -41,7 +41,8 @@
       <el-date-picker
         v-if="isDatePicker(item.type)"
         v-model="filterParams[item.name]"
-        unlink-panels
+        :type="item.type"
+        :picker-options="item.pickerOptions"
         v-bind="item"
         v-on="itemEvents[item.name]"
       />

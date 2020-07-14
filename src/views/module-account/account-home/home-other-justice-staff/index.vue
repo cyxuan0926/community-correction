@@ -70,22 +70,20 @@
         methods: {
             async initAMap() {
                 try {
+                    console.log( this.getJusticeCode.adCode )
                     const that = this
                     const utilIns = that.instance = AmapUtil.getMapInstance()
                     const adCode = that.getJusticeCode.adCode
                     const { data } = await getReportMapmarks()
                     await utilIns.loadMap({id: 'homeMap'})
-                    //await utilIns.loadPlugin('Geocoder')
+                    await utilIns.loadPlugin('DistrictLayer')
 
                     if( data && data.length ) {
                         that.markList = data.filter(m => m.lng && m.lat && m.username).map(m => ({
                             mkId: m.id,
                             mkUsername: m.username,
-                            config: {
-                                position: [m.lng, m.lat],
-                                icon: `${URLConfig.webHost}/static/img/mark_bs0${m.status != 1 && m.status != 2 ? '3' : m.status }.png`
-                            }
-                            
+                            content: `<img width="19px" height="32px" src="${URLConfig.webHost}/static/img/mark_bs0${m.status != 1 && m.status != 2 ? '3' : m.status }.png">`,
+                            position: [m.lng, m.lat]
                         }))
                     }
 
