@@ -717,8 +717,9 @@ export default {
       width: 34.3%;
 
       .el-image__inner {
-        width: 100%;
-        height: auto;
+        // width: 100%;
+        height: 50%;
+        // height: auto;
       }
     }
 
