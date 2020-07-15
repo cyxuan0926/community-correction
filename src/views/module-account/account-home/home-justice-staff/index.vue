@@ -57,24 +57,24 @@
           }}</template>
 
           <template #vehicleType="{ row }">
-            <!-- 往返 -->
-            <span v-if="row.roundType">{{
-              row.backVehicleType | filterInput({ filterEl: vehicleType })
-            }}</span>
+          <!-- 往返 -->
+          <span v-if="row.roundType === '1'">{{
+            row.backVehicleType | filterInput({ filterEl: vehicleType })
+          }}</span>
 
-            <!-- 单程 -->
-            <span v-else>{{
-              row.leaveVehicleType | filterInput({ filterEl: vehicleType })
-            }}</span>
-          </template>
+          <!-- 单程 -->
+          <span v-else>{{
+            row.leaveVehicleType | filterInput({ filterEl: vehicleType })
+          }}</span>
+        </template>
 
-          <template #tocityName="{ row }">
-            <!-- 往返 -->
-            <span v-if="row.roundType">{{ row.backTocityName }}</span>
+        <template #tocityName="{ row }">
+          <!-- 往返 -->
+          <span v-if="row.roundType === '1'">{{ row.backTocityName }}</span>
 
-            <!-- 单程 -->
-            <span v-else>{{ row.leaveTocityName }}</span>
-          </template>
+          <!-- 单程 -->
+          <span v-else>{{ row.leaveTocityName }}</span>
+        </template>
 
           <template #operation="{ row }">
             <el-button @click="onAudit(row.id)">审批</el-button>
@@ -206,12 +206,12 @@ export default {
         },
         {
           label: '单程往返',
-          // prop: 'roundType',
+          prop: 'roundType',
           slotName: 'roundType'
         },
         {
           label: '交通工具',
-          // prop: 'vehicleType',
+          prop: 'vehicleType',
           slotName: 'vehicleType'
         },
         {
