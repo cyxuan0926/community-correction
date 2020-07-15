@@ -42,7 +42,7 @@
         v-if="isDatePicker(item.type)"
         v-model="filterParams[item.name]"
         :type="item.type"
-        :picker-options="item.pickerOptions"
+        :picker-options="pickerOptions"
         v-bind="item"
         v-on="itemEvents[item.name]"
       />
@@ -102,7 +102,12 @@ export default {
 
   data() {
     return {
-      filterParams: {}
+      filterParams: {},
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+      }
     }
   },
 
