@@ -227,7 +227,7 @@ export default {
     }
   },
 
-  async created() {
+  async activated() {
     this.filterItems = this.initItems
     await this.gettingPageData()
   }

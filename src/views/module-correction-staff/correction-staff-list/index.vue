@@ -545,7 +545,7 @@ export default {
     }
   },
 
-  created() {
+  activated() {
     this.gettingPageData()
   }
 }
