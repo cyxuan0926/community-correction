@@ -26,7 +26,7 @@
                         <el-select 
                             v-model="selectReportDate" 
                             placeholder="请选择历史报到日期"
-                            :change="handleHistoryReportChange">
+                            @change="handleHistoryReportChange">
                             <el-option
                                 v-for="item in reportDateList"
                                 :key="item"
@@ -83,16 +83,19 @@
 
         methods: {
             setReportData() {
+                this.reportDetailedAddress = {}
                 this.infoData.historyDates.forEach(d => {
                     const rt = d.reportTime
-                    if( !this.reportDateList.includes(rt) ) {
-                        this.reportDateList.push(rt)
+                    if( rt ) {
+                        if( !this.reportDateList.includes(rt) ) {
+                            this.reportDateList.push(rt)
+                        }
+                        (this.reportDetailedAddress[rt] = this.reportDetailedAddress[rt] || []).push({
+                            id: d.id,
+                            status: d.status,
+                            address: `${d.leaveTime} 去${d.detailedAddress}，${d.backTime} 返回`
+                        })
                     }
-                    (this.reportDetailedAddress[rt] = this.reportDetailedAddress[rt] || []).push({
-                        id: d.id,
-                        status: d.status,
-                        address: `${d.leaveTime}去${d.detailedAddress}，${d.backTime}返回`
-                    })
                 });
                 this.selectReportDate = this.reportDateList[0]
                 this.setReportAddressList()
