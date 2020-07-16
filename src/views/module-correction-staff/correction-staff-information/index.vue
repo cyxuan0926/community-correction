@@ -10,6 +10,8 @@
         ref="formBasic"
         :model="formBasicModel"
         inline
+        label-width="120px"
+        label-position="right"
         :rules="formBasicRules"
       >
         <el-form-item
@@ -54,15 +56,15 @@
         </el-form-item>
 
         <el-form-item
-          class="form-item_address"
-          label="户籍地址"
-          prop="address"
-          :rules="{ required: true }"
+          label="报到日"
+          class="form-item-reportDay"
+          prop="reportingDay"
         >
           <el-input
-            v-model.trim="formBasicModel.address"
-            disabled
-            placeholder="请填写户籍地址"
+            v-model.number="formBasicModel.reportingDay"
+            placeholder="请填写报到日"
+            clearable
+            :disabled="!!+formBasicModel.edited"
           />
         </el-form-item>
 
@@ -75,35 +77,8 @@
         </el-form-item>
 
         <el-form-item
-          class="form-item_livingPlace"
-          label="居住地"
-          prop="livingPlace"
-          :rules="{ required: true }"
-        >
-          <el-input
-            v-model.trim="formBasicModel.livingPlace"
-            disabled
-            placeholder="请填写居住地"
-          />
-        </el-form-item>
-
-        <el-form-item
-          label="接管日期"
-          prop="handoverTime"
-          :rules="{ required: true }"
-        >
-          <el-date-picker
-            v-model="formBasicModel.handoverTime"
-            type="date"
-            disabled
-            placeholder="请选择接管日期"
-            value-format="yyyy-MM-dd hh:mm:ss"
-          />
-        </el-form-item>
-
-        <el-form-item
           label="报到周期"
-          class="form-item_fullwidth"
+          class="form-item_livingPlace"
           prop="reportingCycle"
           :rules="{ required: true, message: '请选择报到周期' }"
         >
@@ -122,110 +97,29 @@
         </el-form-item>
 
         <el-form-item
-          label="报到期"
-          prop="reportingPeriod"
-          :rules="{ required: true, message: '请选择报到期' }"
+          label="接管日期"
+          prop="handoverTime"
+          :rules="{ required: true }"
         >
-          <el-select
-            v-model="formBasicModel.reportingPeriod"
-            placeholder="请选择报到期"
-            :disabled="!!+formBasicModel.edited"
-          >
-            <el-option
-              v-for="reportDurationOption of reportDurationOptions"
-              :key="reportDurationOption"
-              :label="reportDurationOption"
-              :value="reportDurationOption"
-            />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item
-          label="报到日"
-          class="form-item-reportDay"
-          prop="reportingDay"
-        >
-          <el-input
-            v-model.number="formBasicModel.reportingDay"
-            placeholder="请填写报到日"
-            clearable
-            :disabled="!!+formBasicModel.edited"
-          />
-        </el-form-item>
-
-        <el-form-item
-          class="form-item_textarea"
-          label="判决机关"
-          prop="judgmentOrgan"
-        >
-          <el-input
-            v-model.trim="formBasicModel.judgmentOrgan"
-            type="text"
-            show-word-limit
-            maxlength="50"
-            placeholder="请填写判决机关"
-            clearable
-          />
-        </el-form-item>
-
-        <el-form-item label="判决日期" prop="judgmentDate">
           <el-date-picker
-            v-model="formBasicModel.judgmentDate"
+            v-model="formBasicModel.handoverTime"
             type="date"
-            placeholder="请选择判决日期"
-            value-format="yyyy-MM-dd"
-            clearable
+            disabled
+            placeholder="请选择接管日期"
+            value-format="yyyy-MM-dd hh:mm:ss"
           />
         </el-form-item>
 
-        <el-form-item class="form-item_charge" label="罪名" prop="charge">
+        <el-form-item
+          class="form-item_fullwidth form-item__livingPlace"
+          label="居住地"
+          prop="livingPlace"
+          :rules="{ required: true }"
+        >
           <el-input
-            v-model.trim="formBasicModel.charge"
-            type="text"
-            show-word-limit
-            maxlength="50"
-            placeholder="请填写罪名"
-            clearable
-          />
-        </el-form-item>
-
-        <el-form-item label="判处类型" prop="sentenceType">
-          <el-select
-            v-model="formBasicModel.sentenceType"
-            placeholder="请选择判处类型"
-            clearable
-          >
-            <el-option
-              v-for="sentenceTypeOption of sentenceTypeOptions"
-              :key="sentenceTypeOption"
-              :label="sentenceTypeOption"
-              :value="sentenceTypeOption"
-            />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="附加刑" prop="supplementaryPenalty">
-          <el-select
-            v-model="formBasicModel.supplementaryPenalty"
-            placeholder="请选择附加刑"
-            clearable
-          >
-            <el-option
-              v-for="supplementaryPenaltyOption of supplementaryPenaltyOptions"
-              :key="supplementaryPenaltyOption"
-              :label="supplementaryPenaltyOption"
-              :value="supplementaryPenaltyOption"
-            />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="原判刑期" prop="originalSentence">
-          <el-input
-            v-model.trim="formBasicModel.originalSentence"
-            show-word-limit
-            maxlength="50"
-            placeholder="请填写原判刑期"
-            clearable
+            v-model.trim="formBasicModel.livingPlace"
+            disabled
+            placeholder="请填写居住地"
           />
         </el-form-item>
 
@@ -348,7 +242,126 @@
         class="form-supervision form"
         :model="formSupervisionModel"
         inline
+        label-width="120px"
+        label-position="right"
       >
+        <el-form-item class="form-item__left" label="原判刑期" prop="originalSentence">
+          <el-input
+            v-model.trim="formSupervisionModel.originalSentence"
+            show-word-limit
+            maxlength="50"
+            placeholder="请填写原判刑期"
+            clearable
+          />
+        </el-form-item>
+
+        <el-form-item 
+          class="form-item__right supplementaryPenalty"
+          label="附加刑"
+          prop="supplementaryPenalty"
+        >
+          <el-select
+            v-model="formSupervisionModel.supplementaryPenalty"
+            placeholder="请选择附加刑"
+            clearable
+          >
+            <el-option
+              v-for="supplementaryPenaltyOption of supplementaryPenaltyOptions"
+              :key="supplementaryPenaltyOption"
+              :label="supplementaryPenaltyOption"
+              :value="supplementaryPenaltyOption"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item class="form-item__left" label="罪名" prop="charge">
+          <el-input
+            v-model.trim="formSupervisionModel.charge"
+            type="text"
+            show-word-limit
+            maxlength="50"
+            placeholder="请填写罪名"
+            clearable
+          />
+        </el-form-item>
+
+        <el-form-item
+          class="form-item__right"
+          label="判处类型"
+          prop="sentenceType"
+        >
+          <el-select
+            v-model="formSupervisionModel.sentenceType"
+            placeholder="请选择判处类型"
+            clearable
+          >
+            <el-option
+              v-for="sentenceTypeOption of sentenceTypeOptions"
+              :key="sentenceTypeOption"
+              :label="sentenceTypeOption"
+              :value="sentenceTypeOption"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          class="form-item__left"
+          label="户籍地址"
+          prop="address"
+          :rules="{ required: true }"
+        >
+          <el-input
+            v-model.trim="formSupervisionModel.address"
+            disabled
+            placeholder="请填写户籍地址"
+          />
+        </el-form-item>
+
+        <el-form-item
+          class="form-item__right"
+          label="报到期"
+          prop="reportingPeriod"
+          :rules="{ required: true, message: '请选择报到期' }"
+        >
+          <el-select
+            v-model="formSupervisionModel.reportingPeriod"
+            placeholder="请选择报到期"
+            :disabled="!!+formSupervisionModel.edited"
+          >
+            <el-option
+              v-for="reportDurationOption of reportDurationOptions"
+              :key="reportDurationOption"
+              :label="reportDurationOption"
+              :value="reportDurationOption"
+            />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          class="form-item__left"
+          label="判决机关"
+          prop="judgmentOrgan"
+        >
+          <el-input
+            v-model.trim="formSupervisionModel.judgmentOrgan"
+            type="text"
+            show-word-limit
+            maxlength="50"
+            placeholder="请填写判决机关"
+            clearable
+          />
+        </el-form-item>
+
+        <el-form-item class="form-item__right" label="判决日期" prop="judgmentDate">
+          <el-date-picker
+            v-model="formSupervisionModel.judgmentDate"
+            type="date"
+            placeholder="请选择判决日期"
+            value-format="yyyy-MM-dd"
+            clearable
+          />
+        </el-form-item>
+
         <el-form-item class="form-item_idCard is-required" label="身份证信息">
           <template>
             <base-img-viewer
@@ -395,8 +408,8 @@
     </div>
 
     <div class="correction-information-button information-button__common">
-      <el-button type="primary" @click="onSave">保存</el-button>
-      <el-button type="primary" @click="onGoBack">返回</el-button>
+      <el-button :loading="saveLoading" type="primary" @click="onSave">保存</el-button>
+      <el-button :disabled="saveLoading" type="primary" @click="onGoBack">返回</el-button>
     </div>
 
     <base-map-viewer
@@ -438,6 +451,7 @@ export default {
       else callback()
     }
     return {
+      saveLoading: false,
       reportDurationOptions: REPORTDURATIONOPTIONS,
       sentenceTypeOptions: SENTENCETYPEOPTIONS,
       reportCycleOptions: REPORTCYCLEOPTIONS,
@@ -448,19 +462,13 @@ export default {
         sex: '',
         birthday: '',
         uuid: '',
-        address: '',
         phone: '',
         livingPlace: '',
         handoverTime: '',
         reportingCycle: '月报到',
-        reportingPeriod: 5,
         reportingDay: '',
         judgmentOrgan: '',
         judgmentDate: '',
-        charge: '',
-        sentenceType: '',
-        supplementaryPenalty: '',
-        originalSentence: '',
         correctDeadline: '',
         correctDeadlineStart: '',
         correctDeadlineEnd: '',
@@ -476,7 +484,13 @@ export default {
         charge: [{ required: true, message: '请填写罪名' }]
       },
       formSupervisionModel: {
-        effectiveRange: 300
+        effectiveRange: 300,
+        originalSentence: '',
+        charge: '',
+        sentenceType: '',
+        address: '',
+        reportingPeriod: 5,
+        formSupervisionModel: ''
       },
       visible: false,
       currentMonthDays: CURRENTMONTHDAYS,
@@ -582,6 +596,8 @@ export default {
     },
 
     onSave() {
+      this.saveLoading = true
+
       const isCorrectDeadlineStartSuccess = this.onCorrectDeadlineDateBlur(
         this.formBasicModel.correctDeadlineStart
       )
@@ -618,9 +634,11 @@ export default {
 
           await this.saveCorrectionalInformation(this.formBasicModel)
 
-          if (this.correctionalDetailResult) await this.gettingData()
+          if (this.correctionalDetailResult) this.$router.push({ path: '/correction-staff/list' })
         }
       })
+
+      this.saveLoading = false
     }
   },
 
@@ -633,12 +651,14 @@ export default {
 <style lang="scss" scoped>
 .correction-information {
   &-form {
+    .el-date-editor.el-input, .el-date-editor.el-input__inner, .el-select {
+      width: 100%;
+    }
     .form-basic {
       width: 65%;
 
       .el-form-item {
         width: 49.6%;
-        text-align: right;
 
         &:nth-child(odd) {
           border-right: none;
@@ -653,16 +673,14 @@ export default {
         }
 
         ::v-deep &__content {
-          padding-right: 1%;
+          width: calc(99% - 120px);
         }
 
         &.form-item_fullwidth {
-          width: 96.4%;
+          width: 99.3%;
           border-right: $-boder-style;
-          padding-left: 3%;
 
           ::v-deep .el-form-item__content {
-            width: 81.7%;
             .el-input,
             .el-select,
             .el-date-editor {
@@ -671,27 +689,9 @@ export default {
           }
         }
 
-        &.form-item-reportDay {
-          ::v-deep .el-form-item__content {
-            width: 66%;
-          }
-        }
-
-        &.form-item_textarea {
-          ::v-deep .el-form-item__content {
-            width: 76%;
-          }
-        }
-
-        &.form-item_charge {
-          ::v-deep .el-form-item__content {
-            width: 82%;
-          }
-        }
-
         &.form-item_dateRange {
           ::v-deep .el-form-item__content {
-            width: 80%;
+            width: calc(99.7% - 120px);
 
             .el-date-editor {
               width: 49%;
@@ -699,27 +699,19 @@ export default {
           }
         }
 
-        &.form-item_address {
-          ::v-deep .el-form-item__content {
-            width: 74%;
-          }
-        }
-
-        &.form-item_livingPlace {
-          ::v-deep .el-form-item__content {
-            width: 78%;
-          }
+        &.form-item__livingPlace {
+          width: 99.4%;
         }
       }
     }
 
     ::v-deep .form-img {
-      width: 34.3%;
+      width: 24%;
+      height: 30%;
+      padding-left: 5%;
 
       .el-image__inner {
-        // width: 100%;
-        height: 50%;
-        // height: auto;
+        height: 45.6%;
       }
     }
 
@@ -727,11 +719,26 @@ export default {
       width: 99.2%;
 
       .el-form-item {
-        width: 100%;
+        width: 99.7%;
         border-top: none;
 
         &:first-child {
           border-top: $-boder-style;
+        }
+
+        &.form-item__left {
+          width: 65.04%;
+          border-bottom: $-boder-style;
+
+          ::v-deep .el-form-item__content {
+            width: calc(99% - 120px);
+          }
+        }
+
+        &.form-item__right {
+          width: calc(34.7% - 1px);
+          border-left: none;
+          border-bottom: $-boder-style;
         }
 
         &.form-item_location {
@@ -739,18 +746,13 @@ export default {
           justify-content: space-around;
           border-bottom: $-boder-style;
 
-          ::v-deep .el-form-item__label {
-            width: 9%;
-            padding-right: 0px;
-          }
-
           ::v-deep .el-form-item__content {
             display: flex;
-            width: 85%;
+            width: calc(100% - 120px);
 
             .addressDetail {
               width: 70%;
-              // cursor: pointer;
+              cursor: pointer;
 
               a {
                 color: #409eff;
@@ -782,14 +784,9 @@ export default {
           align-items: center;
           border-bottom: $-boder-style;
 
-          ::v-deep .el-form-item__label {
-            padding-left: 5%;
-          }
-
           ::v-deep .el-form-item__content {
             display: flex;
             width: 70%;
-            padding-left: 4%;
           }
 
           .el-image {
@@ -817,5 +814,8 @@ export default {
       border-color: #f78080;
     }
   }
+}
+.supplementaryPenalty {
+  border-top: $-boder-style !important;
 }
 </style>
