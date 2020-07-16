@@ -170,8 +170,7 @@
         .maplayer__header {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            right: 0;
             overflow: hidden;
             padding: 0 16px;
             box-sizing: border-box;
