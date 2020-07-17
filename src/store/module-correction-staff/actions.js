@@ -43,8 +43,6 @@ export default {
     try {
       const { code } = await correctionStaffAPI.authCorrectionalStaff(params)
 
-      console.log(code)
-
       const isSuccess = code === 200
 
       const { opStatus } = params
