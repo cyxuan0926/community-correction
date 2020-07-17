@@ -69,7 +69,6 @@
 
         methods: {
             async initAMap() {
-                console.log('== initAmap')
                 try {
                     const that = this
                     const utilIns = that.instance = AmapUtil.getMapInstance()
@@ -133,9 +132,7 @@
                             adcode: [adCode]
                         })
                     }
-                    console.log('======= start')
                     utilIns.setCity(adCode)
-                    console.log( '=========== end' + adCode )
 
                 } catch (err) {
                     Promise.reject(err)
