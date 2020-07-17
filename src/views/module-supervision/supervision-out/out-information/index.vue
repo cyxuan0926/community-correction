@@ -133,7 +133,7 @@
         >
           <el-date-picker
             v-model="formData.outwardStartTime"
-            type="date"
+            type="datetime"
             placeholder="请选择开始时间"
             disabled
           />
@@ -147,7 +147,7 @@
         >
           <el-date-picker
             v-model="formData.outwardeEndTime"
-            type="date"
+            type="datetime"
             placeholder="请选择结束时间"
             disabled
           />
@@ -192,7 +192,7 @@
           >
             <el-date-picker
               v-model="formData.backStartTime"
-              type="date"
+              type="datetime"
               placeholder="请选择开始时间"
               disabled
             />
@@ -205,7 +205,7 @@
           >
             <el-date-picker
               v-model="formData.backEndTime"
-              type="date"
+              type="datetime"
               placeholder="请选择结束时间"
               disabled
             />
