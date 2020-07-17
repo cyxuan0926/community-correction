@@ -69,8 +69,8 @@
 
         methods: {
             async initAMap() {
+                console.log('== initAmap')
                 try {
-                    console.log( this.getJusticeCode.adCode )
                     const that = this
                     const utilIns = that.instance = AmapUtil.getMapInstance()
                     const adCode = that.getJusticeCode.adCode
@@ -82,7 +82,7 @@
                         that.markList = data.filter(m => m.lng && m.lat && m.username).map(m => ({
                             mkId: m.id,
                             mkUsername: m.username,
-                            content: `<img width="19px" height="32px" src="${URLConfig.webHost}/static/img/mark_bs0${m.status != 1 && m.status != 2 ? '3' : m.status }.png">`,
+                            content: `<img width="19px" height="32px" src="${URLConfig.webHost}/static/img/mark_bs0${m.status}.png">`,
                             position: [m.lng, m.lat]
                         }))
                     }
@@ -133,7 +133,9 @@
                             adcode: [adCode]
                         })
                     }
+                    console.log('======= start')
                     utilIns.setCity(adCode)
+                    console.log( '=========== end' + adCode )
 
                 } catch (err) {
                     Promise.reject(err)
@@ -168,8 +170,7 @@
         .maplayer__header {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            right: 0;
             overflow: hidden;
             padding: 0 16px;
             box-sizing: border-box;

@@ -38,7 +38,7 @@ import {
   jurisdictionsFilterCreator
 } from '@/common/mixins'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'reportDetailList',
@@ -52,8 +52,18 @@ export default {
   computed: {
     ...mapState('registration', ['reportDetailLists']),
 
+    ...mapGetters('account', [
+      'isJudiciaryAccount',
+      'isJusticeDepartmentAccount',
+      'isJusticeBureauAccount',
+      'isJudiceOfficeAccount'
+    ]),
+
     tableCols() {
-      return this.commonRegistrationDetailTableCols
+      return this.commonRegistrationDetailTableCols.slice(
+        this.isJudiciaryAccount ? 0 : 
+          this.isJusticeDepartmentAccount ? 1 : 2
+      )
     }
   },
 
