@@ -106,14 +106,14 @@ export default class AmapUtil {
         return this
     }
 
-    loadMap(id) {
+    loadMap(config) {
         return new Promise((resolve, reject) => {
             if ( window.AMap ) {
-                resolve( this.setMap(window.AMap, id) )
+                resolve( this.setMap(window.AMap, config) )
             } else {
                 let methodName = 'initAMpCallback' + ('' + Math.random() ).replace(/\D/g, '')
                 window[methodName] = () => {
-                    resolve( this.setMap(window.AMap, id) )
+                    resolve( this.setMap(window.AMap, config) )
                     window[methodName] = null
                 }
                 let script = document.createElement('script')

@@ -62,5 +62,12 @@ export const saveAccountJurisdictionAreaInfo = accountJurisdictionAreaInfo => {
 }
 
 export const removeStore = () => {
-  localStorage.clear()
+  if( window.AMap ) {
+    window.AMap = null
+  }
+  localStorage.removeItem('token')
+  localStorage.removeItem('menus')
+  localStorage.removeItem('authorities')
+  localStorage.removeItem('publicUserInfo')
+  localStorage.removeItem('accountJurisdictionAreaInfo')
 }
