@@ -51,6 +51,7 @@
     <el-dialog
       :visible.sync="show.dialogVisible"
       title="审核"
+      :close-on-click-modal="false"
       @close="onVerifyClose"
     >
       <div class="row">
@@ -252,86 +253,6 @@ export default {
       }
     ]
 
-    const goBackButton = {
-      text: '返回',
-      attrs: {
-        plain: true
-      }
-    }
-
-    const closeButton = {
-      text: '关闭',
-      attrs: {
-        plain: true,
-        type: 'danger'
-      },
-      events: {
-        click: this.onVerifyClose
-      }
-    }
-
-    const verifyArgeeButtons = [
-      {
-        text: '确定审核通过？',
-        attrs: {
-          plain: true
-        },
-        events: {
-          click: this.OnAuthCorrectionStaff
-        },
-        authStatus: 'PASSED'
-      },
-      {
-        ...goBackButton,
-        events: {
-          click: this.onVerifyArgeeGoBack
-        }
-      },
-      closeButton
-    ]
-
-    const verifyButtons = [
-      {
-        text: '通过',
-        attrs: {
-          plain: true
-        },
-        events: {
-          click: this.onVerifyArgee
-        }
-      },
-      {
-        text: '不通过',
-        attrs: {
-          plain: true
-        },
-        events: {
-          click: this.onVerifyDisargee
-        }
-      },
-      closeButton
-    ]
-
-    const verifyDisagreeButtons = [
-      {
-        text: '提交',
-        attrs: {
-          plain: true
-        },
-        events: {
-          click: this.OnAuthCorrectionStaff
-        },
-        authStatus: 'DENIED'
-      },
-      {
-        ...goBackButton,
-        events: {
-          click: this.onVerifyDisargeeGoBack
-        }
-      },
-      closeButton
-    ]
-
     return {
       activeTabName: tabStatus['PENDING'],
       tabOptions,
@@ -343,9 +264,6 @@ export default {
       radiusOptions: RADIUSOPTIONS,
       remarkOptions: REMARKOPTIONS,
       remark: '身份信息错误',
-      verifyButtons,
-      verifyArgeeButtons,
-      verifyDisagreeButtons,
       show: {
         dialogVisible: false,
         verifyArgeeVisible: false,
@@ -362,16 +280,112 @@ export default {
         ]
       },
       correctionStaff: {},
-      mapConfigs: {}
+      mapConfigs: {},
+      buttonLoading: false
     }
   },
 
   computed: {
     ...mapState('correctionStaff', ['correctionalPage', 'authResult']),
+
     tableCols() {
       let cols = this.allTableCols.slice(0)
       if (this.activeTabName === this.tabStatus['PENDING']) cols.splice(-2, 1)
       return cols
+    },
+
+    goBackButton() {
+      return {
+        text: '返回',
+        attrs: {
+          plain: true,
+          disabled: this.buttonLoading
+        }
+      }
+    },
+
+    closeButton() {
+      return {
+        text: '关闭',
+        attrs: {
+          plain: true,
+          type: 'danger',
+          disabled: this.buttonLoading
+        },
+        events: {
+          click: this.onVerifyClose
+        }
+      }
+    },
+
+    verifyDisagreeButtons() {
+      return [
+        {
+          text: '提交',
+          attrs: {
+            plain: true,
+            loading: this.buttonLoading
+          },
+          events: {
+            click: this.OnAuthCorrectionStaff
+          },
+          authStatus: 'DENIED'
+        },
+        {
+          ...this.goBackButton,
+          events: {
+            click: this.onVerifyDisargeeGoBack
+          }
+        },
+        this.closeButton
+      ]
+    },
+
+    verifyButtons() {
+      return [
+        {
+          text: '通过',
+          attrs: {
+            plain: true
+          },
+          events: {
+            click: this.onVerifyArgee
+          }
+        },
+        {
+          text: '不通过',
+          attrs: {
+            plain: true
+          },
+          events: {
+            click: this.onVerifyDisargee
+          }
+        },
+        this.closeButton
+      ]
+    },
+
+    verifyArgeeButtons() {
+      return [
+        {
+          text: '确定审核通过？',
+          attrs: {
+            plain: true,
+            loading: this.buttonLoading
+          },
+          events: {
+            click: this.OnAuthCorrectionStaff
+          },
+          authStatus: 'PASSED'
+        },
+        {
+          ...this.goBackButton,
+          events: {
+            click: this.onVerifyArgeeGoBack
+          }
+        },
+        this.closeButton
+      ]
     }
   },
 
@@ -470,6 +484,8 @@ export default {
     async OnAuthCorrectionStaff(e) {
       this.$showLoading()
 
+      this.buttonLoading = true
+
       const { username } = this.correctionStaff
 
       let params = {
@@ -482,17 +498,18 @@ export default {
 
       let isSuccess = false
 
+
       if (e.currentTarget.dataset.status === 'DENIED') {
         const remarks = this.formModel.remarkReason || this.remark
 
         params = { ...params, remarks }
 
-        if (this.remark === '其他') {
-          this.$refs.form.validate(async valid => {
-            if (valid) isSuccess = await this.authCorrectionalStaff(params)
-          })
-        } else isSuccess = await this.authCorrectionalStaff(params)
+        if (this.remark === '其他') await this.$refs.form.validate() && (isSuccess = await this.authCorrectionalStaff(params))
+
+        else isSuccess = await this.authCorrectionalStaff(params)
       } else isSuccess = await this.authCorrectionalStaff(params)
+
+      this.buttonLoading = false
 
       if (isSuccess) this.onVerifyClose()
 
