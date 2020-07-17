@@ -24,12 +24,12 @@ export default {
   overflow: hidden;
 
   video {
-    width: 100%;
+    width: 52%;
     cursor: pointer;
   }
 
   &-placeholder {
-    width: 100%;
+    width: 49%;
     text-align: center;
     color: #8c8080;
     background-color: #e5e5e5;
