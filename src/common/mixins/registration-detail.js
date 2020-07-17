@@ -52,10 +52,10 @@ export default {
         slotName: 'registVideo',
         minWidth: 200
       },
-      {
-        label: '报到朗读内容',
-        prop: 'readContent'
-      },
+      // {
+      //   label: '报到朗读内容',
+      //   prop: 'readContent'
+      // },
       {
         label: '报到状态',
         prop: 'status',
