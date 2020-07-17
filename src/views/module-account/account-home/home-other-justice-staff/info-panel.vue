@@ -37,7 +37,6 @@
                         </el-select>
                     </td>
                 </tr>
-
                 <tr>
                     <td>外出请假情况：</td>
                     <td colspan="3">
@@ -83,6 +82,7 @@
 
         methods: {
             setReportData() {
+                this.reportDateList = []
                 this.reportDetailedAddress = {}
                 this.infoData.historyDates.forEach(d => {
                     const rt = d.reportTime

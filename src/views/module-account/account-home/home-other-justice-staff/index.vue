@@ -11,7 +11,7 @@
             <fullscreen ref="fullscreen" @change="handleFullscreenChange">
                 <div class="maplayer__content" id="homeMap"></div>
             </fullscreen>
-            <div class="maplayer__amap__infowin" ref="mapInfoWin" :style="{'visibility': isInfowinOpen ? 'visible' : 'hidden'}">
+            <div class="maplayer__amap__infowin" ref="mapInfoWin" :class="{'hideInfoWin' : !isInfowinOpen}">
                 <div class="maplayer__amap__infowin__header">
                     <span class="maplayer__amap__infowin__header__btn-close" @click="handleInfowinClose">
                         <i class="el-icon-close"></i>
@@ -69,12 +69,12 @@
 
         methods: {
             async initAMap() {
-                console.log('== initAmap')
                 try {
                     const that = this
                     const utilIns = that.instance = AmapUtil.getMapInstance()
                     const adCode = that.getJusticeCode.adCode
                     const { data } = await getReportMapmarks()
+
                     await utilIns.loadMap({id: 'homeMap'})
                     await utilIns.loadPlugin('DistrictLayer')
 
@@ -102,20 +102,21 @@
                         const { data } = await getReportDetails({
                             id: mkId
                         })
-                        data.historyDates = (await getReportHistoryDate({
-                            username: mkUsername
-                        })).data || []
-                        //data.selectReportDate = data.historyDates[0]
-
-                        utilIns.infoWindow.open( utilIns.map, _position )
-                        if( utilIns.currentZoom >= utilIns.maxZoom ) {
-                            utilIns.map.setCenter(_position, false, 400 )
-                        }else {
-                            utilIns.map.setZoomAndCenter(utilIns.maxZoom, _position, false, 400 )
+                        if( data ) {
+                            data.historyDates = (await getReportHistoryDate({
+                                username: mkUsername
+                            })).data || []
+                            
+                            utilIns.infoWindow.open( utilIns.map, _position )
+                            if( utilIns.currentZoom >= utilIns.maxZoom ) {
+                                utilIns.map.setCenter(_position, false, 300 )
+                            }else {
+                                utilIns.map.setZoomAndCenter(utilIns.maxZoom, _position, false, 400 )
+                            }
+                            
+                            that.isInfowinOpen = true
+                            that.infoData = data
                         }
-
-                        that.isInfowinOpen = true
-                        that.infoData = data
                     })
                     .bindMapEvent('zoomchange', debounce(() => {
                         if( (utilIns.currentZoom = utilIns.map.getZoom()) >  utilIns.maxZoom ) {
@@ -133,9 +134,7 @@
                             adcode: [adCode]
                         })
                     }
-                    console.log('======= start')
                     utilIns.setCity(adCode)
-                    console.log( '=========== end' + adCode )
 
                 } catch (err) {
                     Promise.reject(err)
@@ -231,6 +230,10 @@
                     color: #fff;
                 }
 
+            }
+
+            &.hideInfoWin {
+                transform: translate(0, -9999px)
             }
         }
     }
