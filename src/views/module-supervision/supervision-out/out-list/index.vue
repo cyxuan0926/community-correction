@@ -106,11 +106,13 @@ export default {
       },
       {
         label: '申请时间',
-        prop: 'createTime'
+        prop: 'createTime',
+        width: 160
       },
       {
         label: '出发日期',
-        prop: 'leaveStartTime'
+        prop: 'leaveStartTime',
+        width: 160
       },
       {
         label: '单程往返',
