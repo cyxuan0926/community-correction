@@ -246,7 +246,7 @@ export default {
     // 外出申请列表数据样式化
     filterReportOutListsContent() {
       return this.reportOutLists && this.reportOutLists.content && this.reportOutLists.content.length ? (
-        this.reportOutLists.content.length > 6 ? this.reportOutLists.content.slice(0, 7) : []
+        this.reportOutLists.content.length > 6 ? this.reportOutLists.content.slice(0, 7) : this.reportOutLists.content
       ) : []
     }
   },

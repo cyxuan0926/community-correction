@@ -50,7 +50,7 @@ export default {
       {
         label: '报到视频',
         slotName: 'registVideo',
-        minWidth: 200
+        minWidth: 130
       },
       // {
       //   label: '报到朗读内容',

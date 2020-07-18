@@ -149,16 +149,13 @@
           />
         </el-form-item>
 
-        <el-form-item
-          label="矫正期限"
-          class="form-item_fullwidth"
-          prop="correctDeadline"
-        >
+        <el-form-item class="form-item_fullwidth" label="罪名" prop="charge">
           <el-input
-            v-model.trim="formBasicModel.correctDeadline"
-            placeholder="请填写矫正期限"
+            v-model.trim="formBasicModel.charge"
+            type="text"
             show-word-limit
             maxlength="50"
+            placeholder="请填写罪名"
             clearable
           />
         </el-form-item>
@@ -274,13 +271,16 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item class="form-item__left" label="罪名" prop="charge">
+        <el-form-item
+          label="矫正期限"
+          class="form-item__left"
+          prop="correctDeadline"
+        >
           <el-input
-            v-model.trim="formSupervisionModel.charge"
-            type="text"
+            v-model.trim="formSupervisionModel.correctDeadline"
+            placeholder="请填写矫正期限"
             show-word-limit
             maxlength="50"
-            placeholder="请填写罪名"
             clearable
           />
         </el-form-item>
@@ -467,12 +467,10 @@ export default {
         handoverTime: '',
         reportingCycle: '月报到',
         reportingDay: '',
-        judgmentOrgan: '',
-        judgmentDate: '',
-        correctDeadline: '',
         correctDeadlineStart: '',
         correctDeadlineEnd: '',
         originalSentenceStart: '',
+        charge: '',
         originalSentenceEnd: ''
       },
       formBasicRules: {
@@ -486,11 +484,13 @@ export default {
       formSupervisionModel: {
         effectiveRange: 300,
         originalSentence: '',
-        charge: '',
         sentenceType: '',
         address: '',
+        judgmentOrgan: '',
         reportingPeriod: 5,
-        formSupervisionModel: ''
+        correctDeadline: '',
+        judgmentDate: '',
+        supplementaryPenalty: ''
       },
       visible: false,
       currentMonthDays: CURRENTMONTHDAYS,
