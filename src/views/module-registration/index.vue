@@ -28,6 +28,8 @@
         <template #status="{ row }">{{
           row.status | filterInput({ filterEl: registrationStatus })
         }}</template>
+
+        <template #normalReportRate="{ row }">{{ row.normalReportRate + '%' }}</template>
       </base-table>
     </div>
 
@@ -99,7 +101,8 @@ export default {
       },
       {
         label: '正常报到率',
-        prop: 'normalReportRate'
+        prop: 'normalReportRate',
+        slotName: 'normalReportRate'
       }
     ]
 
