@@ -74,9 +74,13 @@ export default {
 
     async gettingPageData() {
       let content, total
-      const params = {
+      const {time, ...params} = {
         ...this.pagination,
         ...this.filterParams
+      }
+      if( time ) {
+        params.startDate = time[0]
+        params.endDate = time[1]
       }
       await this.getReportDetailsPage(params)
       content = this.reportDetailLists['content']
