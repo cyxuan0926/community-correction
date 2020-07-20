@@ -60,6 +60,8 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@vue/cli-plugin-babel": "~4.2.0",
@@ -72,6 +74,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "1.0.0-beta.31",
     "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.1.0",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.1.0",
     "deployment-cli": "^0.2.0",
