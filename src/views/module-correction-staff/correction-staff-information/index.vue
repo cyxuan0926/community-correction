@@ -117,7 +117,7 @@
         </el-form-item>
 
         <el-form-item
-          class="form-item_fullwidth form-item__livingPlace"
+          class="form-item_fullwidth"
           label="居住地"
           prop="livingPlace"
           :rules="{ required: true }"
@@ -677,7 +677,7 @@ export default {
       width: 65%;
 
       .el-form-item {
-        width: 49.6%;
+        width: 49.7%;
 
         &:nth-child(odd) {
           border-right: none;
@@ -696,7 +696,7 @@ export default {
         }
 
         &.form-item_fullwidth {
-          width: 99.3%;
+          width: 99.5%;
           border-right: $-boder-style;
 
           ::v-deep .el-form-item__content {
@@ -718,10 +718,6 @@ export default {
           }
         }
 
-        &.form-item__livingPlace {
-          width: 99.4%;
-        }
-
         &.el-form-item__none-top {
           border-top: none !important;
         }
@@ -730,12 +726,12 @@ export default {
 
     ::v-deep .form-img {
       width: 23%;
-      height: 30%;
+      height: 20%;
       padding-top: 1%;
       margin: 0px auto;
 
       .el-image__inner {
-        height: 40.6%;
+        height: 20.6%;
       }
     }
 
@@ -748,7 +744,7 @@ export default {
         }
 
         &.form-item__left {
-          width: 64.6%;
+          width: 64.7%;
           border-bottom: $-boder-style;
 
           ::v-deep .el-form-item__content {
