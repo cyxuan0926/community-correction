@@ -615,7 +615,7 @@ export default {
         .video,
         .audio {
           width: 48%;
-          height: 150px;
+          height: 180px;
           box-shadow: 0 0 5px #ddd;
           margin-bottom: 5px;
 
@@ -626,7 +626,7 @@ export default {
 
           ::v-deep .video-placeholder,
           .audio {
-            line-height: 150px;
+            line-height: 180px;
           }
         }
       }

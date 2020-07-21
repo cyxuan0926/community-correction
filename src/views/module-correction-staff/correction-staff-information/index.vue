@@ -15,6 +15,7 @@
         :rules="formBasicRules"
       >
         <el-form-item
+          class="el-form-item__none-top"
           label="矫正人员姓名"
           prop="realName"
           :rules="{ required: true }"
@@ -26,7 +27,12 @@
           />
         </el-form-item>
 
-        <el-form-item label="性别" prop="sex" :rules="{ required: true }">
+        <el-form-item
+          class="el-form-item__none-top"
+          label="性别"
+          prop="sex"
+          :rules="{ required: true }"
+        >
           <el-input
             v-model.trim="formBasicModel.sex"
             disabled
@@ -253,7 +259,7 @@
         </el-form-item>
 
         <el-form-item 
-          class="form-item__right supplementaryPenalty"
+          class="form-item__right supplementaryPenalty none__right-border"
           label="附加刑"
           prop="supplementaryPenalty"
         >
@@ -286,7 +292,7 @@
         </el-form-item>
 
         <el-form-item
-          class="form-item__right"
+          class="form-item__right none__right-border"
           label="判处类型"
           prop="sentenceType"
         >
@@ -318,7 +324,7 @@
         </el-form-item>
 
         <el-form-item
-          class="form-item__right"
+          class="form-item__right none__right-border"
           label="报到期"
           prop="reportingPeriod"
           :rules="{ required: true, message: '请选择报到期' }"
@@ -352,7 +358,11 @@
           />
         </el-form-item>
 
-        <el-form-item class="form-item__right" label="判决日期" prop="judgmentDate">
+        <el-form-item
+          class="form-item__right none__right-border"
+          label="判决日期"
+          prop="judgmentDate"
+        >
           <el-date-picker
             v-model="formSupervisionModel.judgmentDate"
             type="date"
@@ -362,7 +372,7 @@
           />
         </el-form-item>
 
-        <el-form-item class="form-item_idCard is-required" label="身份证信息">
+        <el-form-item class="form-item_idCard is-required none__right-border" label="身份证信息">
           <template>
             <base-img-viewer
               v-for="file of uuidImgLists"
@@ -375,7 +385,7 @@
 
         <el-form-item
           label="报到地点"
-          class="form-item_location"
+          class="form-item_location none__right-border"
           prop="effectiveRange"
           :rules="{ required: true, message: '请选择有效范围' }"
         >
@@ -650,10 +660,19 @@ export default {
 
 <style lang="scss" scoped>
 .correction-information {
+  .information-button__common {
+    width: 100%;
+  }
+
   &-form {
+    border-top: $-boder-style;
+
+    border-right: $-boder-style;
+ 
     .el-date-editor.el-input, .el-date-editor.el-input__inner, .el-select {
       width: 100%;
     }
+
     .form-basic {
       width: 65%;
 
@@ -702,24 +721,26 @@ export default {
         &.form-item__livingPlace {
           width: 99.4%;
         }
+
+        &.el-form-item__none-top {
+          border-top: none !important;
+        }
       }
     }
 
     ::v-deep .form-img {
-      width: 24%;
+      width: 23%;
       height: 30%;
-      padding-left: 5%;
+      padding-top: 1%;
+      margin: 0px auto;
 
       .el-image__inner {
-        height: 45.6%;
+        height: 40.6%;
       }
     }
 
     .form-supervision {
-      width: 99.2%;
-
       .el-form-item {
-        width: 99.7%;
         border-top: none;
 
         &:first-child {
@@ -727,7 +748,7 @@ export default {
         }
 
         &.form-item__left {
-          width: 65.04%;
+          width: 64.6%;
           border-bottom: $-boder-style;
 
           ::v-deep .el-form-item__content {
@@ -736,7 +757,7 @@ export default {
         }
 
         &.form-item__right {
-          width: calc(34.7% - 1px);
+          width: calc(35.2% - 1px);
           border-left: none;
           border-bottom: $-boder-style;
         }
@@ -817,5 +838,9 @@ export default {
 }
 .supplementaryPenalty {
   border-top: $-boder-style !important;
+}
+
+.none__right-border {
+  border-right: none !important;
 }
 </style>
