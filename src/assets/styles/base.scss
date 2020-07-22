@@ -1,0 +1,60 @@
+@import "./var";
+
+body {
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  color: $--color-text-primary;
+  font-variant: tabular-nums;
+  font-feature-settings: "tnum";
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.el-image__inner {
+  width: 100%;
+  height: 100%;
+}
+
+.search {
+  padding-bottom: 10px;
+}
+
+.cursor_pointer {
+  cursor: pointer;
+}
+
+.table-tabs_card {
+  .cell {
+    height: 32px;
+    line-height: 32px;
+  }
+}
+
+.title-information__common {
+  padding-bottom: 10px;
+}
+
+.form-information__common {
+  display: flex;
+  flex-wrap: wrap;
+
+  .form {
+    .el-form-item {
+      padding: 16px 0px;
+      margin-right: 0px;
+      margin-bottom: 0px;
+      border: $-boder-style;
+      border-bottom: none;
+    }
+  }
+}
+
+.information-button__common {
+  width: 99.4%;
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  .el-button {
+    width: 8%;
+  }
+}

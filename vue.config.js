@@ -1,6 +1,8 @@
 'use strict'
 const path = require('path')
 
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
+
 const resolve = dir => path.join(__dirname, dir)
 
 const isProduction = () => process.env.NODE_ENV === 'production'
@@ -14,6 +16,16 @@ module.exports = {
         prependData: `@import "@/assets/styles/var.scss";`
       }
     }
+  },
+  devServer: {
+    disableHostCheck: true
+  },
+  configureWebpack: {
+    plugins: [
+      new MomentLocalesPlugin({
+        localesToKeep: ['es-us', 'ru']
+      })
+    ]
   },
   chainWebpack(config) {
     config.when(isProduction(), config => {

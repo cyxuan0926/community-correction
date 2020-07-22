@@ -1,1 +1,1 @@
-export const _import = path => () => import(`@/views/${ path }`)
+export const _import = path => () => import(`@/views/${path}`)
