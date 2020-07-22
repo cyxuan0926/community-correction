@@ -28,6 +28,10 @@ export default {
     commit(`account/${mutationsAccount.SET_MENUS}`, [], { root: true })
     commit(`account/${mutationsAccount.SET_AUTHORITIES}`, [], { root: true })
     commit(`account/${mutationsAccount.SET_PUBLICUSERINFO}`, {}, { root: true })
+    commit(mutationsGlobal.SET_JURISDICTION, [])
+    commit(mutationsGlobal.SET_PROVINCE, [])
+    commit(mutationsGlobal.SET_COUNTY, [])
+    commit(mutationsGlobal.SET_CITY, [])
     Message.closeAll()
   },
 

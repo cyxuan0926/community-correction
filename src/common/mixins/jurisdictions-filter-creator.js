@@ -64,6 +64,7 @@ export default {
       if (name === 'provinceCode') {
         if (filterItems.some(item => item.name === 'cityCode')) {
           const index = filterItems.findIndex(item => item.name === 'cityCode')
+
           if (value) {
             await this.initOrganizationData({
               actionName: 'getCities',
@@ -270,27 +271,34 @@ export default {
     
     // 司法厅 市 区县
     }else if (this.isJusticeDepartmentAccount) {
-      let provinceCode = this.getJusticeCode.provinceCode
+      const { provinceCode } = this.getJusticeCode
+
       this.createCountyFilter()
+
       this.createCityFilter(true, {
         provinceCode
       })
-      this.filterParams.provinceCode = provinceCode
+
+      this.$set(this.filterParams, 'provinceCode', provinceCode)
     
     // 市司法局 区县
     }else if (this.isJusticeBureauAccount) {
-      let cityCode = this.getJusticeCode.cityCode
+      const { cityCode } = this.getJusticeCode
+
       this.createCountyFilter(true, {
         cityCode
       })
-      this.filterParams.cityCode = cityCode
+
+      this.$set(this.filterParams, 'cityCode', cityCode)
     // 区县司法局 司法所
     }else {
-      let areaCode = this.getJusticeCode.areaCode
+      const { areaCode } = this.getJusticeCode
+
       this.createJurisdictionFilter(true, {
         adCode: areaCode
       })
-      this.filterParams.areaCode = areaCode
+
+      this.$set(this.filterParams, 'areaCode', areaCode)
     }
 
   }
