@@ -347,7 +347,7 @@ export default {
             &_near,
             &_late {
               color: $--color-white;
-              background-color: #f29d70;
+              background-color: #72c7f2;
               width: 95%;
               div {
                 padding: 10px 0px 5px 10px;
@@ -362,7 +362,7 @@ export default {
             }
 
             &_near {
-              background-color: #eb333d;
+              background-color: #c6dd8d;
             }
 
             &_warnning {
@@ -468,12 +468,12 @@ export default {
   // }
 
   .calendar-day_report {
-    background-color: #ddfcc8;
+    background-color: #1fa232;
     border-radius: 50%;
   }
 
   .calendar-day_danger {
-    background-color: #eb333d;
+    background-color: #ff8600;
     border-radius: 50%;
   }
 

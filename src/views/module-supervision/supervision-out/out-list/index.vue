@@ -162,7 +162,8 @@ export default {
       initItems,
       status,
       vehicleType,
-      roundType
+      roundType,
+      filterItems: initItems
     }
   },
 
@@ -229,9 +230,8 @@ export default {
     }
   },
 
-  async activated() {
-    this.filterItems = this.initItems
-    await this.gettingPageData()
+  activated() {
+    this.gettingPageData()
   }
 }
 </script>

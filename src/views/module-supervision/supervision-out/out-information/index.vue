@@ -5,7 +5,15 @@
     </p>
 
     <div class="supervision-out-information-form form-information__common">
-      <el-form class="form" ref="form" :model="formData" :rules="rules" inline>
+      <el-form 
+        class="form"
+        ref="form"
+        :model="formData"
+        :rules="rules"
+        inline
+        label-width="125px"
+        label-position="right"
+      >
         <el-form-item
           label="矫正人员姓名"
           prop="correctionName"
@@ -34,7 +42,7 @@
         </el-form-item>
 
         <el-form-item
-          class="el-form_fullWidth border__right form-item__selection"
+          class="el-form_fullWidth border__right"
           label="单程往返"
           prop="roundType"
           :rules="{ required: true, message: '请选择单程往返' }"
@@ -212,7 +220,7 @@
           </el-form-item>
 
           <el-form-item
-            class="el-form_fullWidth border__right el-form__detailedAddress"
+            class="el-form_fullWidth border__right"
             label="返程详细地址"
             prop="backDetailedAddress"
             :rules="{ required: true, message: '请输入返程详细地址' }"
@@ -253,7 +261,7 @@
         </el-form-item>
 
         <el-form-item
-          class="el-form_fullWidth border__right form-item__selection"
+          class="el-form_fullWidth border__right"
           label="外出事由"
           prop="awayReasons"
           :rules="{ required: true, message: '请输入外出事由' }"
@@ -269,7 +277,7 @@
           :class="[
             { 'form-item__detail-result': status === 'detail' },
             { 'el-form_fullWidth': status === 'audit' },
-            { 'form-item__selection': status === 'audit' },
+            { 'border__right': status === 'audit' && formData.roundType === '1' },
             {
               'form-item__detail-result__none-border_bottom':
                 status === 'detail' && formData.auditResult === 1
@@ -309,8 +317,8 @@
         </el-form-item>
 
         <el-form-item
-          v-if="!(status === 'detail' && formData.auditResult === 0)"
-          class="el-form_fullWidth form-item__refuse-reason form-item__selection"
+          v-if="formData.auditResult === 1"
+          class="el-form_fullWidth form-item__refuse-reason"
           label="拒绝原因"
           prop="refusalReasons"
         >
@@ -332,7 +340,7 @@
         v-if="status === 'audit' && !formData.status"
         type="primary"
         @click="onSave"
-        >保存</el-button
+        >提交</el-button
       >
 
       <el-button type="primary" @click="onGoBack">返回</el-button>
@@ -423,17 +431,19 @@ export default {
     onSave() {
       const { auditResult, refusalReasons } = this.formData
 
-      this.$refs.form.validate(async () => {
-        this.$showLoading()
+      this.$refs.form.validate(async valid => {
+        if (valid) {
+          this.$showLoading()
 
-        await this.approveReportOut({
-          applicationId: this.applicationId,
-          auditResult,
-          refusalReasons,
-          type: '1'
-        })
+          await this.approveReportOut({
+            applicationId: this.applicationId,
+            auditResult,
+            refusalReasons,
+            type: '1'
+          })
 
-        if (this.reportOutResult) this.gettingData()
+          if (this.reportOutResult) this.gettingData()
+        }
       })
     }
   },
@@ -451,7 +461,6 @@ export default {
     .el-form {
       .el-form-item {
         width: 49.6%;
-        text-align: right;
 
         &:nth-child(odd) {
           border-right: none;
@@ -463,7 +472,7 @@ export default {
         }
 
         ::v-deep .el-form-item__content {
-          width: 77.5%;
+          width: calc(99% - 125px);
           .el-input,
           .el-select,
           .el-date-editor {
@@ -472,22 +481,15 @@ export default {
         }
 
         &.el-form_fullWidth {
-          width: 96.3%;
-          padding-left: 3%;
+          width: 99.3%;
 
           ::v-deep .el-form-item__content {
-            width: 86.5%;
+            width: calc(99% - 120px);
             .el-input,
             .el-select,
             .el-date-editor {
               width: 100%;
             }
-          }
-        }
-
-        &.el-form__detailedAddress {
-          ::v-deep .el-form-item__content {
-            width: 88.3%
           }
         }
 
@@ -498,11 +500,6 @@ export default {
           }
         }
 
-        &.form-item__selection {
-          ::v-deep .el-form-item__content {
-            width: 91%;
-          }
-        }
 
         &.border-right__none {
           border-right: none;
@@ -510,10 +507,6 @@ export default {
 
         &.border__right {
           border-right: $-boder-style;
-        }
-
-        ::v-deep &__content {
-          padding-right: 1%;
         }
 
         &.form-item__detail-result {
