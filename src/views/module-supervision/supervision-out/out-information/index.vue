@@ -11,7 +11,7 @@
         :model="formData"
         :rules="rules"
         inline
-        label-width="120px"
+        label-width="125px"
         label-position="right"
       >
         <el-form-item
@@ -472,7 +472,7 @@ export default {
         }
 
         ::v-deep .el-form-item__content {
-          width: calc(99% - 120px);
+          width: calc(99% - 125px);
           .el-input,
           .el-select,
           .el-date-editor {
