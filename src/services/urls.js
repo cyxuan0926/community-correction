@@ -20,9 +20,9 @@ const config = {
   // 线上环境
   prod: {
     publicApiHost: 'https://auth-api.yuwugongkai.com',
-    apiHost: '',
+    apiHost: 'https://correction-api.yuwugongkai.com',
     mapKey: '9415fa5f5fd07290d579f5de39ace82f',
-    webHost: 'http://qa-correction.yuwugongkai.com/'
+    webHost: 'https://correction.yuwugongkai.com/'
   }
 }
 
