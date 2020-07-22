@@ -78,10 +78,10 @@ export default {
           markerConfigs = {},
           mapClass = {}
         } = this.mapConfigs
-
         const utilIns = await AmapUtil.getMapInstance().loadMap({
           id: this.$refs.map,
           zoomEnable: false,
+          mapStyle: 'amap://styles/normal',
           ...mapClass
         })
         
@@ -90,10 +90,8 @@ export default {
           radius: this.radius,
           ...circleConfigs
         })
-        .addMarks({
-          config: markerConfigs
-        })
-        .setFitView()
+        .addMarks(markerConfigs)
+        .setFitView([...utilIns.marks, ...utilIns.circles])
 
         //this.map = utilIns.map
 
