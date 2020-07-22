@@ -16,7 +16,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "commit": "git-cz",
-    "deploy:dev": "npx deployment-cli --config deploy/deploy.dev.conf.js"
+    "deploy:dev": "npx deployment-cli --config deploy/deploy.dev.conf.js",
+    "deploy:prod": "npx deployment-cli --config deploy/deploy.prod.conf.js"
   },
   "config": {
     "commitizen": {
