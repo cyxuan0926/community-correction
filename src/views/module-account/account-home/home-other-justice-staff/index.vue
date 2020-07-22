@@ -80,8 +80,11 @@
 
                     if( data && data.length ) {
                         that.markList = data.filter(m => m.lng && m.lat && m.username).map(m => ({
-                            mkId: m.id,
-                            mkUsername: m.username,
+                            props: {
+                                mkId: m.id,
+                                mkUsername: m.username
+                            },
+                            offset: new utilIns.AmapConstructor.Pixel(-9.5, -32),
                             content: `<img width="19px" height="32px" src="${URLConfig.webHost}/static/img/mark_bs0${m.status}.png">`,
                             position: [m.lng, m.lat]
                         }))
