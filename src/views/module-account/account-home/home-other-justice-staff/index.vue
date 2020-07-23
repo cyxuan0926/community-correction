@@ -84,7 +84,7 @@
                                 mkId: m.id,
                                 mkUsername: m.username
                             },
-                            offset: new utilIns.AmapConstructor.Pixel(-9.5, -32),
+                            offset: utilIns.getOffset(-9.5, -32),
                             content: `<img width="19px" height="32px" src="${URLConfig.webHost}/static/img/mark_bs0${m.status}.png">`,
                             position: [m.lng, m.lat]
                         }))
@@ -95,13 +95,18 @@
                     .addDistrictLayerCountry()
                     .addInfoWindow({
                         content: that.$refs.mapInfoWin,
-                        offset: utilIns.getOffset(0, -48),
+                        //高德jsapi2.0的写法
+                        //offset: utilIns.getOffset(0, -48),
+                        offset: utilIns.getOffset(-2, -21),
                         isCustom: true,
                         closeWhenClickMap: true
                     })
                     .addMarks(that.markList)
                     .bindMarkEvent('click', async (e) => {
-                        const { _position, mkId, mkUsername } = e.target
+                        //高德jsapi2.0的写法
+                        //const { _position, mkId, mkUsername } = e.target
+                        const { mkId, mkUsername } = e.target
+                        const _position = [e.lnglat.lng, e.lnglat.lat]
                         const { data } = await getReportDetails({
                             id: mkId
                         })
@@ -109,14 +114,13 @@
                             data.historyDates = (await getReportHistoryDate({
                                 username: mkUsername
                             })).data || []
-                            
-                            utilIns.infoWindow.open( utilIns.map, _position )
+
                             if( utilIns.currentZoom >= utilIns.maxZoom ) {
                                 utilIns.map.setCenter(_position, false, 300 )
                             }else {
                                 utilIns.map.setZoomAndCenter(utilIns.maxZoom, _position, false, 400 )
                             }
-                            
+                            utilIns.infoWindow.open( utilIns.map, _position )
                             that.isInfowinOpen = true
                             that.infoData = data
                         }
