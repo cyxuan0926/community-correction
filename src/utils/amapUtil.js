@@ -119,7 +119,7 @@ export default class AmapUtil {
                 let script = document.createElement('script')
                 script.type = 'text/javascript'
                 script.async = true
-                script.src = `https://webapi.amap.com/maps?v=2.0&key=${URLConfig.mapKey}&callback=${methodName}`
+                script.src = `https://webapi.amap.com/maps?v=1.4.15&key=${URLConfig.mapKey}&callback=${methodName}`
                 script.onerror = reject
                 document.head.appendChild(script)
             }
