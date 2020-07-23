@@ -14,8 +14,7 @@ const defaultCircleConfig = {
 }
 
 const defaultInfowinConfig = {
-    content: '窗体信息',
-    anchor: 'bottom-center'
+    content: '窗体信息'
 }
 
 const defaultDisWorldConfig = {
