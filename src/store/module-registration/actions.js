@@ -30,7 +30,7 @@ export default {
 
           audioUrl: audio ? `${ URLConfig.publicApiHost }/files/${ audio }` : '',
 
-          readContents: readContent + ';' + readNumber
+          readContents: (readContent ? ( readContent + ';' ) : '')  + (readNumber || '')
         }
       })
 
