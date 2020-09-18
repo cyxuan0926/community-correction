@@ -3,7 +3,7 @@
     <!-- <div class="audio-placeholder" v-if="!audioUrl">
       <i class="iconfont icon-audio" />
     </div> -->
-    <div v-if="!audioUrl" class="audio-container">
+    <div v-if="audioUrl" class="audio-container">
       <img v-if="audioImg === 3" :src="audioIcon" alt="音频" @click="onPlay" />
       <img
         v-if="audioImg === 1"
