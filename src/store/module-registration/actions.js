@@ -16,11 +16,21 @@ export default {
       let { list } = data
 
       list = list.map(item => {
-        const { video } = item
+        const {
+          video,
+          audio,
+          readContent,
+          readNumber
+        } = item
 
         return {
           ...item,
-          videoUrl: video ? `${ URLConfig.publicApiHost }/files/${ video }` : ''
+
+          videoUrl: video ? `${ URLConfig.publicApiHost }/files/${ video }` : '',
+
+          audioUrl: audio ? `${ URLConfig.publicApiHost }/files/${ audio }` : '',
+
+          readContents: readContent + ';' + readNumber
         }
       })
 
