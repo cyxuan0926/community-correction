@@ -25,6 +25,10 @@
           <base-video :videoUrl="row.videoUrl" />
         </template>
 
+        <template #audioSlot="{ row }">
+          <base-audio :audioUrl="row.audioUrl" />
+        </template>
+  
         <template #status="{ row }">{{
           row.status | filterInput({ filterEl: registrationStatus })
         }}</template>
