@@ -32,3 +32,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Env.local
+、、、
+本地需要新建一个.env.local文件
+、、、

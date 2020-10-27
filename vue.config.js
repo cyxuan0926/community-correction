@@ -9,7 +9,7 @@ const isProduction = () => process.env.NODE_ENV === 'production'
 
 module.exports = {
   assetsDir: 'static',
-  productionSourceMap: false,
+  productionSourceMap: isProduction() ? false : true,
   css: {
     loaderOptions: {
       sass: {
